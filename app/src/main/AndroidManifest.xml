@@ -67,6 +67,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.superhumansintechnology.gl3amtest.NewDestinationActivity" />
         </activity>
+        <activity
+            android:name=".JSONLookupActivity"
+            android:label="@string/title_activity_jsonlookup"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.superhumansintechnology.gl3amtest.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
