@@ -9,4 +9,6 @@
     <string name="destination">Destination:</string>
     <string name="distance_from_location">Distance:</string>
     <string name="act_dist">Activation Distance:</string>
+    <string name="start">Start</string>
+    <string name="cancel">Stop</string>
 </resources>
