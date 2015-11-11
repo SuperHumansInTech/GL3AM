@@ -1,0 +1,13 @@
+Distance Matrix API: AIzaSyCFBwE32AJV6V3KcExwu-VIQsKsrugrva4
+
+Manual for matrix: https://developers.google.com/maps/documentation/distance-matrix/intro
+
+API Rquest form: https://maps.googleapis.com/maps/api/distancematrix/output?parameters
+
+Google Maps API: AIzaSyD8xWdXPfuGsmOQwoSgvZdPGCal5w7t77A
+
+
+
+
+
+

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="superheroesintechnology.gl3am.UpdateActivity"
+    android:background="@color/primaryBackGroundColor">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:layout_weight="5">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/destinationTextView"
+                android:text="@string/destination"
+                android:layout_gravity="right"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/defDistTextView"
+                android:text="@string/act_dist"
+                android:layout_gravity="right"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/distFromDestTextView"
+                android:text="@string/distance_from_location"
+                android:layout_gravity="right"/>
+
+            // Below can be removed before final product is completed. For testing purposes only.
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/booleanTextView"
+                android:text="boolean:"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/destinationResultTextView"
+                android:text=""
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/defDistResultTextView"
+                android:text=""
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/distFromDestResultTextView"
+                android:text=""
+                android:layout_marginLeft="10dp" />
+
+            //the below textview is only or testing
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/booleanResultTextView"
+                android:text=""
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/favoritesStatusImage"
+            android:background="@drawable/favorites"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/alarmStatusImage"
+            android:background="@drawable/alarm54"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/homeStatusImage"
+            android:background="@drawable/home"
+            android:clickable="false"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/messageStatusImage"
+            android:background="@drawable/speech_bubble63"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/statusStatusImage"
+            android:background="@drawable/map4"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+
+</RelativeLayout>

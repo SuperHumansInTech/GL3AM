@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="superheroesintechnology.gl3am.SplashActivity"
+    android:background="@color/primaryBackGroundColor"
+    android:transitionGroup="false"
+    android:visibility="visible">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="70sp"
+        android:textColor="@color/title_color"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:id="@+id/appTitleSplashTextView"
+        android:visibility="visible" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/gps27"
+        android:id="@+id/targetSplashImageView"
+        android:layout_below="@+id/appTitleSplashTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:visibility="visible"
+        android:foregroundGravity="top" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftLineImageView"
+        android:background="@drawable/left_line"
+        android:layout_alignTop="@id/targetSplashImageView"
+        android:layout_alignRight="@id/targetSplashImageView"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/right_line"
+        android:background="@drawable/right_line"
+        android:layout_alignTop="@id/targetSplashImageView"
+        android:layout_alignLeft="@id/targetSplashImageView"/>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/messageSplashImageView"
+        android:background="@drawable/speech_bubble63"
+        android:layout_alignBottom="@id/right_line"
+        android:layout_alignRight="@id/right_line"
+        android:visibility="visible" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/alarmSplashImageView"
+        android:background="@drawable/alarm54"
+        android:visibility="visible"
+        android:foregroundGravity="top"
+        android:layout_alignBottom="@id/leftLineImageView"
+        android:layout_alignLeft="@id/leftLineImageView"
+       />
+
+</RelativeLayout>
