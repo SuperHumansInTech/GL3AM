@@ -1,41 +1,108 @@
 package superheroesintechnology.gl3am;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AlarmActivity extends Activity {
 
-    //NumberPicker alarmNoPicker = null;
     private SeekBar seekBar;
     private TextView distanceText;
+    private ImageView startCancelImageView;
+    private static final String ALARM_PREFS = "AlamrPrefernceFile";
+    private TextView startCancelTextView;
+    private boolean isPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        startCancelImageView = (ImageView)findViewById(R.id.startStopAlarmImageView);
+        startCancelTextView = (TextView)findViewById(R.id.startStopAlarmTextView);
+
+        View.OnClickListener startCancelListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences startStopPrefs = getSharedPreferences(ALARM_PREFS, 0);
+                SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
+
+                if(getIsPressed()){
+                    boolean makeFalse = false;
+                    setIsPressed(makeFalse);
+                   startCancelImageView.setBackgroundResource(R.drawable.start);
+                    startCancelTextView.setText(R.string.start);
+
+                    startStopEditor.putBoolean("bool", makeFalse);
+                    startStopEditor.putString("textState", startCancelTextView.getText().toString());
+                    startStopEditor.commit();
+                }
+                else{
+                    boolean makeTrue = true;
+                    setIsPressed(makeTrue);
+                    startCancelImageView.setBackgroundResource(R.drawable.cancel);
+                    startCancelTextView.setText(R.string.cancel);
+                    startStopEditor.putBoolean("bool", makeTrue);
+                    startStopEditor.putString("textState", startCancelTextView.getText().toString());
+                    startStopEditor.commit();
+                }
+
+            }
+        };
+
+        startCancelImageView.setOnClickListener(startCancelListener);
+        SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
+
+        if (sharedPreferences.contains("bool")){
+            setIsPressed(sharedPreferences.getBoolean("bool", false));
+            if(getIsPressed()){
+                startCancelImageView.setBackgroundResource(R.drawable.cancel);
+                startCancelTextView.setText(R.string.cancel);
+            }
+            else{
+                startCancelImageView.setBackgroundResource(R.drawable.start);
+                startCancelTextView.setText(R.string.start);
+            }
+        }
+
+
         seekBar = (SeekBar)findViewById(R.id.distanceAlarmSeekbar);
         distanceText = (TextView)findViewById(R.id.distanceAlarmTextView);
 
+        if (sharedPreferences.contains("miles")){
+            seekBar.setProgress(sharedPreferences.getInt("miles", 1));
+        }
+
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            SharedPreferences seekBarPrefeernces = getSharedPreferences(ALARM_PREFS, 0);
+            SharedPreferences.Editor seekBarEditor = seekBarPrefeernces.edit();
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final int MIN_VALUE = 1;
                 if(progress < MIN_VALUE){
                     seekBar.setProgress(MIN_VALUE);
 
-               }
+                }
                 distanceText.setText(seekBar.getProgress() + " miles");
+                seekBarEditor.putInt("miles", seekBar.getProgress());
+                seekBarEditor.commit();
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+
+                Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
 
             }
 
@@ -45,19 +112,12 @@ public class AlarmActivity extends Activity {
             }
         });
 
-
-
-//        //Number picker
-//        alarmNoPicker = (NumberPicker)findViewById(R.id.numberPicker);
-//        alarmNoPicker.setMaxValue(20);
-//        alarmNoPicker.setMinValue(1);
-//        alarmNoPicker.setWrapSelectorWheel(false);
-
-
-        ImageView homeImageView = (ImageView)findViewById(R.id.homeAlarmImage);
+        final ImageView homeImageView = (ImageView)findViewById(R.id.homeAlarmImage);
         ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesAlarmImage);
         ImageView statusImageView = (ImageView)findViewById(R.id.statusAlarmImage);
         ImageView messageImageView = (ImageView)findViewById(R.id.messageAlarmImage);
+
+
 
         homeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +129,7 @@ public class AlarmActivity extends Activity {
         favoritesImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
             }
         });
@@ -86,5 +147,13 @@ public class AlarmActivity extends Activity {
                 startActivity(new Intent(AlarmActivity.this, MessageActivity.class));
             }
         });
+    }
+
+    public void setIsPressed(boolean useThis){
+        this.isPressed = useThis;
+    }
+
+    public boolean getIsPressed(){
+        return this.isPressed;
     }
 }
