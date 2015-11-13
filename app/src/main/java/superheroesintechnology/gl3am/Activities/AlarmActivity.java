@@ -1,4 +1,4 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import superheroesintechnology.gl3am.R;
 
 public class AlarmActivity extends Activity {
 
