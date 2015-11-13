@@ -1,4 +1,4 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Models;
 
 /**
  * Destination Class:

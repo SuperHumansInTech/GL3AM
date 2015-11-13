@@ -30,7 +30,7 @@
             android:value="AIzaSyD8xWdXPfuGsmOQwoSgvZdPGCal5w7t77A" />
 
 
-        <activity android:name=".SplashActivity"
+        <activity android:name=".Activities.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -39,26 +39,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity"
+        <activity android:name=".Activities.MapsActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="superheroesintechnology.gl3am.category.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".UpdateActivity"
+        <activity android:name=".Activities.UpdateActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".AlarmActivity"
+        <activity android:name=".Activities.AlarmActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".MessageActivity"
+        <activity android:name=".Activities.MessageActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".Activities.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".FavoritesActivity"
+        <activity android:name=".Activities.FavoritesActivity"
             android:screenOrientation="portrait">
         </activity>
 

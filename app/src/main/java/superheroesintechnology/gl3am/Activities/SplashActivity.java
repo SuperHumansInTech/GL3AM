@@ -1,10 +1,7 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import superheroesintechnology.gl3am.R;
 
 
 public class SplashActivity extends Activity {

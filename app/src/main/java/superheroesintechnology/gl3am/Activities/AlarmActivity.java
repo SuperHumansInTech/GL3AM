@@ -1,16 +1,16 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import superheroesintechnology.gl3am.R;
 
 public class AlarmActivity extends Activity {
 
