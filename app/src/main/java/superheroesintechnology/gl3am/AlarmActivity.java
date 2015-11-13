@@ -1,10 +1,8 @@
 package superheroesintechnology.gl3am;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,8 +24,9 @@ public class AlarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+
         startCancelImageView = (ImageView)findViewById(R.id.startStopAlarmImageView);
-        startCancelTextView = (TextView)findViewById(R.id.startStopAlarmTextView);
+        startCancelTextView = (TextView)findViewById(R.id.startStopText);
 
         View.OnClickListener startCancelListener = new View.OnClickListener(){
             @Override
@@ -35,16 +34,20 @@ public class AlarmActivity extends Activity {
 
                 SharedPreferences startStopPrefs = getSharedPreferences(ALARM_PREFS, 0);
                 SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
+                //testing to see if I can disable something as clickable on another activity
+//                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
+                Intent popUpTest = new Intent(AlarmActivity.this, AlarmLaunchActivity.class);
 
                 if(getIsPressed()){
                     boolean makeFalse = false;
                     setIsPressed(makeFalse);
-                   startCancelImageView.setBackgroundResource(R.drawable.start);
+                    startCancelImageView.setBackgroundResource(R.drawable.start);
                     startCancelTextView.setText(R.string.start);
 
                     startStopEditor.putBoolean("bool", makeFalse);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
+//                    unclickableTest.setClickable(true);
                 }
                 else{
                     boolean makeTrue = true;
@@ -54,6 +57,8 @@ public class AlarmActivity extends Activity {
                     startStopEditor.putBoolean("bool", makeTrue);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
+//                    unclickableTest.setClickable(false);
+                    startService(popUpTest);
                 }
 
             }
@@ -94,7 +99,7 @@ public class AlarmActivity extends Activity {
                     seekBar.setProgress(MIN_VALUE);
 
                 }
-                distanceText.setText(seekBar.getProgress() + " miles");
+                distanceText.setText(seekBar.getProgress() + "");
                 seekBarEditor.putInt("miles", seekBar.getProgress());
                 seekBarEditor.commit();
             }
@@ -155,5 +160,23 @@ public class AlarmActivity extends Activity {
 
     public boolean getIsPressed(){
         return this.isPressed;
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
+        SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
+
+        destroyEditor.putBoolean("bool", false);
+        destroyEditor.putString("textState", "start");
+        destroyEditor.putInt("miles", 1);
+        destroyEditor.commit();
+
+        Toast.makeText(getApplicationContext(), "In Destroy", Toast.LENGTH_LONG).show();
+        super.onStop();
+
+
     }
 }

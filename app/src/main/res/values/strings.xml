@@ -11,4 +11,5 @@
     <string name="act_dist">Activation Distance:</string>
     <string name="start">Start</string>
     <string name="cancel">Stop</string>
+    <string name="miles"> mi.</string>
 </resources>

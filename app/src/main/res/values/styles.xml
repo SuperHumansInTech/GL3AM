@@ -8,5 +8,9 @@
         <item name="colorPrimaryDark">#3c3c3c</item>
         <item name="colorAccent">#3c3c3c</item>
     </style>
+    <style name="AppTheme.AlarmPop">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 
 </resources>

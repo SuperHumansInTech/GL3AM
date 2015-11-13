@@ -15,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/alarmAppNavLinearLayout">
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -39,7 +39,7 @@
             android:layout_height="50dp"
             android:id="@+id/homeAlarmImage"
             android:background="@drawable/home"
-            android:clickable="false"
+            android:clickable="true"
             android:scaleType="centerInside" />
 
         <ImageView
@@ -79,35 +79,51 @@
         android:layout_height="wrap_content"
         android:max="20"
         android:id="@+id/distanceAlarmSeekbar"
-        android:layout_below="@+id/distanceAlarmTextView"
+        android:layout_above="@+id/startStopAlarmImageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp" />
-
-    <TextView
+        android:layout_centerVertical="true"
+        />
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/distanceAlarmTextView"
+        android:id="@+id/alarmSeekBarReadOutDisp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/distanceAlarmSeekbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/distanceAlarmTextView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmMeasurementType"
+            android:text="@string/miles"
+            android:textColor="@color/text_color"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/start"
         android:id="@+id/startStopAlarmImageView"
-        android:layout_below="@+id/distanceAlarmSeekbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/alarmAppNavLinearLayout"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/startStopAlarmTextView"
         android:text="@string/start"
-        android:textSize="12sp"
+        android:id="@+id/startStopText"
         android:textColor="@color/text_color"
-        android:layout_below="@+id/startStopAlarmImageView"
+        android:layout_below="@+id/distanceAlarmSeekbar"
         android:layout_centerHorizontal="true" />
 
 

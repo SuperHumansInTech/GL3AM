@@ -30,6 +30,7 @@
                 android:layout_height="80dp"
                 android:id="@+id/alarmImage"
                 android:background="@drawable/alarm54"
+                android:clickable="true"
                 android:layout_gravity="center" />
 
             <LinearLayout
