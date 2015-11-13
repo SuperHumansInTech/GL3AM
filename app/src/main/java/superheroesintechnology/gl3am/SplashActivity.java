@@ -52,20 +52,20 @@ public class SplashActivity extends Activity {
         Animation targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.fade_in);
         targetImageView.startAnimation(targetAnimationFadeIn);
 
-//        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.alarm_fade_in);
-//        alarmImageView.startAnimation(targetAnimationFadeIn);
-//
-//        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.message_fade_in);
-//        messageImageView.startAnimation(targetAnimationFadeIn);
-//
-//        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.left_line_fadein);
-//        leftLineImageView.startAnimation(targetAnimationFadeIn);
-//
-//        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.right_line_fadein);
-//        rightLineImageView.startAnimation(targetAnimationFadeIn);
-//
-//        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.title_fade_in);
-//        titleTextView.startAnimation(targetAnimationFadeIn);
+        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.alarm_fade_in);
+        alarmImageView.startAnimation(targetAnimationFadeIn);
+
+        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.message_fade_in);
+        messageImageView.startAnimation(targetAnimationFadeIn);
+
+        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.left_line_fadein);
+        leftLineImageView.startAnimation(targetAnimationFadeIn);
+
+        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.right_line_fadein);
+        rightLineImageView.startAnimation(targetAnimationFadeIn);
+
+        targetAnimationFadeIn = AnimationUtils.loadAnimation(getBaseContext(), R.anim.title_fade_in);
+        titleTextView.startAnimation(targetAnimationFadeIn);
 
 //
         targetAnimationFadeIn.setAnimationListener(new Animation.AnimationListener() {

@@ -165,7 +165,7 @@ public class AlarmActivity extends Activity {
 
 
     @Override
-    protected void onStop() {
+    protected void onStart() {
         SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
         SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
 
@@ -174,8 +174,8 @@ public class AlarmActivity extends Activity {
         destroyEditor.putInt("miles", 1);
         destroyEditor.commit();
 
-        Toast.makeText(getApplicationContext(), "In Destroy", Toast.LENGTH_LONG).show();
-        super.onStop();
+        Toast.makeText(getApplicationContext(), "In onStart()", Toast.LENGTH_LONG).show();
+        super.onStart();
 
 
     }
