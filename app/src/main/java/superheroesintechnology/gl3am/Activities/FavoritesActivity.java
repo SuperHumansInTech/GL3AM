@@ -1,10 +1,12 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import superheroesintechnology.gl3am.R;
 
 public class FavoritesActivity extends Activity {
 

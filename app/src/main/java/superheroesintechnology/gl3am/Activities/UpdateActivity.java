@@ -1,4 +1,4 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import superheroesintechnology.gl3am.Models.Destination;
+import superheroesintechnology.gl3am.R;
 
 public class UpdateActivity extends Activity {
 

@@ -1,4 +1,4 @@
-package superheroesintechnology.gl3am;
+package superheroesintechnology.gl3am.Activities;
 
 
 import android.app.Service;
@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import superheroesintechnology.gl3am.R;
 
 public class AlarmLaunchActivity extends Service {
 
