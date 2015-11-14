@@ -29,7 +29,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/alarmImage"
-                android:background="@drawable/alarm54"
+                android:background="@drawable/alarm_text_icon"
                 android:clickable="true"
                 android:layout_gravity="center" />
 

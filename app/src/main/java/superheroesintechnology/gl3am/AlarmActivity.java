@@ -107,7 +107,7 @@ public class AlarmActivity extends Activity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
 
             }
 
@@ -165,7 +165,7 @@ public class AlarmActivity extends Activity {
 
 
     @Override
-    protected void onStart() {
+    protected void onRestart() {
         SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
         SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
 
@@ -174,8 +174,8 @@ public class AlarmActivity extends Activity {
         destroyEditor.putInt("miles", 1);
         destroyEditor.commit();
 
-        Toast.makeText(getApplicationContext(), "In onStart()", Toast.LENGTH_LONG).show();
-        super.onStart();
+       // Toast.makeText(getApplicationContext(), "In onRestart()", Toast.LENGTH_LONG).show();
+        super.onRestart();
 
 
     }

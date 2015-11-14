@@ -12,4 +12,8 @@
     <string name="start">Start</string>
     <string name="cancel">Stop</string>
     <string name="miles"> mi.</string>
+    <string name="fare">Fares</string>
+    <string name="ferries">Ferries</string>
+    <string name="tolls">Tolls</string>
+    <string name="avoid_routes">Avoid:</string>
 </resources>

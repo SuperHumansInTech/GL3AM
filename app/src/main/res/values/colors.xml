@@ -7,4 +7,5 @@
     <color name="title_color">#6DFD30</color>
     <color name="primaryBackGroundColor">#434343</color>
     <color name="popup">#999999</color>
+    <color name="edit_text_colors">#000000</color>
 </resources>
