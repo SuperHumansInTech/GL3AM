@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import superheroesintechnology.gl3am.R;
 
-public class AlarmActivity extends Activity {
+public class AlarmActivity extends Activity{
 
     private SeekBar seekBar;
     private TextView distanceText;
@@ -34,11 +32,14 @@ public class AlarmActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+
+
                 SharedPreferences startStopPrefs = getSharedPreferences(ALARM_PREFS, 0);
                 SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
                 //testing to see if I can disable something as clickable on another activity
 //                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
-                Intent popUpTest = new Intent(AlarmActivity.this, AlarmLaunchActivity.class);
+
+
 
                 if(getIsPressed()){
                     boolean makeFalse = false;
@@ -49,7 +50,7 @@ public class AlarmActivity extends Activity {
                     startStopEditor.putBoolean("bool", makeFalse);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-//                    unclickableTest.setClickable(true);
+
                 }
                 else{
                     boolean makeTrue = true;
@@ -59,8 +60,6 @@ public class AlarmActivity extends Activity {
                     startStopEditor.putBoolean("bool", makeTrue);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-//                    unclickableTest.setClickable(false);
-                    startService(popUpTest);
                 }
 
             }
@@ -165,20 +164,4 @@ public class AlarmActivity extends Activity {
     }
 
 
-
-    @Override
-    protected void onRestart() {
-        SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
-        SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
-
-        destroyEditor.putBoolean("bool", false);
-        destroyEditor.putString("textState", "start");
-        destroyEditor.putInt("miles", 1);
-        destroyEditor.commit();
-
-       // Toast.makeText(getApplicationContext(), "In onRestart()", Toast.LENGTH_LONG).show();
-        super.onRestart();
-
-
-    }
 }
