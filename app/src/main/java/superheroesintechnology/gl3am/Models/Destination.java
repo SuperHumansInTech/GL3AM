@@ -11,6 +11,8 @@ package superheroesintechnology.gl3am.Models;
  */
 public class Destination {
 
+
+
     // Longitude vars
     private double doubLong;
     private String stringLong;
