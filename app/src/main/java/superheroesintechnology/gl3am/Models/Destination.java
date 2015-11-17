@@ -22,6 +22,8 @@ import superheroesintechnology.gl3am.Activities.AlarmLaunchActivity;
 public class Destination extends Thread{
 
 
+
+
     // Longitude vars
     private double doubLong;
     private String stringLong;
