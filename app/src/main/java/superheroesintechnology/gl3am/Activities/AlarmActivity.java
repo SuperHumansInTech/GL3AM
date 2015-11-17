@@ -19,15 +19,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-<<<<<<< HEAD
-=======
+
 import android.widget.Toast;
 
 import superheroesintechnology.gl3am.Models.Destination;
->>>>>>> refs/remotes/origin/master
 import superheroesintechnology.gl3am.R;
 
-public class AlarmActivity extends Activity{
+public class AlarmActivity extends Activity {
 
     private double longitude;
     private double latitude;
@@ -54,16 +52,10 @@ public class AlarmActivity extends Activity{
             public void onClick(View v) {
 
 
-
                 SharedPreferences startStopPrefs = getSharedPreferences(ALARM_PREFS, 0);
                 SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
                 //testing to see if I can disable something as clickable on another activity
 //                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> refs/remotes/origin/master
 
 
                 if (getIsPressed()) {
@@ -76,14 +68,8 @@ public class AlarmActivity extends Activity{
                     startStopEditor.putBoolean("bool", makeFalse);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-<<<<<<< HEAD
-
-                }
-                else{
-=======
-//                    unclickableTest.setClickable(true);
                 } else {
->>>>>>> refs/remotes/origin/master
+
                     boolean makeTrue = true;
                     setIsPressed(makeTrue);
                     startStopEditor.putBoolean("isPressed", true);
@@ -101,7 +87,6 @@ public class AlarmActivity extends Activity{
                         public void onLocationChanged(Location location) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-
 
 
                             SharedPreferences.Editor editor = sharedLocationPref.edit();
@@ -130,7 +115,7 @@ public class AlarmActivity extends Activity{
 
                     Runnable locationRunnable = new Runnable() {
                         @Override
-                        public void run()  {
+                        public void run() {
 
                             /*
                                 THIS HANDLER ALLOWS THE LOCATION TO BE UPDATED EVERY X SECONDS,
@@ -185,18 +170,12 @@ public class AlarmActivity extends Activity{
                     locationUpdateThread.start();
 
 
-
                     startCancelImageView.setBackgroundResource(R.drawable.cancel);
                     startCancelTextView.setText(R.string.cancel);
                     startStopEditor.putBoolean("bool", makeTrue);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-<<<<<<< HEAD
-=======
-//                    unclickableTest.setClickable(false);
-
-
->>>>>>> refs/remotes/origin/master
+                   
                 }
 
             }
@@ -205,23 +184,22 @@ public class AlarmActivity extends Activity{
         startCancelImageView.setOnClickListener(startCancelListener);
         SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
 
-        if (sharedPreferences.contains("bool")){
+        if (sharedPreferences.contains("bool")) {
             setIsPressed(sharedPreferences.getBoolean("bool", false));
-            if(getIsPressed()){
+            if (getIsPressed()) {
                 startCancelImageView.setBackgroundResource(R.drawable.cancel);
                 startCancelTextView.setText(R.string.cancel);
-            }
-            else{
+            } else {
                 startCancelImageView.setBackgroundResource(R.drawable.start);
                 startCancelTextView.setText(R.string.start);
             }
         }
 
 
-        seekBar = (SeekBar)findViewById(R.id.distanceAlarmSeekbar);
-        distanceText = (TextView)findViewById(R.id.distanceAlarmTextView);
+        seekBar = (SeekBar) findViewById(R.id.distanceAlarmSeekbar);
+        distanceText = (TextView) findViewById(R.id.distanceAlarmTextView);
 
-        if (sharedPreferences.contains("miles")){
+        if (sharedPreferences.contains("miles")) {
             seekBar.setProgress(sharedPreferences.getInt("miles", 1));
         }
 
@@ -230,10 +208,11 @@ public class AlarmActivity extends Activity{
 
             SharedPreferences seekBarPrefeernces = getSharedPreferences(ALARM_PREFS, 0);
             SharedPreferences.Editor seekBarEditor = seekBarPrefeernces.edit();
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final int MIN_VALUE = 1;
-                if(progress < MIN_VALUE){
+                if (progress < MIN_VALUE) {
                     seekBar.setProgress(MIN_VALUE);
 
                 }
@@ -255,11 +234,10 @@ public class AlarmActivity extends Activity{
             }
         });
 
-        final ImageView homeImageView = (ImageView)findViewById(R.id.homeAlarmImage);
-        ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesAlarmImage);
-        ImageView statusImageView = (ImageView)findViewById(R.id.statusAlarmImage);
-        ImageView messageImageView = (ImageView)findViewById(R.id.messageAlarmImage);
-
+        final ImageView homeImageView = (ImageView) findViewById(R.id.homeAlarmImage);
+        ImageView favoritesImageView = (ImageView) findViewById(R.id.favoritesAlarmImage);
+        ImageView statusImageView = (ImageView) findViewById(R.id.statusAlarmImage);
+        ImageView messageImageView = (ImageView) findViewById(R.id.messageAlarmImage);
 
 
         homeImageView.setOnClickListener(new View.OnClickListener() {
@@ -292,30 +270,13 @@ public class AlarmActivity extends Activity{
         });
     }
 
-    public void setIsPressed(boolean useThis){
+    public void setIsPressed(boolean useThis) {
         this.isPressed = useThis;
     }
 
-    public boolean getIsPressed(){
+    public boolean getIsPressed() {
         return this.isPressed;
     }
-
-
-<<<<<<< HEAD
-=======
-
-    @Override
-    protected void onRestart() {
-        SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
-        SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
-
-        destroyEditor.putBoolean("bool", false);
-        destroyEditor.putString("textState", "start");
-        destroyEditor.putInt("miles", 1);
-        destroyEditor.commit();
-
-       // Toast.makeText(getApplicationContext(), "In onRestart()", Toast.LENGTH_LONG).show();
-        super.onRestart();
-    }
->>>>>>> refs/remotes/origin/master
 }
+
+
