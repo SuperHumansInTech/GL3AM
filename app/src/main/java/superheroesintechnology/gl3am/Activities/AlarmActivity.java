@@ -19,12 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-<<<<<<< HEAD
-=======
-import android.widget.Toast;
-
 import superheroesintechnology.gl3am.Models.Destination;
->>>>>>> refs/remotes/origin/master
 import superheroesintechnology.gl3am.R;
 
 public class AlarmActivity extends Activity{
@@ -59,12 +54,6 @@ public class AlarmActivity extends Activity{
                 SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
                 //testing to see if I can disable something as clickable on another activity
 //                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> refs/remotes/origin/master
-
 
                 if (getIsPressed()) {
                     boolean makeFalse = false;
@@ -75,15 +64,7 @@ public class AlarmActivity extends Activity{
 
                     startStopEditor.putBoolean("bool", makeFalse);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
-                    startStopEditor.commit();
-<<<<<<< HEAD
-
-                }
-                else{
-=======
-//                    unclickableTest.setClickable(true);
-                } else {
->>>>>>> refs/remotes/origin/master
+                    startStopEditor.commit();} else {
                     boolean makeTrue = true;
                     setIsPressed(makeTrue);
                     startStopEditor.putBoolean("isPressed", true);
@@ -191,12 +172,6 @@ public class AlarmActivity extends Activity{
                     startStopEditor.putBoolean("bool", makeTrue);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-<<<<<<< HEAD
-=======
-//                    unclickableTest.setClickable(false);
-
-
->>>>>>> refs/remotes/origin/master
                 }
 
             }
@@ -300,22 +275,4 @@ public class AlarmActivity extends Activity{
         return this.isPressed;
     }
 
-
-<<<<<<< HEAD
-=======
-
-    @Override
-    protected void onRestart() {
-        SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
-        SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
-
-        destroyEditor.putBoolean("bool", false);
-        destroyEditor.putString("textState", "start");
-        destroyEditor.putInt("miles", 1);
-        destroyEditor.commit();
-
-       // Toast.makeText(getApplicationContext(), "In onRestart()", Toast.LENGTH_LONG).show();
-        super.onRestart();
-    }
->>>>>>> refs/remotes/origin/master
 }
