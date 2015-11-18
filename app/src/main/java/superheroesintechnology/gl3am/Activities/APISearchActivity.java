@@ -7,11 +7,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.Subscriber;
 import superheroesintechnology.gl3am.Adapters.DirectionListAdapter;
+import superheroesintechnology.gl3am.Models.FareModel;
+import superheroesintechnology.gl3am.Models.LegModel;
+import superheroesintechnology.gl3am.Models.RouteModel;
 import superheroesintechnology.gl3am.Models.SearchResultModel;
+import superheroesintechnology.gl3am.Models.TextValModel;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.APIClient;
 
@@ -35,8 +41,11 @@ public class APISearchActivity extends Activity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //SearchResultModel model = setTestData();
+               // searchResultsList.setAdapter(new DirectionListAdapter(APISearchActivity.this, model.getSearchResults()));
+
                 APIClient.getDirectionsProvider()
-                        .getDirections("Santa Rosa, CA", searchInput.getText().toString(), "DRIVING", "")
+                        .getDirections("Santa Rosa, CA", searchInput.getText().toString())
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<SearchResultModel>() {
@@ -53,8 +62,65 @@ public class APISearchActivity extends Activity {
                                 searchResultsList.setAdapter(new DirectionListAdapter(APISearchActivity.this, searchResultModel.getSearchResults()));
                             }
                         });
+
             }
         });
+
+
+    }
+
+    private SearchResultModel setTestData() {
+        SearchResultModel results = new SearchResultModel();
+        results.setSearchResults(new ArrayList<RouteModel>());
+        RouteModel route1 = new RouteModel();
+        RouteModel route2 = new RouteModel();
+        RouteModel route3 = new RouteModel();
+
+        LegModel  leg1 = new LegModel();
+        LegModel  leg2 = new LegModel();
+        LegModel  leg3 = new LegModel();
+        TextValModel duration1 = new TextValModel();
+        TextValModel duration2 = new TextValModel();
+        TextValModel duration3 = new TextValModel();
+
+        duration1.setText("1 hour");
+        duration1.setValue(60);
+        leg1.setDuration(duration1);
+
+        duration2.setText("2 hours");
+        duration2.setValue(120);
+        leg2.setDuration(duration2);
+
+        duration3.setText("3 hours");
+        duration3.setValue(180);
+        leg3.setDuration(duration3);
+
+        ArrayList<LegModel> legList1 = new ArrayList<LegModel>();
+        ArrayList<LegModel> legList2 = new ArrayList<LegModel>();
+        ArrayList<LegModel> legList3 = new ArrayList<LegModel>();
+
+        legList1.add(leg1);
+        legList2.add(leg2);
+        legList3.add(leg3);
+
+        route1.setSummary("Best one");
+        route1.setLegsArray(legList1);
+
+        route2.setSummary("Second best");
+        route2.setLegsArray(legList2);
+
+        route3.setSummary("Third best");
+        route2.setLegsArray(legList3);
+
+        results.getSearchResults().add(route1);
+        results.getSearchResults().add(route2);
+        results.getSearchResults().add(route3);
+        //LegModel leg1 = new LegModel();
+       // LegModel leg2 = new LegModel();
+       // LegModel leg3 = new LegModel();
+
+
+        return results;
 
 
     }

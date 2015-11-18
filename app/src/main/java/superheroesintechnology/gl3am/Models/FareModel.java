@@ -13,7 +13,7 @@ public class FareModel {
     private String currCode;
 
     @SerializedName("value")
-    private float Amount;
+    private double Amount;
 
     @SerializedName("text")
     private String text;
@@ -26,9 +26,9 @@ public class FareModel {
     public void setCurrCode(String currCode) {this.currCode = currCode;}
 
     //Amount
-    public float getAmount() {return Amount;}
+    public double getAmount() {return Amount;}
 
-    public void setAmount(int toSet) {this.Amount = toSet;}
+    public void setAmount(double toSet) {this.Amount = toSet;}
 
     //Text
     public String getText() {return text;}

@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import superheroesintechnology.gl3am.Models.LegModel;
 import superheroesintechnology.gl3am.Models.RouteModel;
+import superheroesintechnology.gl3am.Models.TextValModel;
 import superheroesintechnology.gl3am.R;
 
 /**
@@ -23,14 +23,14 @@ public class DirectionListAdapter extends ArrayAdapter<RouteModel> {
         super(context, 0, routes);
     }
 
-    public DirectionListAdapter(Context context, int resource, ArrayList<RouteModel> items){
+    public DirectionListAdapter(Context context, int resource, List<RouteModel> items){
         super(context, resource, items);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
 
-        if(v == null) {
+        if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.route_item, null);
@@ -39,42 +39,48 @@ public class DirectionListAdapter extends ArrayAdapter<RouteModel> {
 
         RouteModel route = getItem(position);
 
-        if(route != null) {
+        if (route != null) {
             TextView summaryText = (TextView) v.findViewById(R.id.summaryText);
-            TextView durationText = (TextView) v.findViewById(R.id.durationText);
-            TextView dAddressText = (TextView) v.findViewById(R.id.dAddressText);
-            TextView dLatLngText = (TextView) v.findViewById(R.id.dLatLngText);
-            TextView sAddressText = (TextView) v.findViewById(R.id.sAddressText);
-            TextView sLatLngText = (TextView) v.findViewById(R.id.sLatLngText);
+           // TextView durationText = (TextView) v.findViewById(R.id.durationText);
+           // TextView dAddressText = (TextView) v.findViewById(R.id.dAddressText);
+            //TextView dLatLngText = (TextView) v.findViewById(R.id.dLatLngText);
+            //TextView sAddressText = (TextView) v.findViewById(R.id.sAddressText);
+            //TextView sLatLngText = (TextView) v.findViewById(R.id.sLatLngText);
 
-            if(summaryText != null) {
+            if (summaryText != null) {
                 summaryText.setText(route.getSummary());
             }
-            if(route.legCount() >= 1) {
+            /*if (route.legCount() >= 1) {
                 LegModel firstleg = route.getLeg(0);
                 if (firstleg != null) {
 
-                }
-                if(durationText != null) {
-                    durationText.setText(firstleg.getDurationText());
-                }
-                if(dAddressText != null) {
-                    dAddressText.setText(firstleg.getEnd_address());
-                }
-                if(dLatLngText != null) {
-                    dLatLngText.setText(firstleg.getEnd_latlngString());
+                    if (durationText != null) {
+                        TextValModel duration = firstleg.getDuration();
+                        if(duration != null) {
+                            durationText.setText(duration.getText());
+                            if(durationText.getText() != null)
+                                durationText.getText();
+                        }
+                    }
+                    /
+                    if (dAddressText != null) {
+
+                        dAddressText.setText(firstleg.getEnd_address());
+                    }
+                    if (dLatLngText != null) {
+                        dLatLngText.setText(firstleg.getEnd_latlngString());
+
+                    }
+                    if (sAddressText != null) {
+                        sAddressText.setText(firstleg.getStart_address());
+                    }
+                    if (sLatLngText != null) {
+                        sLatLngText.setText(firstleg.getStart_latlngString());
+                    }
 
                 }
-                if(sAddressText != null) {
-                    sAddressText.setText(firstleg.getStart_address());
-                }
-                if(sLatLngText != null) {
-                    sLatLngText.setText(firstleg.getStart_latlngString());
-                }
-
-            }
+            }*/
         }
         return v;
     }
-
 }
