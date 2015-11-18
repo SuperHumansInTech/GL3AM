@@ -14,6 +14,7 @@ import rx.schedulers.Schedulers;
 import rx.Subscriber;
 import superheroesintechnology.gl3am.Adapters.DirectionListAdapter;
 import superheroesintechnology.gl3am.Models.FareModel;
+import superheroesintechnology.gl3am.Models.LatLngModel;
 import superheroesintechnology.gl3am.Models.LegModel;
 import superheroesintechnology.gl3am.Models.RouteModel;
 import superheroesintechnology.gl3am.Models.SearchResultModel;
@@ -42,10 +43,13 @@ public class APISearchActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //SearchResultModel model = setTestData();
-               // searchResultsList.setAdapter(new DirectionListAdapter(APISearchActivity.this, model.getSearchResults()));
+               //searchResultsList.setAdapter(new DirectionListAdapter(APISearchActivity.this, model.getSearchResults()));
+                if(searchInput.getText() == null) {
+                    return;
+                }
 
                 APIClient.getDirectionsProvider()
-                        .getDirections("Santa Rosa, CA", searchInput.getText().toString())
+                        .getDirections("Santa+Rosa+CA", searchInput.getText().toString())
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<SearchResultModel>() {
@@ -95,6 +99,29 @@ public class APISearchActivity extends Activity {
         duration3.setValue(180);
         leg3.setDuration(duration3);
 
+
+        leg1.setEnd_address("123 Street St.");
+        leg2.setEnd_address("123 Street St.");
+        leg3.setEnd_address("123 Street St.");
+
+        leg1.setEnd_address("123 Street St.");
+        leg2.setEnd_address("123 Street St.");
+        leg3.setEnd_address("123 Street St.");
+
+        LatLngModel end_coords = new LatLngModel();
+        end_coords.setCoords(12.55, 12.55);
+
+        leg1.setEnd_location(end_coords);
+        leg2.setEnd_location(end_coords);
+        leg3.setEnd_location(end_coords);
+
+        LatLngModel start_coords = new LatLngModel();
+        start_coords.setCoords(20.20, 20.20);
+
+        leg1.setStart_location(start_coords);
+        leg2.setStart_location(start_coords);
+        leg3.setStart_location(start_coords);
+
         ArrayList<LegModel> legList1 = new ArrayList<LegModel>();
         ArrayList<LegModel> legList2 = new ArrayList<LegModel>();
         ArrayList<LegModel> legList3 = new ArrayList<LegModel>();
@@ -110,7 +137,7 @@ public class APISearchActivity extends Activity {
         route2.setLegsArray(legList2);
 
         route3.setSummary("Third best");
-        route2.setLegsArray(legList3);
+        route3.setLegsArray(legList3);
 
         results.getSearchResults().add(route1);
         results.getSearchResults().add(route2);
