@@ -2,10 +2,12 @@ package superheroesintechnology.gl3am.Activities;
 
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -36,6 +38,7 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
 //        setContentView(R.layout.activity_alarm_launch);
 //
 //        DisplayMetrics dm = new DisplayMetrics();
@@ -74,6 +77,7 @@ public class AlarmLaunchActivity extends Service {
             public void onClick(View v) {
               wm.removeView(layout);
                 stopSelf();
+                //RELEASE WAKELOCK
             }
         });
 
@@ -89,10 +93,10 @@ public class AlarmLaunchActivity extends Service {
         layout.setPadding(8, 8, 8, 8);
         layout.setGravity(Gravity.CENTER);
 
-
+        //FLAG_ALT_FOCUSABLE_IM
         WindowManager.LayoutParams parameters = new WindowManager.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM, PixelFormat.OPAQUE);
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.OPAQUE);
 
         parameters.x = 0;
         parameters.y = 0;
