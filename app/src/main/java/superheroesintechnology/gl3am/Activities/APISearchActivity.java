@@ -6,14 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import java.util.ArrayList;
+
+
+import android.text.TextUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.Subscriber;
 import superheroesintechnology.gl3am.Adapters.DirectionListAdapter;
-import superheroesintechnology.gl3am.Models.FareModel;
 import superheroesintechnology.gl3am.Models.LatLngModel;
 import superheroesintechnology.gl3am.Models.LegModel;
 import superheroesintechnology.gl3am.Models.RouteModel;
@@ -49,7 +50,7 @@ public class APISearchActivity extends Activity {
                 }
 
                 APIClient.getDirectionsProvider()
-                        .getDirections("Santa+Rosa+CA", searchInput.getText().toString())
+                        .getDirections("Santa+Rosa+CA", TextUtils.htmlEncode(searchInput.getText().toString()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<SearchResultModel>() {
