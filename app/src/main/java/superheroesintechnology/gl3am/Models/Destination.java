@@ -1,15 +1,5 @@
 package superheroesintechnology.gl3am.Models;
 
-import android.app.Activity;
-import android.app.IntentService;
-import android.content.Intent;
-import android.os.Looper;
-
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
-import superheroesintechnology.gl3am.Activities.AlarmLaunchActivity;
-
 /**
  * Destination Class:
  *
@@ -36,7 +26,7 @@ public class Destination extends Thread{
     private String addressString;
 
     // Calculation values
-    private double distFromDest; // User defined distance
+    private double activation_distance; // User defined distance
     private String distFromDestStr;
     private String distFromCurLoc; // Value of current distance from destination as string type
 
@@ -46,7 +36,7 @@ public class Destination extends Thread{
      double types.
      Output: Stores values of doubles and also stores them as String types.
      */
-    public Destination(String address, double doubLat, double doubLong, double distFromDest) {
+    public Destination(String address, double doubLat, double doubLong, double activation_distance) {
 
 
         this.addressString = address;
@@ -54,8 +44,8 @@ public class Destination extends Thread{
         this.stringLat = String.valueOf(doubLat);
         this.doubLong = doubLong;
         this.stringLong = String.valueOf(doubLong);
-        this.distFromDest = distFromDest;
-        this.distFromDestStr = String.valueOf(distFromDest);
+        this.activation_distance = activation_distance;
+        this.distFromDestStr = String.valueOf(activation_distance);
     }
 
 
@@ -75,9 +65,9 @@ public class Destination extends Thread{
         this.stringLong = String.valueOf(doubLong);
     }
 
-    public void setDistFromDest(double distFromDest) {
-        this.distFromDest = distFromDest;
-        this.distFromDestStr = String.valueOf(distFromDest);
+    public void setActivation_distance(double activation_distance) {
+        this.activation_distance = activation_distance;
+        this.distFromDestStr = String.valueOf(activation_distance);
     }
 
     public void setAddressString(String addressString) {
@@ -124,13 +114,13 @@ public class Destination extends Thread{
      verifyDistance():
      Input: takes in double values for current long and lat
      Output: returns a false boolean value if distance from destination is greater than the user
-             defined distance threshold from destination and returns true if less
+             defined distance threshold from destination and returns true if equal to or less
      */
     public boolean verifyDistance(double curLong, double curLat) {
 
         boolean verifyDist = false;
 
-        if (distFromDest > calcDistanceFromDest(curLong, curLat)) {
+        if (activation_distance >= calcDistanceFromDest(curLong, curLat)) {
             verifyDist = true;
         }
 

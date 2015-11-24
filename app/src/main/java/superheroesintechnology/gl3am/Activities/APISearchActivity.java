@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 
-
 import android.text.TextUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
