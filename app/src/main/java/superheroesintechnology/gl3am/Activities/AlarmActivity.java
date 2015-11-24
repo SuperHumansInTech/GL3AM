@@ -14,18 +14,27 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import superheroesintechnology.gl3am.Adapters.DirectionListAdapter;
 import superheroesintechnology.gl3am.Models.Destination;
 import superheroesintechnology.gl3am.Models.SMSMessage;
+import superheroesintechnology.gl3am.Models.SearchResultModel;
 import superheroesintechnology.gl3am.R;
+import superheroesintechnology.gl3am.Services.APIClient;
 
-public class AlarmActivity extends Activity {
+public class AlarmActivity extends Activity{
 
     private double longitude;
     private double latitude;
@@ -37,6 +46,8 @@ public class AlarmActivity extends Activity {
     private boolean isPressed = false;
     public boolean isSeekChanged = false;
     public int activationDistance = 1;
+    private ImageView searchButton;
+    private EditText searchLoc;
 
 
 
@@ -45,12 +56,50 @@ public class AlarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
+        searchButton = (ImageView) findViewById(R.id.destSearchButton);
+
 
 
         final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, activationDistance);
 
         startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
+        final TextView searchDestTextView = (TextView) findViewById(R.id.locationSearchFieldAlarm);
+
+//      SETTING UP DESTINATION SEARCH BUTTON onCLICKLISTENER
+        searchButton.setOnClickListener(new View.OnClickListener() {
+
+//          MAKES API CALL onCLICK
+
+            @Override
+            public void onClick(View v) {
+                if(searchDestTextView.getText() == null) {
+                    return;
+                }
+
+
+
+                APIClient.getDirectionsProvider()
+                        .getDirections("Santa+Rosa+CA", TextUtils.htmlEncode(searchDestTextView.getText().toString()))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<SearchResultModel>() {
+
+                            @Override
+                            public void onCompleted() {
+
+                            }
+                            @Override
+                            public void onError(Throwable e) {int i = 0; }
+
+                            @Override
+                            public void onNext(SearchResultModel searchResultModel) {
+                                Toast.makeText(getApplicationContext(), "Made the API call, bro", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+        });
 
         View.OnClickListener startCancelListener = new View.OnClickListener() {
             @Override
@@ -62,7 +111,6 @@ public class AlarmActivity extends Activity {
                 //testing to see if I can disable something as clickable on another activity
 //                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
 
-
                 if (getIsPressed()) {
                     boolean makeFalse = false;
                     setIsPressed(makeFalse);
@@ -72,9 +120,7 @@ public class AlarmActivity extends Activity {
 
                     startStopEditor.putBoolean("bool", makeFalse);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
-                    startStopEditor.commit();
-//                    unclickableTest.setClickable(true);
-                } else {
+                    startStopEditor.commit();} else {
                     boolean makeTrue = true;
                     setIsPressed(makeTrue);
                     startStopEditor.putBoolean("isPressed", true);
@@ -198,9 +244,6 @@ public class AlarmActivity extends Activity {
                     startStopEditor.putBoolean("bool", makeTrue);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-//                    unclickableTest.setClickable(false);
-
-
                 }
 
             }
@@ -318,19 +361,4 @@ public class AlarmActivity extends Activity {
         return this.isPressed;
     }
 
-
-
-    @Override
-    protected void onRestart() {
-        SharedPreferences destroyPrefs = getSharedPreferences(ALARM_PREFS, 0);
-        SharedPreferences.Editor destroyEditor = destroyPrefs.edit();
-
-        destroyEditor.putBoolean("bool", false);
-        destroyEditor.putString("textState", "start");
-        destroyEditor.putInt("miles", 1);
-        destroyEditor.commit();
-
-       // Toast.makeText(getApplicationContext(), "In onRestart()", Toast.LENGTH_LONG).show();
-        super.onRestart();
-    }
 }

@@ -147,11 +147,12 @@
         android:hint="Search location..."
         android:background="@color/popup" />
     <ImageView
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/magnifier12"
         android:layout_gravity="center"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="10dp"
+        android:id="@+id/destSearchButton" />
 </LinearLayout>
 
     <Spinner
