@@ -7,36 +7,42 @@
         android:id = "@+id/summaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="1dp"
         />
     <TextView
         android:id = "@+id/durationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="10dp"
         />
     <TextView
         android:id = "@+id/dAddressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="15dp"
         />
     <TextView
         android:id = "@+id/dLatLngText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="1dp"
         />
     <TextView
         android:id = "@+id/sAddressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="1dp"
         />
     <TextView
         android:id = "@+id/sLatLngText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text= "Test"
         android:layout_marginTop="1dp"
         />
 </LinearLayout>

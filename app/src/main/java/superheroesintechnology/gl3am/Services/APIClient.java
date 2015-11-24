@@ -1,9 +1,7 @@
 package superheroesintechnology.gl3am.Services;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
 
+import com.google.gson.Gson;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;

@@ -27,10 +27,13 @@ public class UpdateActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
+<<<<<<< HEAD
 
         SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
         activationDistance = activationDistancePrefs.getInt("activationDist", 0);
 
+=======
+>>>>>>> 0aec91eda06acc87d9beaaca2686eeee12193897
         TextView destinationTextView = (TextView)findViewById(R.id.destinationResultTextView);
         TextView actDistTextView = (TextView)findViewById(R.id.defDistResultTextView);
         final TextView distFromDefTextView = (TextView)findViewById(R.id.distFromDestResultTextView);
@@ -70,10 +73,13 @@ public class UpdateActivity extends Activity {
 
 
 
+
         ImageView alarmImageView = (ImageView)findViewById(R.id.alarmStatusImage);
         ImageView homeImageView = (ImageView)findViewById(R.id.homeStatusImage);
         ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesStatusImage);
         ImageView messageImageView = (ImageView)findViewById(R.id.messageStatusImage);
+
+
 
         alarmImageView.setOnClickListener(new View.OnClickListener() {
             @Override
