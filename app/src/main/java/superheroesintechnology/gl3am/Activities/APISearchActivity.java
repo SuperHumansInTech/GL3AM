@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+import android.text.TextUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.Subscriber;
@@ -49,7 +49,7 @@ public class APISearchActivity extends Activity {
                 }
 
                 APIClient.getDirectionsProvider()
-                        .getDirections("Santa+Rosa+CA", searchInput.getText().toString())
+                        .getDirections("Santa+Rosa+CA", TextUtils.htmlEncode(searchInput.getText().toString()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<SearchResultModel>() {

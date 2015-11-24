@@ -29,7 +29,7 @@ public class AlarmActivity extends Activity{
     private SeekBar seekBar;
     private TextView distanceText;
     private ImageView startCancelImageView;
-    private static final String ALARM_PREFS = "AlamrPrefernceFile";
+    private static final String ALARM_PREFS = "AlarmPreferenceFile";
     private TextView startCancelTextView;
     private boolean isPressed = false;
 
@@ -56,17 +56,18 @@ public class AlarmActivity extends Activity{
 //                ImageView unclickableTest = (ImageView)findViewById(R.id.homeAlarmImage);
 
                 if (getIsPressed()) {
-                    boolean makeFalse = false;
-                    setIsPressed(makeFalse);
+                   // boolean makeFalse = false;
+                    setIsPressed(false);
                     startCancelImageView.setBackgroundResource(R.drawable.start);
                     startCancelTextView.setText(R.string.start);
                     startStopEditor.putBoolean("isPressed", false);
 
-                    startStopEditor.putBoolean("bool", makeFalse);
+                    startStopEditor.putBoolean("bool", false);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
-                    startStopEditor.commit();} else {
-                    boolean makeTrue = true;
-                    setIsPressed(makeTrue);
+                    startStopEditor.commit();}
+                else {
+                    //boolean makeTrue = true;
+                    setIsPressed(true);
                     startStopEditor.putBoolean("isPressed", true);
 
                     final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
@@ -122,7 +123,7 @@ public class AlarmActivity extends Activity{
                             locationUpdateHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    SharedPreferences startStopPrefs = getSharedPreferences("AlamrPrefernceFile", 0);
+                                    SharedPreferences startStopPrefs = getSharedPreferences("AlarmPreferenceFile", 0);
                                     final boolean isPressed = startStopPrefs.getBoolean("isPressed", false);
 
                                     SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
@@ -169,7 +170,7 @@ public class AlarmActivity extends Activity{
 
                     startCancelImageView.setBackgroundResource(R.drawable.cancel);
                     startCancelTextView.setText(R.string.cancel);
-                    startStopEditor.putBoolean("bool", makeTrue);
+                    startStopEditor.putBoolean("bool", true);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
                 }
