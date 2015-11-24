@@ -1,5 +1,7 @@
 package superheroesintechnology.gl3am.Models;
 
+import java.text.DecimalFormat;
+
 /**
  * Destination Class:
  *
@@ -148,7 +150,8 @@ public class Destination {
         calcedDist *= 180/Math.PI;
         calcedDist *= 60 * 1.1515;
 
-        distFromCurLoc = String.valueOf(calcedDist);
+        DecimalFormat form = new DecimalFormat("0.00");
+        distFromCurLoc = String.valueOf(form.format(calcedDist));
 
         return calcedDist;
     }
