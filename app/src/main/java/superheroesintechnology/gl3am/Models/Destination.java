@@ -1,6 +1,9 @@
 package superheroesintechnology.gl3am.Models;
 
 
+
+import java.text.DecimalFormat;
+
 import java.text.DecimalFormat;
 
 import android.app.Activity;
