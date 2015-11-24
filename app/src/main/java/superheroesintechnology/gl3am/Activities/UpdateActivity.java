@@ -19,12 +19,20 @@ import superheroesintechnology.gl3am.R;
 
 public class UpdateActivity extends Activity {
 
-    public Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, 0.004);
+
+    public int activationDistance;
+    public Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
+
+
+        SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
+        activationDistance = activationDistancePrefs.getInt("activationDist", 0);
+
+
         TextView destinationTextView = (TextView)findViewById(R.id.destinationResultTextView);
         TextView actDistTextView = (TextView)findViewById(R.id.defDistResultTextView);
         final TextView distFromDefTextView = (TextView)findViewById(R.id.distFromDestResultTextView);
@@ -33,7 +41,7 @@ public class UpdateActivity extends Activity {
         final TextView boolTextView = (TextView)findViewById((R.id.booleanResultTextView));
 
         destinationTextView.setText(testDest.getAddressString());
-        actDistTextView.setText(testDest.getDistFromDestStr());
+        actDistTextView.setText(Integer.toString(activationDistance));
 
 
         final Handler locationUpdateHandler = new Handler();

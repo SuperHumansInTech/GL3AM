@@ -14,13 +14,25 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import superheroesintechnology.gl3am.Adapters.DirectionListAdapter;
 import superheroesintechnology.gl3am.Models.Destination;
+import superheroesintechnology.gl3am.Models.SMSMessage;
+import superheroesintechnology.gl3am.Models.SearchResultModel;
 import superheroesintechnology.gl3am.R;
+import superheroesintechnology.gl3am.Services.APIClient;
 
 public class AlarmActivity extends Activity{
 
@@ -32,22 +44,66 @@ public class AlarmActivity extends Activity{
     private static final String ALARM_PREFS = "AlarmPreferenceFile";
     private TextView startCancelTextView;
     private boolean isPressed = false;
+    public boolean isSeekChanged = false;
+    public int activationDistance = 1;
+    private ImageView searchButton;
+    private EditText searchLoc;
 
-    public Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, 0.004);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
+        searchButton = (ImageView) findViewById(R.id.destSearchButton);
+
+
+
+        final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, activationDistance);
 
         startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
+        final TextView searchDestTextView = (TextView) findViewById(R.id.locationSearchFieldAlarm);
+
+//      SETTING UP DESTINATION SEARCH BUTTON onCLICKLISTENER
+        searchButton.setOnClickListener(new View.OnClickListener() {
+
+//          MAKES API CALL onCLICK
+
+            @Override
+            public void onClick(View v) {
+                if(searchDestTextView.getText() == null) {
+                    return;
+                }
+
+
+
+                APIClient.getDirectionsProvider()
+                        .getDirections("Santa+Rosa+CA", TextUtils.htmlEncode(searchDestTextView.getText().toString()))
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<SearchResultModel>() {
+
+                            @Override
+                            public void onCompleted() {
+
+                            }
+                            @Override
+                            public void onError(Throwable e) {int i = 0; }
+
+                            @Override
+                            public void onNext(SearchResultModel searchResultModel) {
+                                Toast.makeText(getApplicationContext(), "Made the API call, bro", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+        });
 
         View.OnClickListener startCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 SharedPreferences startStopPrefs = getSharedPreferences(ALARM_PREFS, 0);
@@ -110,9 +166,13 @@ public class AlarmActivity extends Activity{
 
                     locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
 
+                    //PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                      //  PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CPUWakeLock");
+                        //wl.acquire();
                     Runnable locationRunnable = new Runnable() {
                         @Override
                         public void run()  {
+
 
                             /*
                                 THIS HANDLER ALLOWS THE LOCATION TO BE UPDATED EVERY X SECONDS,
@@ -132,10 +192,16 @@ public class AlarmActivity extends Activity{
 
 
                                     if (testDest.verifyDistance(currentLongitude, currentLatitude)) {
+                                        //PowerManager.WakeLock TempWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                                          //      PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
+                                        //TempWakeLock.acquire();
+
                                         runOnUiThread(new Runnable() {
                                             public void run() {
+                                                //alarmSound.start();
                                                 Intent popUpTest = new Intent(AlarmActivity.this, AlarmLaunchActivity.class);
                                                 startService(popUpTest);
+                                                //alarmSound.pause();
                                             }
                                         });
 
@@ -146,12 +212,17 @@ public class AlarmActivity extends Activity{
                                             public void run() {
                                                 boolean makeFalse = false;
                                                 setIsPressed(makeFalse);
+                                                //alarmSound.pause();
+                                                //alarmSound.seekTo(0);
                                                 startCancelImageView.setBackgroundResource(R.drawable.start);
                                                 startCancelTextView.setText(R.string.start);
                                                 startStopEditor.putBoolean("isPressed", false);
                                             }
                                         });
+
+                                        //TempWakeLock.release();
                                         return;
+
                                     }
 
                                     if (isPressed) {
@@ -165,6 +236,7 @@ public class AlarmActivity extends Activity{
 
                     Thread locationUpdateThread = new Thread(locationRunnable);
                     locationUpdateThread.start();
+                    //wl.release();
 
 
 
@@ -209,6 +281,20 @@ public class AlarmActivity extends Activity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final int MIN_VALUE = 1;
+
+//              THIS IF-STATEMENT ONLY SETS testDest's ACTIVATION DISTANCE
+//                  IF THE START BUTTON HAS NOT BEEN PRESSED
+                if (!isPressed) {
+                    testDest.setDistFromDest(progress);
+                }
+
+                activationDistance = seekBar.getProgress();
+                isSeekChanged = true;
+                SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
+                SharedPreferences.Editor activationDistanceEditor = activationDistancePrefs.edit();
+                activationDistanceEditor.putInt("activationDist", activationDistance);
+                activationDistanceEditor.commit();
+
                 if(progress < MIN_VALUE){
                     seekBar.setProgress(MIN_VALUE);
 

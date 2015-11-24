@@ -1,5 +1,22 @@
 package superheroesintechnology.gl3am.Models;
 
+
+import java.text.DecimalFormat;
+
+import java.text.DecimalFormat;
+
+import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
+import android.os.Looper;
+
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+import superheroesintechnology.gl3am.Activities.AlarmLaunchActivity;
+
+
+
 /**
  * Destination Class:
  *
@@ -151,7 +168,8 @@ public class Destination extends Thread{
         calcedDist *= 180 / Math.PI;
         calcedDist *= 60 * 1.1515;
 
-        distFromCurLoc = String.valueOf(calcedDist);
+        DecimalFormat form = new DecimalFormat("0.00");
+        distFromCurLoc = String.valueOf(form.format(calcedDist));
 
         return calcedDist;
 

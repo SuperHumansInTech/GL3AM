@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -20,14 +21,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.R;
 
 public class AlarmLaunchActivity extends Service {
+
+
 
     private WindowManager wm;
     private LinearLayout layout;
     private TextView alarmMessage;
     private ImageView stopButton;
+    MediaPlayer alarmSound;
+    public String myPhoneNumber = "7072922477";
+    public String smsText = "Hopefully this works";
 
     @Nullable
     @Override
@@ -38,6 +45,15 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
+        newMessage.sendSMS();
+
+        alarmSound = MediaPlayer.create(this, R.raw.sound);
+        if (alarmSound.getCurrentPosition() != 0) {
+            alarmSound.seekTo(0);
+        }
+
+        alarmSound.start();
 
 //        setContentView(R.layout.activity_alarm_launch);
 //
@@ -75,6 +91,8 @@ public class AlarmLaunchActivity extends Service {
 
             @Override
             public void onClick(View v) {
+                alarmSound.pause();
+                alarmSound.release();
               wm.removeView(layout);
                 stopSelf();
                 //RELEASE WAKELOCK
@@ -107,6 +125,8 @@ public class AlarmLaunchActivity extends Service {
         layout.addView(stopButton);
 
         wm.addView(layout, parameters);
+
+
     }
 
 
