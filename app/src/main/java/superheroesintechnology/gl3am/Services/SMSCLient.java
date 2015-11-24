@@ -1,12 +1,15 @@
+/*
 package superheroesintechnology.gl3am.Services;
 
 import java.util.ArrayList;
 
 import superheroesintechnology.gl3am.Models.Destination;
 
+*/
 /**
  * Created by student on 11/23/15.
- */
+ *//*
+
 public class SMSClient {
 
 
@@ -14,7 +17,7 @@ public class SMSClient {
 
     //setSMS_list(ArrayList<SMSModel> list) - Completely copies a new list of SMSModels to SMS_list.
     //I figure we should have this for completion but it's not really something we should be doing.
-     public setSMS_list(ArrayList<SMSModel> list) {
+     public void setSMS_list(ArrayList<SMSModel> list) {
          SMS_list.clear();
          SMS_list = list;
      }
@@ -55,3 +58,4 @@ public class SMSClient {
     }
 
 }
+*/

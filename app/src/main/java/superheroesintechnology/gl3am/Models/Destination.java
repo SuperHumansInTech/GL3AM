@@ -32,11 +32,11 @@ public class Destination extends Thread{
 
 
     // Longitude vars
-    private double doubLong;
+    private double doubLong = 1000; //Setting impossible latitude to use as an error handler, since both 0 and negative values are used.
     private String stringLong;
 
     // Latitude vars
-    private double doubLat;
+    private double doubLat = 1000; // Same as above.
     private String stringLat;
 
     // Destination Vars
@@ -53,6 +53,8 @@ public class Destination extends Thread{
      double types.
      Output: Stores values of doubles and also stores them as String types.
      */
+    public Destination() {};
+
     public Destination(String address, double doubLat, double doubLong, double activation_distance) {
 
 
@@ -135,13 +137,14 @@ public class Destination extends Thread{
      */
     public boolean verifyDistance(double curLong, double curLat) {
 
-        boolean verifyDist = false;
+       // boolean verifyDist = false;
 
         if (activation_distance >= calcDistanceFromDest(curLong, curLat)) {
-            verifyDist = true;
+            return true;
+            //verifyDist = true;
         }
-
-        return verifyDist;
+        return false;
+        //return verifyDist;
     }
 
 
