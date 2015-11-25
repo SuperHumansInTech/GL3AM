@@ -4,6 +4,7 @@ package superheroesintechnology.gl3am.Activities;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.R;
@@ -33,8 +35,8 @@ public class AlarmLaunchActivity extends Service {
     private TextView alarmMessage;
     private ImageView stopButton;
     MediaPlayer alarmSound;
-    public String myPhoneNumber = "7072922477";
-    public String smsText = "Hopefully this works";
+    public String myPhoneNumber;
+    public String smsText;
 
     @Nullable
     @Override
@@ -45,8 +47,25 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
-        newMessage.sendSMS();
+
+// GET SMS INFO (USING SHAREDPREFS) FROM AlarmActivity
+// SAVE THEM TO LOCAL NUMBER AND TEXT STRING VARIABLES
+        SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
+        myPhoneNumber = sharedSMSPrefs.getString("number", null);
+        smsText = sharedSMSPrefs.getString("text", null);
+
+// SEND SMS IF USER HAS ENTERED NUMBER AND TEXT DATA
+// MAKE TOAST IF SENT
+// ELSE, MAKE A TOAST: "DID NOT SEND TEXT"
+        if (myPhoneNumber != null && smsText != null) {
+            final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
+            newMessage.sendSMS();
+            Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "No text sent. You did not enter a number or message!",
+                    Toast.LENGTH_LONG).show();
+        }
+
 
         alarmSound = MediaPlayer.create(this, R.raw.sound);
         if (alarmSound.getCurrentPosition() != 0) {

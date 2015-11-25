@@ -16,4 +16,6 @@
     <string name="ferries">Ferries</string>
     <string name="tolls">Tolls</string>
     <string name="avoid_routes">Avoid:</string>
+    <string name="smsInfoField">SMS:</string>
+    <string name="acceptSMSButton">Save SMS info</string>
 </resources>

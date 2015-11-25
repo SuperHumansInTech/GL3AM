@@ -155,6 +155,8 @@
         android:id="@+id/destSearchButton" />
 </LinearLayout>
 
+
+
     <Spinner
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -199,6 +201,47 @@
         android:gravity="center"
         android:layout_weight="1"/>
 </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/smsLinearLayout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:text="@string/smsInfoField"/>
+        <EditText
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/smsNumberField"
+            android:textColor="@color/edit_text_colors"
+            android:hint="Enter phone number..."
+            android:background="@color/popup"/>
+        <EditText
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/smsTextField"
+            android:textColor="@color/edit_text_colors"
+            android:hint="Enter your text..."
+            android:background="@color/popup"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/popup"
+            android:textColor="@color/text_color"
+            android:text="@string/acceptSMSButton"
+            android:id="@+id/saveSmsButton"/>
+
+    </LinearLayout>
 </LinearLayout>
 
 </RelativeLayout>

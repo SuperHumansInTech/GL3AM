@@ -46,15 +46,19 @@ public class AlarmActivity extends Activity{
     public int activationDistance = 1;
     private Button searchButton;
     private EditText searchLoc;
+    private Button smsButton;
     public int counter = 4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location temp_loc = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
         final SharedPreferences.Editor sharedLocationEditor = sharedLocationPref.edit();
+
+
 
         if(temp_loc != null) {
             Curr_location.setLat(temp_loc.getLatitude());
@@ -74,6 +78,35 @@ public class AlarmActivity extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+
+// SET UP EDITTEXT FIELDS FOR SMS
+        final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
+        final EditText smsText = (EditText) findViewById(R.id.smsTextField);
+        final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
+        final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
+        smsButton = (Button) findViewById(R.id.saveSmsButton);
+
+        smsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+// IF USER HAS NOT ENTERED SMS DATA, RETURN
+                if (smsNumberView.getText() == null || smsTextView.getText() == null) {
+                    return;
+                }
+
+// IF USER HAS ENTERED SMS DATA, GET THE DATA
+                final String smsNumberString = smsNumber.getText().toString();
+                final String smsTextString = smsText.getText().toString();
+
+// SAVE SMS INFO (USING SHAREDPREFS): NUMBER AND TEXT
+                SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
+                sharedSMSEditor.putString("number", smsNumberString);
+                sharedSMSEditor.putString("text", smsTextString);
+                sharedSMSEditor.commit();
+
+            }
+        });
 
         searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
         searchButton = (Button) findViewById(R.id.destSearchButton);

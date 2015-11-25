@@ -28,7 +28,6 @@ public class UpdateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-
         SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
         activationDistance = activationDistancePrefs.getInt("activationDist", 0);
 
