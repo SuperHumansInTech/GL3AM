@@ -12,11 +12,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.wearable.internal.ChannelSendFileResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,9 +44,9 @@ public class AlarmActivity extends Activity{
     private boolean isPressed = false;
     public boolean isSeekChanged = false;
     public int activationDistance = 1;
-    private ImageView searchButton;
+    private Button searchButton;
     private EditText searchLoc;
-
+    public int counter = 4;
 
 
     @Override
@@ -61,12 +64,19 @@ public class AlarmActivity extends Activity{
             sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
             sharedLocationEditor.apply();
         }
+        else {
+            Curr_location.setLat(38);
+            Curr_location.setLng(-122.8);
+            sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
+            sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
+            sharedLocationEditor.apply();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
         searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
-        searchButton = (ImageView) findViewById(R.id.destSearchButton);
+        searchButton = (Button) findViewById(R.id.destSearchButton);
 
 
 
@@ -255,8 +265,14 @@ public class AlarmActivity extends Activity{
                                     }
 
                                     else {
-                                        Toast.makeText(getApplicationContext(), "Distance remaining: "
-                                                + destination.getDistFromCurLoc() , Toast.LENGTH_LONG).show();
+                                        counter++;
+                                        if (counter >= 5) {
+
+
+                                            Toast.makeText(getApplicationContext(), "Distance remaining: "
+                                                    + destination.getDistFromCurLoc(), Toast.LENGTH_LONG).show();
+                                            counter = 0;
+                                        }
                                     }
 
 

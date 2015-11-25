@@ -146,7 +146,7 @@
         android:textColor="@color/edit_text_colors"
         android:hint="Search location..."
         android:background="@color/popup" />
-    <ImageView
+    <Button
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/magnifier12"
