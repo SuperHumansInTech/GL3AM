@@ -62,16 +62,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Alarm"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="false" />
-
 
 
     <SeekBar
@@ -95,15 +85,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
-            android:id="@+id/distanceAlarmTextView"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:id="@+id/distanceAlarmTextView"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/alarmMeasurementType"
             android:text="@string/miles"
             android:textColor="@color/text_color"
+            android:labelFor="@id/distanceAlarmTextView"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
@@ -125,7 +114,91 @@
         android:textColor="@color/text_color"
         android:layout_below="@+id/distanceAlarmSeekbar"
         android:layout_centerHorizontal="true" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/alarmLinearLayout"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_centerHorizontal="true"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Alarm"
+        android:id="@+id/alarmTitle"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        />
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/searchFieldLinearLayout"
+    android:orientation="horizontal"
+        android:layout_gravity="center"
+    android:layout_marginTop="20dp">
+    <EditText
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationSearchFieldAlarm"
+        android:textColor="@color/edit_text_colors"
+        android:hint="Search location..."
+        android:background="@color/popup" />
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/magnifier12"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/destSearchButton" />
+</LinearLayout>
 
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avoidRouteTypes"
+        android:textColor="@color/text_color"
+        android:text="@string/avoid_routes"
+        android:layout_marginTop="10dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/checkboxLinearLayout"
+    android:layout_gravity="fill_vertical"
+    android:gravity="center">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fare"
+        android:id="@+id/fareAlarmCheckbox"
+        android:gravity="center"
+        android:layout_weight="1"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ferries"
+        android:id="@+id/ferriesAlarmCheckbox"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tolls"
+        android:id="@+id/tollsAlarmCheckbox"
+        android:gravity="center"
+        android:layout_weight="1"/>
+</LinearLayout>
+</LinearLayout>
 
 </RelativeLayout>
