@@ -355,6 +355,7 @@ public class AlarmActivity extends Activity{
 
         if (sharedPreferences.contains("miles")){
             seekBar.setProgress(sharedPreferences.getInt("miles", 1));
+            distanceText.setText(String.valueOf(sharedPreferences.getInt("miles", 1)));
         }
 
 
