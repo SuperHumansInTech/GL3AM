@@ -7,7 +7,7 @@ import android.widget.Toast;
 /**
  * Created by chadlewis on 11/18/15.
  */
-public class SMSMessage extends Activity {
+public class SMSMessage {
 
     public String phoneNumber;
     public String smsTextMessage;
@@ -33,13 +33,15 @@ public class SMSMessage extends Activity {
         this.smsTextMessage = smsTextMessage;
     }
 
-    public void sendSMS () {
+    public boolean sendSMS () {
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber,null,smsTextMessage,null,null);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
 
     }
