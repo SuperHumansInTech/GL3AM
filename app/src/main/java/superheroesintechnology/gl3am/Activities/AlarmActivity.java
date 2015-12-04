@@ -99,16 +99,19 @@ public class AlarmActivity extends Activity{
                 if (smsNumberView.getText() == null || smsTextView.getText() == null) {
                     return;
                 }
+                else {
+
 
 // IF USER HAS ENTERED SMS DATA, GET THE DATA
-                //final String smsNumberString = smsNumber.getText().toString();
-                //final String smsTextString = smsText.getText().toString();
+                    //final String smsNumberString = smsNumber.getText().toString();
+                    //final String smsTextString = smsText.getText().toString();
 
-                SMSMessage stored = new SMSMessage(smsNumber.getText().toString(), smsText.getText().toString() );
+                    SMSMessage stored = new SMSMessage(smsNumber.getText().toString(), smsText.getText().toString());
 
 // SAVE SMS INFO (USING SHAREDPREFS): NUMBER AND TEXT
-                StoreClient.setCurrSMS(stored);
-                StoreClient.addSMS(stored);
+                    StoreClient.setCurrSMS(stored);
+                    StoreClient.addSMS(stored);
+                }
                 //String SMSJson = gson.toJson(stored);
                 //Toast.makeText(getApplicationContext(), SMSJson, Toast.LENGTH_LONG).show();
                 //SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
