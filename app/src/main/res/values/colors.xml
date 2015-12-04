@@ -8,4 +8,5 @@
     <color name="primaryBackGroundColor">#434343</color>
     <color name="popup">#999999</color>
     <color name="edit_text_colors">#000000</color>
+    <color name="pop_up_background">#262626</color>
 </resources>

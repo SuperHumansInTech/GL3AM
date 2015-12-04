@@ -104,13 +104,10 @@ public class AlarmLaunchActivity extends Service {
 
 
         stopButton = new ImageView(this);
-//        stopButton.setText("OK");
-//        stopButton.setTextColor(getResources().getColor(R.color.text_color));
         stopButton.setBackground(ResourcesCompat.getDrawable(getResources(),
                 R.drawable.alarm54, null));
 
         stopButton.setLayoutParams(btnParams);
-//        stopButton.setGravity(Gravity.CENTER);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
 
