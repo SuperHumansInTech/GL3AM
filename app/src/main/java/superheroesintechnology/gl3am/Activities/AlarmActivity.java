@@ -57,7 +57,7 @@ public class AlarmActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final StorageClient StoreClient = new StorageClient(this, "default");
-        StoreClient.purgeCurrent(); //Avoid sending old SMS.
+        //StoreClient.purgeCurrent(); //Avoid sending old SMS.
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location temp_loc = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         //final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
@@ -86,17 +86,26 @@ public class AlarmActivity extends Activity{
         setContentView(R.layout.activity_alarm);
 
 // SET UP EDITTEXT FIELDS FOR SMS
-        final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
-        final EditText smsText = (EditText) findViewById(R.id.smsTextField);
-        final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
-        final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
+        //final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
+       // final EditText smsText = (EditText) findViewById(R.id.smsTextField);
+        //final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
+       // final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
         smsButton = (Button) findViewById(R.id.saveSmsButton);
 
         smsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        //alarmSound.start();
+                        Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                        startActivity(popUpTest);
+                        //alarmSound.pause();
+                    }
+                });
 // IF USER HAS NOT ENTERED SMS DATA, RETURN
-                if (smsNumberView.getText() == null || smsTextView.getText() == null) {
+
+                /*if (smsNumberView.getText() == null || smsTextView.getText() == null) {
                     return;
                 }
                 else {
@@ -118,7 +127,7 @@ public class AlarmActivity extends Activity{
                 //SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
                 //sharedSMSEditor.putString("sms", SMSJson);
                 //sharedSMSEditor.commit();
-                /*
+
                 SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
                 sharedSMSEditor.putString("number", smsNumberString);

@@ -39,12 +39,12 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
         if (message != null) {
 
-            //TextView nameText = (TextView) v.findViewById(R.id.nameText);
-            // TextView descText = (TextView) v.findViewById(R.id.descText);
+            TextView nameText = (TextView) v.findViewById(R.id.nameText);
+            TextView descText = (TextView) v.findViewById(R.id.descText);
             TextView phoneText = (TextView) v.findViewById(R.id.phoneText);
             TextView messageText = (TextView) v.findViewById(R.id.messageText);
 
-            /*
+
             if(nameText != null) {
                 if(message.getName() != null) {
                     nameText.setText(message.getName());
@@ -52,12 +52,12 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
             }
 
             if(descText != null) {
-                if(message.getDesc() != null) {
-                    descText.setText(message.getDesc());
+                if(message.getDescription() != null) {
+                    descText.setText(message.getDescription());
                 }
             }
 
-            */
+
             if (phoneText != null) {
                 if (message.getPhoneNumber() != null) {
                     phoneText.setText(message.getPhoneNumber());

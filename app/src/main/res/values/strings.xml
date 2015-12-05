@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">GL3AMS</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="message_service">Messaging</string>
-    <string name="alarm_service">Alarm</string>
+    <string name="title_activity_maps">Home</string>
+    <string name="message_service">Messages</string>
+    <string name="alarm_service">New Destination</string>
     <string name="update_system">Status</string>
     <string name="settings">Settings</string>
-    <string name="favorites">Favorites</string>
+    <string name="favorites">Saved Destinations</string>
     <string name="destination">Destination:</string>
     <string name="distance_from_location">Distance:</string>
     <string name="act_dist">Activation Distance:</string>
@@ -17,5 +17,6 @@
     <string name="tolls">Tolls</string>
     <string name="avoid_routes">Avoid:</string>
     <string name="smsInfoField">SMS:</string>
-    <string name="acceptSMSButton">Save SMS info</string>
+    <string name="acceptSMSButton">Add New SMS:</string>
+    <string name="defaultAppend">This message automatically sent by GL3AMS.</string>
 </resources>

@@ -211,7 +211,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp">
 
-        <TextView
+ <!--       <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_color"
@@ -232,6 +232,7 @@
             android:textColor="@color/edit_text_colors"
             android:hint="Enter your text..."
             android:background="@color/popup"/>
+        -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
