@@ -143,9 +143,8 @@
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:id="@+id/locationSearchFieldAlarm"
-        android:textColor="@color/edit_text_colors"
-        android:hint="Search location..."
-        android:background="@color/popup" />
+        android:textColor="@color/text_color"
+        android:hint="Search location..."/>
     <Button
         android:layout_width="20dp"
         android:layout_height="20dp"

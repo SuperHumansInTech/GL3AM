@@ -75,8 +75,8 @@ public class AlarmActivity extends Activity{
             //sharedLocationEditor.apply();
         }
         else {
-            //Curr_location.setLat(38);
-           // Curr_location.setLng(-122.8);
+//            Curr_location.setLat(38);
+//            Curr_location.setLng(-122.8);
            // sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
            // sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
            // sharedLocationEditor.apply();
@@ -84,6 +84,8 @@ public class AlarmActivity extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        Curr_location.setLat(38);
+        Curr_location.setLng(-122.8);
 
 // SET UP EDITTEXT FIELDS FOR SMS
         //final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
@@ -157,7 +159,8 @@ public class AlarmActivity extends Activity{
 
             @Override
             public void onClick(View v) {
-                if(searchDestTextView.getText() == null) {
+                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                if(searchDestTextView.getText().toString() == null) {
                     return;
                 }
 

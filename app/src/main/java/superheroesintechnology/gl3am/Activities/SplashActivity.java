@@ -23,11 +23,11 @@ public class SplashActivity extends Activity {
     private ImageView leftLineImageView;
     private ImageView rightLineImageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
 
         final StorageClient StoreClient = new StorageClient(this, "default");
         StoreClient.purgeCurrent();
@@ -91,9 +91,6 @@ public class SplashActivity extends Activity {
             }
         });
 
-
-
-        //startActivity(new Intent(SplashActivity.this, MapsActivity.class));
 
     }
 
