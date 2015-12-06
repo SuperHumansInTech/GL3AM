@@ -22,12 +22,39 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter a name (optional)..."
+            android:id="@+id/SMSName"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/primaryBackGroundColor"
+            />
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Enter phone number..."
             android:id="@+id/SMSPhoneNum"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/text_color"
+            android:textColorHint="@color/primaryBackGroundColor"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter a description (optional) ..."
+            android:id="@+id/SMSDesc"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/primaryBackGroundColor"
             />
 
         <EditText
@@ -38,7 +65,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/text_color"/>
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/primaryBackGroundColor"/>
     </LinearLayout>
 
     <ImageView

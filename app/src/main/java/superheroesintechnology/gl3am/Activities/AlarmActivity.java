@@ -19,16 +19,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.wearable.internal.ChannelSendFileResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import superheroesintechnology.gl3am.Models.Destination;
 import superheroesintechnology.gl3am.Models.LatLngModel;
+import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.Models.SearchResultModel;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.APIClient;
+import superheroesintechnology.gl3am.Services.StorageClient;
+
 
 public class AlarmActivity extends Activity{
 
@@ -52,58 +56,86 @@ public class AlarmActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        final StorageClient StoreClient = new StorageClient(this, "default");
+        //StoreClient.purgeCurrent(); //Avoid sending old SMS.
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location temp_loc = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor sharedLocationEditor = sharedLocationPref.edit();
-
+        //final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
+        //final SharedPreferences.Editor sharedLocationEditor = sharedLocationPref.edit();
+        final Gson gson = new GsonBuilder().create();
 
 
         if(temp_loc != null) {
             Curr_location.setLat(temp_loc.getLatitude());
             Curr_location.setLng(temp_loc.getLongitude());
+            StoreClient.setCurrLocation(Curr_location);
             //I'm not sure if we really even need a Curr_location variable... - ZBrester
-            sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
-            sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
-            sharedLocationEditor.apply();
+            //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
+            //sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
+            //sharedLocationEditor.apply();
         }
         else {
-            Curr_location.setLat(38);
-            Curr_location.setLng(-122.8);
-            sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
-            sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
-            sharedLocationEditor.apply();
+//            Curr_location.setLat(38);
+//            Curr_location.setLng(-122.8);
+           // sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
+           // sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
+           // sharedLocationEditor.apply();
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        Curr_location.setLat(38);
+        Curr_location.setLng(-122.8);
 
 // SET UP EDITTEXT FIELDS FOR SMS
-        final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
-        final EditText smsText = (EditText) findViewById(R.id.smsTextField);
-        final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
-        final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
+        //final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
+       // final EditText smsText = (EditText) findViewById(R.id.smsTextField);
+        //final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
+       // final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
         smsButton = (Button) findViewById(R.id.saveSmsButton);
 
         smsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        //alarmSound.start();
+                        Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                        startActivity(popUpTest);
+                        //alarmSound.pause();
+                    }
+                });
 // IF USER HAS NOT ENTERED SMS DATA, RETURN
-                if (smsNumberView.getText() == null || smsTextView.getText() == null) {
+
+                /*if (smsNumberView.getText() == null || smsTextView.getText() == null) {
                     return;
                 }
+                else {
+
 
 // IF USER HAS ENTERED SMS DATA, GET THE DATA
-                final String smsNumberString = smsNumber.getText().toString();
-                final String smsTextString = smsText.getText().toString();
+                    //final String smsNumberString = smsNumber.getText().toString();
+                    //final String smsTextString = smsText.getText().toString();
+
+                    SMSMessage stored = new SMSMessage(smsNumber.getText().toString(), smsText.getText().toString());
 
 // SAVE SMS INFO (USING SHAREDPREFS): NUMBER AND TEXT
+                    StoreClient.setCurrSMS(stored);
+                    StoreClient.addSMS(stored);
+                }
+                //String SMSJson = gson.toJson(stored);
+                //Toast.makeText(getApplicationContext(), SMSJson, Toast.LENGTH_LONG).show();
+                //SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
+                //SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
+                //sharedSMSEditor.putString("sms", SMSJson);
+                //sharedSMSEditor.commit();
+
                 SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
                 sharedSMSEditor.putString("number", smsNumberString);
                 sharedSMSEditor.putString("text", smsTextString);
                 sharedSMSEditor.commit();
+                */
 
             }
         });
@@ -127,14 +159,15 @@ public class AlarmActivity extends Activity{
 
             @Override
             public void onClick(View v) {
-                if(searchDestTextView.getText() == null) {
+                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                if(searchDestTextView.getText().toString() == null) {
                     return;
                 }
 
 
 
                 APIClient.getDirectionsProvider()
-                        .getDirections(Curr_location.getCoordHtmlString(), TextUtils.htmlEncode(searchDestTextView.getText().toString()))
+                        .getDirections(StoreClient.getCurrLocation().getCoordHtmlString(), TextUtils.htmlEncode(searchDestTextView.getText().toString()))
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<SearchResultModel>() {
@@ -185,6 +218,11 @@ public class AlarmActivity extends Activity{
                     //Check Destination.java for why. ZBrester
                     if(destination.getDoubLat() == 1000 | destination.getDoubLong() == 1000 ) {
                         Toast.makeText(getApplicationContext(), "Error! No assigned destination." , Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if(StoreClient.getCurrSMS() == null) {
+                        Toast.makeText(getApplicationContext(), "Error! No SMS Message set." , Toast.LENGTH_LONG).show();
+                        return;
                     }
                     //boolean makeTrue = true;
                     setIsPressed(true);
@@ -204,6 +242,7 @@ public class AlarmActivity extends Activity{
 
                             Curr_location.setLat(location.getLatitude());
                             Curr_location.setLng(location.getLongitude());
+                            StoreClient.setCurrLocation(Curr_location); //Temporary, this will be updating the AlarmModel's current location LatLng rather than this. - ZBrester
 
                             //latitude = location.getLatitude();
                             //longitude = location.getLongitude();
@@ -211,12 +250,12 @@ public class AlarmActivity extends Activity{
 
 
 
-                            sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
-                            sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
+                            //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
+                            //sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
 
                             //editor.putString("currentLatitude", Double.toString(latitude));
                             //editor.putString("currentLongitude", Double.toString(longitude));
-                            sharedLocationEditor.apply();
+                            //sharedLocationEditor.apply();
                         }
 
                         @Override
@@ -257,12 +296,12 @@ public class AlarmActivity extends Activity{
                                     SharedPreferences startStopPrefs = getSharedPreferences("AlarmPreferenceFile", 0);
                                     final boolean isPressed = startStopPrefs.getBoolean("isPressed", false);
 
-                                    SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
-                                    final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
-                                    final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
+                                    //SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
+                                    //final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
+                                    //final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
 
 
-                                    if (destination.verifyDistance(currentLongitude, currentLatitude)) {
+                                    if (destination.verifyDistance(StoreClient.getCurrLocation().getLng(), StoreClient.getCurrLocation().getLat())) {
                                         //PowerManager.WakeLock TempWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP |
                                           //      PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
                                         //TempWakeLock.acquire();

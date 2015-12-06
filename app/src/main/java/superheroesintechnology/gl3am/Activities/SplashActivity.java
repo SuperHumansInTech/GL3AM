@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import superheroesintechnology.gl3am.R;
+import superheroesintechnology.gl3am.Services.StorageClient;
 
 
 public class SplashActivity extends Activity {
@@ -22,11 +23,14 @@ public class SplashActivity extends Activity {
     private ImageView leftLineImageView;
     private ImageView rightLineImageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        final StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient.purgeCurrent();
 
         Typeface titleTypeFace = Typeface.createFromAsset(getAssets(), "Agency_FB.ttf");
         titleTextView = (TextView) findViewById(R.id.appTitleSplashTextView);
@@ -87,9 +91,6 @@ public class SplashActivity extends Activity {
             }
         });
 
-
-
-        //startActivity(new Intent(SplashActivity.this, MapsActivity.class));
 
     }
 
