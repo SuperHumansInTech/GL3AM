@@ -64,56 +64,27 @@
 
 
 
-    <SeekBar
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:max="20"
-        android:id="@+id/distanceAlarmSeekbar"
-        android:layout_above="@+id/startStopAlarmImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/alarmSeekBarReadOutDisp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/distanceAlarmSeekbar">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=""
-            android:id="@+id/distanceAlarmTextView"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/alarmMeasurementType"
-            android:text="@string/miles"
-            android:textColor="@color/text_color"
-            android:labelFor="@id/distanceAlarmTextView"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>
 
-    <ImageView
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:background="@drawable/start"
-        android:id="@+id/startStopAlarmImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@id/alarmAppNavLinearLayout"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:id="@+id/startStopText"
-        android:textColor="@color/text_color"
-        android:layout_below="@+id/distanceAlarmSeekbar"
-        android:layout_centerHorizontal="true" />
+
+    <!--<ImageView-->
+        <!--android:layout_width="45dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="@drawable/start"-->
+        <!--android:id="@+id/startStopAlarmImageView"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_above="@id/alarmAppNavLinearLayout"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/start"-->
+        <!--android:id="@+id/startStopText"-->
+        <!--android:textColor="@color/text_color"-->
+        <!--android:layout_below="@+id/distanceAlarmSeekbar"-->
+        <!--android:layout_centerHorizontal="true" />-->
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -146,8 +117,8 @@
         android:textColor="@color/text_color"
         android:hint="Search location..."/>
     <Button
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@drawable/magnifier12"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
@@ -158,12 +129,43 @@
 
     <Spinner
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/spinner"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmSeekBarReadOutDisp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/distanceAlarmTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarmMeasurementType"
+            android:text="@string/miles"
+            android:textColor="@color/text_color"
+            android:labelFor="@id/distanceAlarmTextView"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="20"
+        android:layout_marginTop="15dp"
+        android:id="@+id/distanceAlarmSeekbar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
 
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/avoidRouteTypes"
@@ -199,7 +201,7 @@
         android:id="@+id/tollsAlarmCheckbox"
         android:gravity="center"
         android:layout_weight="1"/>
-</LinearLayout>
+</LinearLayout> -->
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -210,36 +212,23 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp">
 
- <!--       <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_color"
-            android:text="@string/smsInfoField"/>
-        <EditText
-            android:layout_width="288dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/smsNumberField"
-            android:textColor="@color/edit_text_colors"
-            android:hint="Enter phone number..."
-            android:background="@color/popup"/>
-        <EditText
-            android:layout_width="288dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/smsTextField"
-            android:textColor="@color/edit_text_colors"
-            android:hint="Enter your text..."
-            android:background="@color/popup"/>
-        -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/popup"
             android:textColor="@color/text_color"
-            android:text="@string/acceptSMSButton"
-            android:id="@+id/saveSmsButton"/>
+            android:text="@string/confirmAlarmInfo"
+            android:id="@+id/confirmAlarmInfoButton"/>
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@color/popup"-->
+            <!--android:textColor="@color/text_color"-->
+            <!--android:text="Save or Use"-->
+            <!--android:id="@+id/saveOrUseButton"-->
+            <!--android:onClick="onSaveOrUseClick"/>-->
 
     </LinearLayout>
 </LinearLayout>

@@ -19,4 +19,8 @@
     <string name="smsInfoField">SMS:</string>
     <string name="acceptSMSButton">Add New SMS:</string>
     <string name="defaultAppend">This message automatically sent by GL3AMS.</string>
+    <string name="confirmAlarmInfo">Confirm Info</string>
+    <string name="radioButtonText">Save Info to Favorites</string>
+    <string name="saveRadioText">Save Info to Favorites</string>
+    <string name="useRadioText">Do Not Save</string>
 </resources>
