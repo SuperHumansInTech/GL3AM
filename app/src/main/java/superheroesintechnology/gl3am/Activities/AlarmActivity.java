@@ -410,7 +410,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
 //        startCancelImageView.setOnClickListener(startCancelListener);
         SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
-
+//
 //        if (sharedPreferences.contains("bool")){
 //            setIsPressed(sharedPreferences.getBoolean("bool", false));
 //            if(getIsPressed()){
