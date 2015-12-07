@@ -138,7 +138,7 @@ public class StorageClient {
     public AlarmModel getCurrAlarm() {
         String json = sharedPref.getString(CURR_ALARM, null);
         if(json == null) {
-            return new AlarmModel();
+            return null;
         }
         else {
             return gson.fromJson(json, AlarmModel.class);

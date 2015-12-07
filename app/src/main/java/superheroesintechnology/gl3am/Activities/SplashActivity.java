@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Curr_location.setLatitude(0);
+        /*Curr_location.setLatitude(0);
         Curr_location.setLongitude(0);
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -98,7 +98,7 @@ public class SplashActivity extends Activity {
             locManager.removeUpdates(listener);
         } else {
             locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-        }
+        }*/
 
         SharedPreferences initLocationPrefs = getSharedPreferences("initialLocation", Context.MODE_PRIVATE);
         SharedPreferences.Editor initLocationPrefsEditor = initLocationPrefs.edit();
