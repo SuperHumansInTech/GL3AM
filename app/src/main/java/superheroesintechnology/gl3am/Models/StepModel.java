@@ -1,4 +1,4 @@
-package superheroesintechnology.gl3am.Models;
+ package superheroesintechnology.gl3am.Models;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -95,7 +95,8 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:id="@+id/alarmAppNavLinearLayout">
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -141,5 +142,22 @@
             android:scaleType="centerInside" />
 
     </LinearLayout>
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/start"
+        android:id="@+id/startStopAlarmImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/alarmAppNavLinearLayout"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:id="@+id/startStopText"
+        android:textColor="@color/text_color"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/startStopAlarmImageView"/>
 </RelativeLayout>

@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
 
     <application
         android:allowBackup="true"
@@ -74,6 +75,11 @@
             android:name=".Activities.APISearchActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".Activities.SMSPopActivity"></activity>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

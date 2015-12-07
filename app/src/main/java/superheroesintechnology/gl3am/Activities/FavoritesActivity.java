@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import superheroesintechnology.gl3am.Activities.MapsActivity;
 import superheroesintechnology.gl3am.R;
 
 public class FavoritesActivity extends Activity {
