@@ -10,15 +10,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="superheroesintechnology.gl3am.Activities.SMSPopActivity">
-
     <LinearLayout
+        android:id="@+id/SMSmasterLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/smsLinearLayout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/SMSpopConCanLinLay"
-        android:layout_centerHorizontal="true">
+        >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/smsLinearLayout"
+        android:orientation="vertical"
+        android:layout_weight=".75"
+        >
 
         <EditText
             android:layout_width="match_parent"
@@ -73,7 +80,41 @@
             android:textColorHint="@color/primaryBackGroundColor"
             android:layout_weight="1"/>
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight=".25">
+            <ImageView
+                android:id="@+id/getSavedMessageButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/favoritesribbon"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saved"
+                android:textColor="@color/text_color"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/saveMessageButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/addtofavorites"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add new"
+                android:textColor="@color/text_color"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/SMSpopConCanLinLay"
         android:layout_width="wrap_content"
