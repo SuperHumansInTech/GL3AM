@@ -39,7 +39,7 @@ public class AlarmActivity extends Activity{
     //private double longitude;
     //private double latitude;
     private LatLngModel Curr_location = new LatLngModel();
-    private LatLngModel Dest_coords;
+    private LatLngModel Dest_coords = new LatLngModel();
     private SeekBar seekBar;
     private TextView distanceText;
     private ImageView startCancelImageView;

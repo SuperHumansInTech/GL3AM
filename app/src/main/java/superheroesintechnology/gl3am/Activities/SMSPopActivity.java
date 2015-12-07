@@ -18,6 +18,7 @@ import superheroesintechnology.gl3am.Services.StorageClient;
 public class SMSPopActivity extends Activity {
 
     private ImageView confirmButton;
+    private ImageView cancelButton;
     private EditText name;
     private EditText desc;
     private EditText number;
@@ -38,6 +39,7 @@ public class SMSPopActivity extends Activity {
         message = (EditText)findViewById(R.id.SMSTextMess);
 
         confirmButton = (ImageView)findViewById(R.id.confirmSMSButton);
+        cancelButton = (ImageView)findViewById(R.id.SMScancelButton);
         DisplayMetrics popDM = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(popDM);
 
@@ -53,20 +55,24 @@ public class SMSPopActivity extends Activity {
                 if (!number.getText().toString().equals("")) {
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
-                    if(save) {
+                    if (save) {
                         storeClient.addSMS(newSMS);
-                    }
-
-                    else {
+                    } else {
                         storeClient.setCurrSMS(newSMS);
 
                     }
                     SMSPopActivity.this.finish();
                     //startActivity(new Intent(SMSPopActivity.this, AlarmActivity.class));
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                SMSPopActivity.this.finish();
             }
         });
     }
