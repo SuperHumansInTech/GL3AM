@@ -19,6 +19,8 @@ public class SMSPopActivity extends Activity {
 
     private ImageView confirmButton;
     private ImageView cancelButton;
+    private ImageView saveSMSButton;
+    private ImageView getSavedSMSButton;
     private EditText name;
     private EditText desc;
     private EditText number;
@@ -31,6 +33,8 @@ public class SMSPopActivity extends Activity {
         //final boolean save = savedInstanceState.getBoolean("save", false);
         final boolean save = false;
         final StorageClient storeClient = new StorageClient(this, "default");
+        Intent srcIntent = getIntent();
+        final String sourceActivity = srcIntent.getStringExtra("source");
 
         setContentView(R.layout.activity_smspop);
         name = (EditText)findViewById(R.id.SMSName);
@@ -40,6 +44,8 @@ public class SMSPopActivity extends Activity {
 
         confirmButton = (ImageView)findViewById(R.id.confirmSMSButton);
         cancelButton = (ImageView)findViewById(R.id.SMScancelButton);
+        saveSMSButton = (ImageView)findViewById(R.id.saveMessageButton);
+        getSavedSMSButton = (ImageView)findViewById(R.id.getSavedMessageButton);
         DisplayMetrics popDM = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(popDM);
 
@@ -55,13 +61,24 @@ public class SMSPopActivity extends Activity {
                 if (!number.getText().toString().equals("")) {
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
-                    if (save) {
-                        storeClient.addSMS(newSMS);
-                    } else {
-                        storeClient.setCurrSMS(newSMS);
+                    if (sourceActivity == "MessageActivity") {
+                        if (save) {
+                            storeClient.addSMS(newSMS);
+                        } else {
+                            storeClient.setCurrSMS(newSMS);
 
+                        }
+                        SMSPopActivity.this.finish();
+                    } else {
+                        if (save) {
+                            storeClient.addSMS(newSMS);
+                        } else {
+                            storeClient.setCurrSMS(newSMS);
+
+                        }
+                        startActivity(new Intent(SMSPopActivity.this, UpdateActivity.class));
                     }
-                    SMSPopActivity.this.finish();
+
                     //startActivity(new Intent(SMSPopActivity.this, AlarmActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
@@ -69,10 +86,25 @@ public class SMSPopActivity extends Activity {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener(){
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SMSPopActivity.this.finish();
+            }
+        });
+
+        saveSMSButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        getSavedSMSButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

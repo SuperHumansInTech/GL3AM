@@ -486,7 +486,14 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+                if (msgOnly || alrmAndMsg) {
+                    Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                    destinationIntent.putExtra("source", "alarmActivity");
+                    startActivity(destinationIntent);
+                    //startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+                } else {
+                    startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                }
             }
         });
 
@@ -521,25 +528,25 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             }
         });
 
-        Button confirmInfoButton = (Button) findViewById(R.id.confirmAlarmInfoButton);
-        //smsButton.setVisibility(View.INVISIBLE);
-
-        confirmInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (msgOnly || alrmAndMsg) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            //alarmSound.start();
-                            Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
-                            startActivity(popUpTest);
-                            //alarmSound.pause();
-                        }
-                    });
-                }
-            }
-        });
+//        Button confirmInfoButton = (Button) findViewById(R.id.confirmAlarmInfoButton);
+//        //smsButton.setVisibility(View.INVISIBLE);
+//
+//        confirmInfoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (msgOnly || alrmAndMsg) {
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            //alarmSound.start();
+//                            Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
+//                            startActivity(popUpTest);
+//                            //alarmSound.pause();
+//                        }
+//                    });
+//                }
+//            }
+//        });
     }
 
     public void setIsPressed(boolean useThis){
