@@ -35,7 +35,6 @@ public class UpdateActivity extends Activity {
     public int activationDistance;
     private ImageView startCancelImageView;
     private TextView startCancelTextView;
-    public Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,9 @@ public class UpdateActivity extends Activity {
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
 
         SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
-        activationDistance = activationDistancePrefs.getInt("activationDist", 0);
+        activationDistance = activationDistancePrefs.getInt("activationDist", 1);
+        final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
+
 
 
         TextView destinationTextView = (TextView) findViewById(R.id.destinationResultTextView);
@@ -108,13 +109,10 @@ public class UpdateActivity extends Activity {
                     startStopEditor.putBoolean("bool", false);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-                }
-
+                } else {
                     //boolean makeTrue = true;
                     setIsPressed(true);
                     startStopEditor.putBoolean("isPressed", true);
-
-
 
 
                     //LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -132,8 +130,6 @@ public class UpdateActivity extends Activity {
 
                             //latitude = location.getLatitude();
                             //longitude = location.getLongitude();
-
-
 
 
                             //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
@@ -167,14 +163,14 @@ public class UpdateActivity extends Activity {
                     //wl.acquire();
                     Runnable locationRunnable = new Runnable() {
                         @Override
-                        public void run()  {
+                        public void run() {
 
 
-                            /*
-                                THIS HANDLER ALLOWS THE LOCATION TO BE UPDATED EVERY X SECONDS,
-                                LOOPING UNTIL THE "START BUTTON IS NO LONGER PRESSED. ELIMINATES
-                                NEED FOR A FOR LOOP.
-                             */
+                                /*
+                                    THIS HANDLER ALLOWS THE LOCATION TO BE UPDATED EVERY X SECONDS,
+                                    LOOPING UNTIL THE "START BUTTON IS NO LONGER PRESSED. ELIMINATES
+                                    NEED FOR A FOR LOOP.
+                                 */
                             final Handler locationUpdateHandler = new Handler(Looper.getMainLooper());
                             locationUpdateHandler.post(new Runnable() {
                                 @Override
@@ -220,9 +216,7 @@ public class UpdateActivity extends Activity {
                                         //TempWakeLock.release();
                                         return;
 
-                                    }
-
-                                    else {
+                                    } else {
                                         counter++;
                                         if (counter >= 5) {
 
@@ -248,18 +242,32 @@ public class UpdateActivity extends Activity {
                     //wl.release();
 
 
-
                     startCancelImageView.setBackgroundResource(R.drawable.cancel);
                     startCancelTextView.setText(R.string.cancel);
                     startStopEditor.putBoolean("bool", true);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
+                    }
                 }
 
             };
 
         startCancelImageView.setOnClickListener(startCancelListener);
+        SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
 
+
+
+        if (sharedPreferences.contains("bool")){
+            setIsPressed(sharedPreferences.getBoolean("bool", false));
+            if(getIsPressed()){
+                startCancelImageView.setBackgroundResource(R.drawable.cancel);
+                startCancelTextView.setText(R.string.cancel);
+            }
+            else{
+                startCancelImageView.setBackgroundResource(R.drawable.start);
+                startCancelTextView.setText(R.string.start);
+            }
+        }
 
 
 
