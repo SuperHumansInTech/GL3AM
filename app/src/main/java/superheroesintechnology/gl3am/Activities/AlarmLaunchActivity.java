@@ -1,6 +1,7 @@
  package superheroesintechnology.gl3am.Activities;
 
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class AlarmLaunchActivity extends Service {
 
 
 
+
     private WindowManager wm;
     private LinearLayout layout;
     private TextView alarmMessage;
@@ -40,6 +42,10 @@ public class AlarmLaunchActivity extends Service {
     MediaPlayer alarmSound;
     public String myPhoneNumber;
     public String smsText;
+    boolean sendSMSBool;
+    boolean alrmBool;
+
+
 
     @Nullable
     @Override
@@ -47,14 +53,54 @@ public class AlarmLaunchActivity extends Service {
         return null;
     }
 
+//    @Override
+//    protected void onHandleIntent(Intent intent) {
+//        sendSMSBool = intent.getBooleanExtra("sendMsg?", false);
+//        alrmBool = intent.getBooleanExtra("alrm?", true);
+//    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        final StorageClient StoreClient = new StorageClient(this, "default");
+        final SMSMessage newMessage = StoreClient.getCurrSMS();
+        sendSMSBool = intent.getBooleanExtra("sendMsg?", false);
+        alrmBool = intent.getBooleanExtra("alrm?", false);
+
+        if (sendSMSBool) {
+            if (newMessage.getPhoneNumber() != null && newMessage.getSmsTextMessage() != null) {
+                //final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
+                newMessage.sendSMS();
+                Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "No text sent. You did not enter a number or message!",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+
+        alarmSound = MediaPlayer.create(this, R.raw.sound);
+        if (alarmSound.getCurrentPosition() != 0) {
+            alarmSound.seekTo(0);
+        }
+
+        if (alrmBool) {
+            alarmSound.start();
+        }
+        return START_STICKY;
+    }
+
     @Override
     public void onCreate() {
+        new AlarmLaunchActivity();
         super.onCreate();
         final Gson gson = new Gson();
         final StorageClient StoreClient = new StorageClient(this, "default");
 // GET SMS INFO (USING SHAREDPREFS) FROM AlarmActivity
 // SAVE THEM TO LOCAL NUMBER AND TEXT STRING VARIABLES
         final SMSMessage newMessage = StoreClient.getCurrSMS();
+
         //SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
         //myPhoneNumber = sharedSMSPrefs.getString("number", null);
         //smsText = sharedSMSPrefs.getString("text", null);
@@ -63,22 +109,28 @@ public class AlarmLaunchActivity extends Service {
 // SEND SMS IF USER HAS ENTERED NUMBER AND TEXT DATA
 // MAKE TOAST IF SENT
 // ELSE, MAKE A TOAST: "DID NOT SEND TEXT"
-        if (newMessage.getPhoneNumber() != null && newMessage.getSmsTextMessage() != null) {
-            //final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
-            newMessage.sendSMS();
-            Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "No text sent. You did not enter a number or message!",
-                    Toast.LENGTH_LONG).show();
-        }
 
-
-        alarmSound = MediaPlayer.create(this, R.raw.sound);
-        if (alarmSound.getCurrentPosition() != 0) {
-            alarmSound.seekTo(0);
-        }
-
-        alarmSound.start();
+//        if (sendSMSBool) {
+//            if (newMessage.getPhoneNumber() != null && newMessage.getSmsTextMessage() != null) {
+//                //final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
+//                newMessage.sendSMS();
+//                Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(getApplicationContext(), "No text sent. You did not enter a number or message!",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+//
+//
+//
+//        alarmSound = MediaPlayer.create(this, R.raw.sound);
+//        if (alarmSound.getCurrentPosition() != 0) {
+//            alarmSound.seekTo(0);
+//        }
+//
+//        if (alrmBool) {
+//            alarmSound.start();
+//        }
 
 //        setContentView(R.layout.activity_alarm_launch);
 //
@@ -113,8 +165,10 @@ public class AlarmLaunchActivity extends Service {
 
             @Override
             public void onClick(View v) {
-                alarmSound.pause();
-                alarmSound.release();
+                if (alarmSound.isPlaying()) {
+                    alarmSound.pause();
+                    alarmSound.release();
+                }
               wm.removeView(layout);
                 stopSelf();
                 //RELEASE WAKELOCK

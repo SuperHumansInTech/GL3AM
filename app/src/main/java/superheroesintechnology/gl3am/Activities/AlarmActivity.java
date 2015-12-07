@@ -489,10 +489,20 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 if (msgOnly || alrmAndMsg) {
                     Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     destinationIntent.putExtra("source", "alarmActivity");
+                    destinationIntent.putExtra("msg?", true);
+                    if (msgOnly) {
+                        destinationIntent.putExtra("alrm?", false);
+                    } else {
+                        destinationIntent.putExtra("alrm?", true);
+                    }
                     startActivity(destinationIntent);
                     //startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
                 } else {
-                    startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                    Intent intent = new Intent(AlarmActivity.this, UpdateActivity.class);
+                    intent.putExtra("msg?", false);
+                    intent.putExtra("alrm?", true);
+                    startActivity(intent);
+                    //startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
                 }
             }
         });
@@ -564,14 +574,17 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         switch (position) {
             case 0:
                 alrmOnly = true;
+                msgOnly = alrmAndMsg = false;
                 //smsButton.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 msgOnly = true;
+                alrmOnly = alrmOnly = false;
                 //smsButton.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 alrmAndMsg = true;
+                alrmOnly = msgOnly = false;
                 //smsButton.setVisibility(View.VISIBLE);
                 break;
         }

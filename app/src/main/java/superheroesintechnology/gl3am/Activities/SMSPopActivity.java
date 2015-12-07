@@ -35,6 +35,8 @@ public class SMSPopActivity extends Activity {
         final StorageClient storeClient = new StorageClient(this, "default");
         Intent srcIntent = getIntent();
         final String sourceActivity = srcIntent.getStringExtra("source");
+        final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
+        final boolean alrmBool = srcIntent.getBooleanExtra("alrm?", true);
 
         setContentView(R.layout.activity_smspop);
         name = (EditText)findViewById(R.id.SMSName);
@@ -76,7 +78,15 @@ public class SMSPopActivity extends Activity {
                             storeClient.setCurrSMS(newSMS);
 
                         }
-                        startActivity(new Intent(SMSPopActivity.this, UpdateActivity.class));
+                        Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
+                        if (sendSMSBool) {
+                            intent.putExtra("msg?", true);
+                        }
+                        if (!alrmBool) {
+                            intent.putExtra("alrm?", false);
+                        }
+
+                        startActivity(intent);
                     }
 
                     //startActivity(new Intent(SMSPopActivity.this, AlarmActivity.class));

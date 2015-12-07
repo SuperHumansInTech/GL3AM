@@ -41,6 +41,10 @@ public class UpdateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        Intent intent = getIntent();
+        final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
+        final boolean alrmBool = intent.getBooleanExtra("alrm?", true);
+
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
@@ -192,7 +196,24 @@ public class UpdateActivity extends Activity {
                                             public void run() {
                                                 //alarmSound.start();
                                                 Intent popUpTest = new Intent(UpdateActivity.this, AlarmLaunchActivity.class);
-                                                startService(popUpTest);
+                                                if (sendSMSBool) {
+                                                    if (alrmBool) {
+                                                        popUpTest.putExtra("alrm?", true);
+                                                    } else {
+                                                        popUpTest.putExtra("alrm?", false);
+                                                    }
+                                                    popUpTest.putExtra("sendMsg?", true);
+                                                    startService(popUpTest);
+                                                } if (!sendSMSBool) {
+                                                    if (alrmBool) {
+                                                        popUpTest.putExtra("alrm?", true);
+                                                    } else {
+                                                        popUpTest.putExtra("alrm?", false);
+                                                    }
+                                                    popUpTest.putExtra("sendMsg?", false);
+                                                    startService(popUpTest);
+                                                }
+
                                                 //alarmSound.pause();
                                             }
                                         });
