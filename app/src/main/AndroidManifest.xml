@@ -74,17 +74,13 @@
         <activity
             android:name=".Activities.APISearchActivity"
             android:screenOrientation="portrait"></activity>
-<<<<<<< HEAD
-        <activity android:name=".Activities.SMSPopActivity"></activity>
+        <activity android:name=".Activities.SMSPopActivity"
+            android:theme="@style/AppTheme.AlarmPop"></activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-=======
-        <activity android:name=".Activities.SMSPopActivity"
-            android:theme="@style/AppTheme.AlarmPop"></activity>
->>>>>>> 70783a9efda63cd6dc852008d35c009c512e4779
-    </application>
+</application>
 
 </manifest>
