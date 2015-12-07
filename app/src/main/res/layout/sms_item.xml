@@ -4,45 +4,39 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id = "@+id/summaryText"
+        android:id = "@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text= "Test"
         android:layout_marginTop="1dp"
         />
     <TextView
-        android:id = "@+id/durationText"
+        android:id = "@+id/descText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text= "Test"
         android:layout_marginTop="10dp"
         />
     <TextView
-        android:id = "@+id/dAddressText"
+        android:id = "@+id/phoneText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text= "Test"
         android:layout_marginTop="15dp"
         />
     <TextView
-        android:id = "@+id/dLatLngText"
+        android:id = "@+id/messageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text= "Test"
         android:layout_marginTop="1dp"
         />
-    <TextView
-        android:id = "@+id/sAddressText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text= "Test"
-        android:layout_marginTop="1dp"
-        />
-    <TextView
-        android:id = "@+id/sLatLngText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text= "Test"
-        android:layout_marginTop="1dp"
-        />
+
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/magnifier12"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/destSearchButton" />
 </LinearLayout>

@@ -1,5 +1,10 @@
 package superheroesintechnology.gl3am.Models;
 
+
+import java.text.DecimalFormat;
+
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
@@ -9,6 +14,8 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 import superheroesintechnology.gl3am.Activities.AlarmLaunchActivity;
+
+
 
 /**
  * Destination Class:
@@ -25,18 +32,18 @@ public class Destination extends Thread{
 
 
     // Longitude vars
-    private double doubLong;
+    private double doubLong = 1000; //Setting impossible latitude to use as an error handler, since both 0 and negative values are used.
     private String stringLong;
 
     // Latitude vars
-    private double doubLat;
+    private double doubLat = 1000; // Same as above.
     private String stringLat;
 
     // Destination Vars
     private String addressString;
 
     // Calculation values
-    private double distFromDest; // User defined distance
+    private double activation_distance; // User defined distance
     private String distFromDestStr;
     private String distFromCurLoc; // Value of current distance from destination as string type
 
@@ -46,7 +53,9 @@ public class Destination extends Thread{
      double types.
      Output: Stores values of doubles and also stores them as String types.
      */
-    public Destination(String address, double doubLat, double doubLong, double distFromDest) {
+    public Destination() {};
+
+    public Destination(String address, double doubLat, double doubLong, double activation_distance) {
 
 
         this.addressString = address;
@@ -54,8 +63,8 @@ public class Destination extends Thread{
         this.stringLat = String.valueOf(doubLat);
         this.doubLong = doubLong;
         this.stringLong = String.valueOf(doubLong);
-        this.distFromDest = distFromDest;
-        this.distFromDestStr = String.valueOf(distFromDest);
+        this.activation_distance = activation_distance;
+        this.distFromDestStr = String.valueOf(activation_distance);
     }
 
 
@@ -75,9 +84,9 @@ public class Destination extends Thread{
         this.stringLong = String.valueOf(doubLong);
     }
 
-    public void setDistFromDest(double distFromDest) {
-        this.distFromDest = distFromDest;
-        this.distFromDestStr = String.valueOf(distFromDest);
+    public void setActivation_distance(double activation_distance) {
+        this.activation_distance = activation_distance;
+        this.distFromDestStr = String.valueOf(activation_distance);
     }
 
     public void setAddressString(String addressString) {
@@ -124,17 +133,18 @@ public class Destination extends Thread{
      verifyDistance():
      Input: takes in double values for current long and lat
      Output: returns a false boolean value if distance from destination is greater than the user
-             defined distance threshold from destination and returns true if less
+             defined distance threshold from destination and returns true if equal to or less
      */
     public boolean verifyDistance(double curLong, double curLat) {
 
-        boolean verifyDist = false;
+       // boolean verifyDist = false;
 
-        if (distFromDest > calcDistanceFromDest(curLong, curLat)) {
-            verifyDist = true;
+        if (activation_distance >= calcDistanceFromDest(curLong, curLat)) {
+            return true;
+            //verifyDist = true;
         }
-
-        return verifyDist;
+        return false;
+        //return verifyDist;
     }
 
 
@@ -161,7 +171,8 @@ public class Destination extends Thread{
         calcedDist *= 180 / Math.PI;
         calcedDist *= 60 * 1.1515;
 
-        distFromCurLoc = String.valueOf(calcedDist);
+        DecimalFormat form = new DecimalFormat("0.00");
+        distFromCurLoc = String.valueOf(form.format(calcedDist));
 
         return calcedDist;
 
