@@ -65,6 +65,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private Location initialLocation = new Location("");
     private boolean saveInfoBool = false;
     private boolean useInfoBool = false;
+    private ImageView nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -480,6 +481,14 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesAlarmImage);
         ImageView statusImageView = (ImageView)findViewById(R.id.statusAlarmImage);
         ImageView messageImageView = (ImageView)findViewById(R.id.messageAlarmImage);
+        nextButton = (ImageView)findViewById(R.id.nextButton);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+            }
+        });
 
 
 
