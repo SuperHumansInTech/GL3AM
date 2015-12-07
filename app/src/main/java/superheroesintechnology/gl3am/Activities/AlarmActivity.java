@@ -184,17 +184,18 @@ public class AlarmActivity extends Activity {
         startCancelImageView.setOnClickListener(startCancelListener);
         SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
 
-        if (sharedPreferences.contains("bool")) {
-            setIsPressed(sharedPreferences.getBoolean("bool", false));
-            if (getIsPressed()) {
-                startCancelImageView.setBackgroundResource(R.drawable.cancel);
-                startCancelTextView.setText(R.string.cancel);
-            } else {
-                startCancelImageView.setBackgroundResource(R.drawable.start);
-                startCancelTextView.setText(R.string.start);
-            }
-        }
-
+//
+//        if (sharedPreferences.contains("bool")){
+//            setIsPressed(sharedPreferences.getBoolean("bool", false));
+//            if(getIsPressed()){
+//                startCancelImageView.setBackgroundResource(R.drawable.cancel);
+//                startCancelTextView.setText(R.string.cancel);
+//            }
+//            else{
+//                startCancelImageView.setBackgroundResource(R.drawable.start);
+//                startCancelTextView.setText(R.string.start);
+//            }
+//        }
 
         seekBar = (SeekBar) findViewById(R.id.distanceAlarmSeekbar);
         distanceText = (TextView) findViewById(R.id.distanceAlarmTextView);
