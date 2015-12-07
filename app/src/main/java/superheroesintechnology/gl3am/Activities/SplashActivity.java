@@ -40,6 +40,7 @@ public class SplashActivity extends Activity {
      */
     private GoogleApiClient client;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,6 @@ public class SplashActivity extends Activity {
         initLocationPrefsEditor.apply();
 
 
-
         final StorageClient StoreClient = new StorageClient(this, "default");
         StoreClient.purgeCurrent();
 
@@ -168,10 +168,7 @@ public class SplashActivity extends Activity {
         });
 
 
-        //startActivity(new Intent(SplashActivity.this, MapsActivity.class));
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
 }

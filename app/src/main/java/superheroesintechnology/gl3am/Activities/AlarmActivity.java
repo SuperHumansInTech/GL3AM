@@ -43,7 +43,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     //private double longitude;
     //private double latitude;
     private LatLngModel Curr_location = new LatLngModel();
-    private LatLngModel Dest_coords;
+    private LatLngModel Dest_coords = new LatLngModel();
     private SeekBar seekBar;
     private TextView distanceText;
     private ImageView startCancelImageView;
@@ -93,9 +93,11 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             //sharedLocationEditor.apply();
         }
         else {
+
             Curr_location.setLat(38);
             Curr_location.setLng(-122.8);
             //StoreClient.setCurrLocation(Curr_location);
+
            // sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
            // sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
            // sharedLocationEditor.apply();
@@ -103,6 +105,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        Curr_location.setLat(38);
+        Curr_location.setLng(-122.8);
 
 
 
@@ -187,8 +191,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
             @Override
             public void onClick(View v) {
-                if(searchDestTextView.getText() == null) {
-                    Toast.makeText(getApplicationContext(), "NOPE", Toast.LENGTH_LONG).show();
+                if(searchDestTextView.getText().toString().equals("")) {
                     return;
                 }
 
