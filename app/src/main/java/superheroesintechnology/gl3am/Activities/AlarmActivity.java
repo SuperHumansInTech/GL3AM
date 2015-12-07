@@ -196,7 +196,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 }
 
 
-
+                
                 APIClient.getDirectionsProvider()
 
                         .getDirections(/*StoreClient.getCurrLocation().getCoordHtmlString()*/TextUtils.htmlEncode(initialLocation.toString()), TextUtils.htmlEncode(searchDestTextView.getText().toString()))
