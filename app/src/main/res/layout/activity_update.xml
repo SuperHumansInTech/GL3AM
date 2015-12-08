@@ -11,7 +11,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/startStopText"
         android:layout_gravity="center"
         android:layout_weight="5">
 
@@ -22,69 +23,75 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/destinationTextView"
                 android:text="@string/destination"
-                android:layout_gravity="right"/>
+                android:layout_gravity="right"
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/defDistTextView"
                 android:text="@string/act_dist"
-                android:layout_gravity="right"/>
+                android:layout_gravity="right"
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/distFromDestTextView"
                 android:text="@string/distance_from_location"
-                android:layout_gravity="right"/>
+                android:layout_gravity="right"
+                android:layout_weight="1"/>
 
             // Below can be removed before final product is completed. For testing purposes only.
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/booleanTextView"
                 android:text="boolean:"
-                android:layout_gravity="right"/>
+                android:layout_gravity="right"
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:id="@+id/destinationResultTextView"
-                android:text=""
-                android:layout_marginLeft="10dp" />
+                android:text="test"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:id="@+id/defDistResultTextView"
-                android:text=""
-                android:layout_marginLeft="10dp" />
+                android:text="test"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:id="@+id/distFromDestResultTextView"
-                android:text=""
-                android:layout_marginLeft="10dp" />
+                android:text="test"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
 
             //the below textview is only or testing
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:id="@+id/booleanResultTextView"
-                android:text=""
-                android:layout_marginLeft="10dp" />
+                android:text="test"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -123,7 +130,8 @@
             android:id="@+id/homeStatusImage"
             android:src="@drawable/home"
             android:clickable="false"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
 
         <ImageView
             android:layout_width="30dp"
