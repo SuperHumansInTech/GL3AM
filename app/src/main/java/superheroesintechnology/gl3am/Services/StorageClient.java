@@ -126,6 +126,20 @@ public class StorageClient {
         PrefEditor.apply();
     }
 
+    public void deleteSMS(int position) {
+        ArrayList<SMSMessage> message_list = loadSMSList();
+        message_list.remove(position);
+    }
+
+    public void deleteSMS(SMSMessage message) {
+        ArrayList<SMSMessage> message_list = loadSMSList();
+        for (int counter = 0; counter < message_list.size(); counter++) {
+            if (message == message_list.get(counter)) {
+                message_list.remove(counter);
+            }
+        }
+    }
+
 
     //Deal with data transfer between objects.
 

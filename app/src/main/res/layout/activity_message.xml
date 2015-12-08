@@ -15,12 +15,25 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/SMSRefreshButton" />
     <ListView
-        android:id="@+id/smsList"
-        android:layout_below="@id/SMSRefreshButton"
+        android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/navBarLinear">
+        android:layout_above="@+id/navBarLinear"
+        android:layout_marginTop="30dp"
+        android:layout_weight=".75">
     </ListView>
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/addtofavorites"
+            android:id="@+id/addMessageToFavs"/>
+
 
     <LinearLayout
         android:orientation="horizontal"

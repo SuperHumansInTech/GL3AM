@@ -17,6 +17,9 @@ import superheroesintechnology.gl3am.R;
  * Created by Zach on 12/3/2015.
  */
 public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
+
+
+
     public SMSListAdapter(Context context, ArrayList<SMSMessage> messages) {
         super(context, 0, messages);
     }
@@ -47,26 +50,26 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
             if(nameText != null) {
                 if(message.getName() != null) {
-                    nameText.setText(message.getName());
+                    nameText.setText("Name: " + message.getName());
                 }
             }
 
             if(descText != null) {
                 if(message.getDescription() != null) {
-                    descText.setText(message.getDescription());
+                    descText.setText("Description: " + message.getDescription());
                 }
             }
 
 
             if (phoneText != null) {
                 if (message.getPhoneNumber() != null) {
-                    phoneText.setText(message.getPhoneNumber());
+                    phoneText.setText("Number: " + message.getPhoneNumber());
                 }
             }
 
             if (messageText != null) {
                 if (message.getSmsTextMessage() != null) {
-                    messageText.setText(message.getSmsTextMessage());
+                    messageText.setText("Message: " + message.getSmsTextMessage());
                 }
             }
 
