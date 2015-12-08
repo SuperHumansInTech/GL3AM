@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.StorageClient;
@@ -33,6 +34,7 @@ public class SMSPopActivity extends Activity {
         //final boolean save = savedInstanceState.getBoolean("save", false);
         final boolean save = false;
         final StorageClient storeClient = new StorageClient(this, "default");
+
         Intent srcIntent = getIntent();
         final String sourceActivity = srcIntent.getStringExtra("source");
         final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
@@ -43,6 +45,13 @@ public class SMSPopActivity extends Activity {
         desc = (EditText)findViewById(R.id.SMSDesc);
         number = (EditText)findViewById(R.id.SMSPhoneNum);
         message = (EditText)findViewById(R.id.SMSTextMess);
+
+
+//// Initialize text in EditText fields to null
+//        name.setText(null);
+//        desc.setText(null);
+//        number.setText(null);
+//        message.setText(null);
 
         confirmButton = (ImageView)findViewById(R.id.confirmSMSButton);
         cancelButton = (ImageView)findViewById(R.id.SMScancelButton);
@@ -61,13 +70,16 @@ public class SMSPopActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!number.getText().toString().equals("")) {
+                    AlarmModel alarm = storeClient.getCurrAlarm(SMSPopActivity.this);
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
                     if (sourceActivity == "MessageActivity") {
                         if (save) {
                             storeClient.addSMS(newSMS);
                         } else {
-                            storeClient.setCurrSMS(newSMS);
+                            //storeClient.setCurrSMS(newSMS);
+                            alarm.setSMS(newSMS);
+                            storeClient.setCurrAlarm(alarm);
 
                         }
                         SMSPopActivity.this.finish();
@@ -75,7 +87,9 @@ public class SMSPopActivity extends Activity {
                         if (save) {
                             storeClient.addSMS(newSMS);
                         } else {
-                            storeClient.setCurrSMS(newSMS);
+                            //storeClient.setCurrSMS(newSMS);
+                            alarm.setSMS(newSMS);
+                            storeClient.setCurrAlarm(alarm);
 
                         }
                         Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
@@ -107,7 +121,8 @@ public class SMSPopActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-
+                SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
+                storeClient.addSMS(newSMS);
             }
         });
 

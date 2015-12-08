@@ -126,22 +126,40 @@ public class StorageClient {
         PrefEditor.apply();
     }
 
+    public void deleteSMS(int position) {
+        ArrayList<SMSMessage> message_list = loadSMSList();
+        message_list.remove(position);
+    }
+
+    public void deleteSMS(SMSMessage message) {
+        ArrayList<SMSMessage> message_list = loadSMSList();
+        for (int counter = 0; counter < message_list.size(); counter++) {
+            if (message == message_list.get(counter)) {
+                message_list.remove(counter);
+            }
+        }
+    }
+
 
     //Deal with data transfer between objects.
 
     public void setCurrAlarm(AlarmModel current) {
+        AlarmModel temp = current;
+        temp.updateContext(null);
         String json = gson.toJson(current);
         PrefEditor.putString(CURR_ALARM, json);
         PrefEditor.apply();
     }
 
-    public AlarmModel getCurrAlarm() {
+    public AlarmModel getCurrAlarm(Context context) {
         String json = sharedPref.getString(CURR_ALARM, null);
         if(json == null) {
-            return new AlarmModel();
+            return null;
         }
         else {
-            return gson.fromJson(json, AlarmModel.class);
+            AlarmModel temp = gson.fromJson(json, AlarmModel.class);
+            temp.updateContext(context);
+            return temp;
         }
     }
 

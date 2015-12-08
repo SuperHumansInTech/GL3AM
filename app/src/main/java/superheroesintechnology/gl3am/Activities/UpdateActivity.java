@@ -21,9 +21,11 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.Destination;
 import superheroesintechnology.gl3am.Models.LatLngModel;
 import superheroesintechnology.gl3am.R;
+import superheroesintechnology.gl3am.Services.StorageClient;
 
 public class UpdateActivity extends Activity {
 
@@ -35,11 +37,15 @@ public class UpdateActivity extends Activity {
     public int activationDistance;
     private ImageView startCancelImageView;
     private TextView startCancelTextView;
+    private AlarmModel Alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final StorageClient StoreClient = new StorageClient(this, "default");
         setContentView(R.layout.activity_update);
+        Alarm = StoreClient.getCurrAlarm(this);
+
 
         Intent intent = getIntent();
         final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
@@ -50,9 +56,9 @@ public class UpdateActivity extends Activity {
         startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
 
-        SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
-        activationDistance = activationDistancePrefs.getInt("activationDist", 1);
-        final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
+        //SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
+        //activationDistance = activationDistancePrefs.getInt("activationDist", 1);
+        //final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
 
 
 
@@ -63,8 +69,8 @@ public class UpdateActivity extends Activity {
         //for testing Destination Class only. Can be removed
         final TextView boolTextView = (TextView) findViewById((R.id.booleanResultTextView));
 
-        destinationTextView.setText(testDest.getAddressString());
-        actDistTextView.setText(Integer.toString(activationDistance));
+        destinationTextView.setText(Alarm.getAddress_string());
+        actDistTextView.setText(Double.toString(Alarm.getActivation_distance()));
 
 
         final Handler locationUpdateHandler = new Handler();
@@ -78,14 +84,14 @@ public class UpdateActivity extends Activity {
 //                final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
 //                final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
 
-                if (testDest.verifyDistance(Curr_location.getLng(), Curr_location.getLat())) {
+                if (Alarm.verifyDistance()) {
                     boolTextView.setText("True");
                     return;
                 } else {
                     boolTextView.setText("False");
                 }
 
-                distFromDefTextView.setText(testDest.getDistFromCurLoc());
+                distFromDefTextView.setText(Double.toString(Alarm.getDistance_left()));
 
                 if (isPressed) {
                     locationUpdateHandler.postDelayed(this, 2000);
@@ -130,7 +136,7 @@ public class UpdateActivity extends Activity {
 
                             Curr_location.setLat(location.getLatitude());
                             Curr_location.setLng(location.getLongitude());
-                            //StoreClient.setCurrLocation(Curr_location); //Temporary, this will be updating the AlarmModel's current location LatLng rather than this. - ZBrester
+                            StoreClient.setCurrLocation(Curr_location); //Temporary, this will be updating the AlarmModel's current location LatLng rather than this. - ZBrester
 
                             //latitude = location.getLatitude();
                             //longitude = location.getLongitude();
@@ -187,7 +193,7 @@ public class UpdateActivity extends Activity {
                                     //final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
 
 
-                                    if (testDest.verifyDistance(Curr_location.getLng(), Curr_location.getLat())) {
+                                    if (Alarm.verifyDistance()) {
                                         //PowerManager.WakeLock TempWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP |
                                         //      PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
                                         //TempWakeLock.acquire();
@@ -243,7 +249,7 @@ public class UpdateActivity extends Activity {
 
 
                                             Toast.makeText(getApplicationContext(), "Distance remaining: "
-                                                    + testDest.getDistFromCurLoc(), Toast.LENGTH_LONG).show();
+                                                    + Alarm.getDistance_left(), Toast.LENGTH_LONG).show();
                                             counter = 0;
                                         }
                                     }

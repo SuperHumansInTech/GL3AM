@@ -33,7 +33,7 @@ public class SplashActivity extends Activity {
     private ImageView messageImageView;
     private ImageView leftLineImageView;
     private ImageView rightLineImageView;
-    private Location Curr_location = new Location("");
+    //private Location Curr_location = new Location("");
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Curr_location.setLatitude(0);
+        /*Curr_location.setLatitude(0);
         Curr_location.setLongitude(0);
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -105,10 +105,8 @@ public class SplashActivity extends Activity {
         initLocationPrefsEditor.putString("initialLat", Double.toString(Curr_location.getLatitude()));
         initLocationPrefsEditor.putString("initialLng", Double.toString(Curr_location.getLongitude()));
         initLocationPrefsEditor.apply();
+*/
 
-
-        final StorageClient StoreClient = new StorageClient(this, "default");
-        StoreClient.purgeCurrent();
 
         Typeface titleTypeFace = Typeface.createFromAsset(getAssets(), "Agency_FB.ttf");
         titleTextView = (TextView) findViewById(R.id.appTitleSplashTextView);

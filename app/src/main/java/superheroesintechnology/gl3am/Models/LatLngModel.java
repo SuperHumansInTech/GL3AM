@@ -1,10 +1,15 @@
  package superheroesintechnology.gl3am.Models;
 
+
+
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
+import java.net.URL;
+import java.net.URLEncoder;
+
+ /**
  * A model to store Latitude and Longitude deserialized from JSON, as doubles.
  *
  * Includes methods to set it manually, return either, and return a string of both of the values separated by a comma (for API queries).
@@ -32,6 +37,6 @@ public class LatLngModel {
     //Returns a string in the form "Latitude, Longitude". This is used for API calls.
     public String getCoordString() {return String.valueOf(this.lat) + ", " + String.valueOf(this.lng);}
 
-    public String getCoordHtmlString() {return TextUtils.htmlEncode(String.valueOf(this.lat)+","+String.valueOf(this.lng));}
+    public String getCoordHtmlString() {return (String.valueOf(this.lat) + "," + String.valueOf(this.lng));}
 
 }
