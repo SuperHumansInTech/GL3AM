@@ -167,6 +167,8 @@ public class AlarmModel {
                     @Override
                     public void onError(Throwable e) {
                         error = true;
+                        Toast.makeText(context.getApplicationContext(),
+                                "API Call unsuccessful. Please use a proper street address, with City.", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

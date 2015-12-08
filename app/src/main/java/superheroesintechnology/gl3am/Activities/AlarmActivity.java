@@ -633,21 +633,10 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //smsButton.setVisibility(View.INVISIBLE);
     }
 
-    public void APIReturned(AlarmModel alarm) {
-        if(alarm.error) {
-            return;
-        }
 
-        if(alarm.getDestination() != null) {
-            seekBar.setMax((int) currAlarmModel.getDistance_left());
-        }
-        if(alarm.getActivation_distance() != 0) {
-            alarm.setActivation_distance((double) seekBar.getProgress());
-        }
 
-        this.StoreClient.setCurrAlarm(alarm);
+    public void setFlags(AlarmModel alarm) {
     }
-
     public void onSaveOrUseClick(View view) {
         if (saveInfoBool) {
             Toast.makeText(getApplicationContext(), "Save", Toast.LENGTH_LONG).show();
