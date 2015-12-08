@@ -37,7 +37,7 @@ public class MessageActivity extends Activity {
         final StorageClient StoreClient = new StorageClient(this, "default");
         setContentView(R.layout.activity_message);
 
-        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
+//        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
 
 
         smsList = (ListView) findViewById(R.id.list);
