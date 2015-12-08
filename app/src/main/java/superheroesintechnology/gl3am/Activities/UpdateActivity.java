@@ -70,7 +70,7 @@ public class UpdateActivity extends Activity {
         final TextView boolTextView = (TextView) findViewById((R.id.booleanResultTextView));
 
         destinationTextView.setText(Alarm.getAddress_string());
-        actDistTextView.setText(Double.toString(Alarm.getActivation_distance()));
+        actDistTextView.setText(Double.toString(Alarm.getActivation_distance()) + " mi.");
 
 
         final Handler locationUpdateHandler = new Handler();
@@ -91,7 +91,7 @@ public class UpdateActivity extends Activity {
                     boolTextView.setText("False");
                 }
 
-                distFromDefTextView.setText(Double.toString(Alarm.getDistance_left()));
+                distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
 
                 if (isPressed) {
                     locationUpdateHandler.postDelayed(this, 2000);
