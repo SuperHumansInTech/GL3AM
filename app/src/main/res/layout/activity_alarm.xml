@@ -148,7 +148,7 @@
         android:textColor="@color/text_color"
         android:hint="Search location..."
         android:textColorHint="@color/hint"/>
-    <Button
+    <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/magnifier12"

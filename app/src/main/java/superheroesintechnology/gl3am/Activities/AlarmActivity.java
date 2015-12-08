@@ -54,7 +54,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private boolean isPressed = false;
     public boolean isSeekChanged = false;
     public int activationDistance = 1;
-    private Button searchButton;
+    private ImageView searchButton;
     private EditText searchLoc;
     private Button smsButton;
    // public int counter = 4;
@@ -183,7 +183,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         */
 
         searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
-        searchButton = (Button) findViewById(R.id.destSearchButton);
+        searchButton = (ImageView) findViewById(R.id.destSearchButton);
 
 
 
