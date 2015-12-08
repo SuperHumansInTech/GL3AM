@@ -1,53 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_click_event">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id = "@+id/nameText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:longClickable="true">
+        android:text= "Test"
+        android:layout_marginTop="1dp"
+        />
+    <TextView
+        android:id = "@+id/descText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Test"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id = "@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Test"
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:id = "@+id/messageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Test"
+        android:layout_marginTop="1dp"
+        />
 
-        <TextView
-            android:id = "@+id/nameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "Test"
-            android:layout_marginTop="1dp"
-            />
-        <TextView
-            android:id = "@+id/descText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "Test"
-            android:layout_marginTop="10dp"
-            />
-        <TextView
-            android:id = "@+id/phoneText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "Test"
-            android:layout_marginTop="15dp"
-            />
-        <TextView
-            android:id = "@+id/messageText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "Test"
-            android:layout_marginTop="1dp"
-            />
-    </LinearLayout>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/deleteSMSButton"
-            android:clickable="false"
-            android:background="@drawable/delete_icon"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center"/>
-
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/magnifier12"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/destSearchButton" />
 </LinearLayout>

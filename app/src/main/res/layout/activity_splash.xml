@@ -52,7 +52,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:id="@+id/messageSplashImageView"
-        android:background="@drawable/speech_bubble63"
+        android:background="@drawable/speehcbubble"
         android:layout_alignBottom="@id/right_line"
         android:layout_alignRight="@id/right_line"
         android:visibility="visible" />

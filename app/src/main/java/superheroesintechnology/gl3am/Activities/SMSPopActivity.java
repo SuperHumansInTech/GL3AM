@@ -63,7 +63,7 @@ public class SMSPopActivity extends Activity {
         int width = popDM.widthPixels;
         int height = popDM.heightPixels;
 
-        getWindow().setLayout((int)(width*.8), (int)(height*.5));
+        getWindow().setLayout((int)(width*.8), (int)(height*.6));
 
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
