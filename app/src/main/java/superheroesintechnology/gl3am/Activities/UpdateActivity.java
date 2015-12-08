@@ -44,8 +44,8 @@ public class UpdateActivity extends Activity {
         super.onCreate(savedInstanceState);
         final StorageClient StoreClient = new StorageClient(this, "default");
         setContentView(R.layout.activity_update);
-        Alarm = StoreClient.getCurrAlarm();
-        Alarm.updateContext(this);
+        Alarm = StoreClient.getCurrAlarm(this);
+
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 

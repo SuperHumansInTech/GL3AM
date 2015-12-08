@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import superheroesintechnology.gl3am.Activities.AlarmActivity;
 import superheroesintechnology.gl3am.Services.APIClient;
 import superheroesintechnology.gl3am.Services.StorageClient;
 
@@ -57,11 +58,14 @@ public class AlarmModel {
     private String address_string;
     private int check_frequency = NORMAL;
     private double activation_distance;
+    private String caller;
 
+    public boolean error = false;
     //private int notify_flags = this.SOUND|this.PUSH;    //By default, only alerts via sound and a push notification.
 
     public AlarmModel(Context C, String search_address) {
         this.context = C;
+        caller = C.getClass().toString();
         updateRoute(true, search_address);
         setFlags(5, 0, 0, false);
     }
@@ -139,16 +143,18 @@ public class AlarmModel {
     }
 
     public void updateRoute(final boolean first, String search_address) {
+        StorageClient StoreClient = new StorageClient(context, "default");
         if(!first) {
-            search_address = TextUtilsCompatJellybeanMr1.htmlEncode(destination.getCoordString());
+            search_address = URLEncoder.encode(destination.getCoordString());
         }
         else {
             search_address = URLEncoder.encode(search_address);
         }
-        StorageClient StoreClient = new StorageClient(context, "default");
+        String temp_address = StoreClient.getCurrLocation().getCoordHtmlString();
+
         APIClient.getDirectionsProvider()
 
-                .getDirections(StoreClient.getCurrLocation().getCoordHtmlString(), search_address)
+                .getDirections(temp_address, search_address)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SearchResultModel>() {
@@ -160,7 +166,7 @@ public class AlarmModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        int i = 0;
+                        error = true;
                     }
 
                     @Override
@@ -175,6 +181,9 @@ public class AlarmModel {
                         destination = leg.getEnd_location();
                         Toast.makeText(context.getApplicationContext(), "API Call successful. Destination coordinates:"
                                 + destination.getCoordString(), Toast.LENGTH_LONG).show();
+                        if(caller == "Alarm") {
+
+                        }
 
                     }
                 });
@@ -194,7 +203,7 @@ public class AlarmModel {
         StorageClient StoreClient = new StorageClient(context, "default");
         LatLngModel temp_coords = StoreClient.getCurrLocation();
         double[] latLongArray = {this.destination.getLat(), this.destination.getLng(),temp_coords.getLat() , temp_coords.getLng()};
-        double theta = this.destination.getLat() - this.destination.getLng();
+        double theta = this.destination.getLng() - temp_coords.getLng();
         double radTheta = Math.PI * theta / 180;
 
         // Converts values to radians

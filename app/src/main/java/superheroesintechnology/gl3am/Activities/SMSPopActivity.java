@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.StorageClient;
@@ -59,13 +60,16 @@ public class SMSPopActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!number.getText().toString().equals("")) {
+                    AlarmModel alarm = storeClient.getCurrAlarm(SMSPopActivity.this);
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
                     if (sourceActivity == "MessageActivity") {
                         if (save) {
                             storeClient.addSMS(newSMS);
                         } else {
-                            storeClient.setCurrSMS(newSMS);
+                            //storeClient.setCurrSMS(newSMS);
+                            alarm.setSMS(newSMS);
+                            storeClient.setCurrAlarm(alarm);
 
                         }
                         SMSPopActivity.this.finish();
@@ -73,7 +77,9 @@ public class SMSPopActivity extends Activity {
                         if (save) {
                             storeClient.addSMS(newSMS);
                         } else {
-                            storeClient.setCurrSMS(newSMS);
+                            //storeClient.setCurrSMS(newSMS);
+                            alarm.setSMS(newSMS);
+                            storeClient.setCurrAlarm(alarm);
 
                         }
                         startActivity(new Intent(SMSPopActivity.this, UpdateActivity.class));

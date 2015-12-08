@@ -68,10 +68,11 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private boolean saveInfoBool = false;
     private boolean useInfoBool = false;
     private ImageView nextButton;
+    private  StorageClient StoreClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient = new StorageClient(this, "default");
         //StoreClient.purgeCurrent(); //Avoid sending old SMS.
 
 // Get user's initial location from SplashActivity (Using SharedPreferences)
@@ -80,7 +81,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
        //initialLocation.setLongitude(Double.parseDouble(initLocationPrefs.getString("initialLng", "")));
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location temp_loc = locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location temp_loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //final SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
         //final SharedPreferences.Editor sharedLocationEditor = sharedLocationPref.edit();
         //final Gson gson = new GsonBuilder().create();
@@ -89,6 +90,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         if(temp_loc != null) {
             Curr_location.setLat(temp_loc.getLatitude());
             Curr_location.setLng(temp_loc.getLongitude());
+            StoreClient.setCurrLocation(Curr_location);
             //StoreClient.setCurrLocation(Curr_location);
             //I'm not sure if we really even need a Curr_location variable... - ZBrester
             //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
@@ -97,10 +99,10 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         }
         else {
             Curr_location = StoreClient.getCurrLocation();
-            if(Curr_location == null) {
-                Curr_location = new LatLngModel();
+            if(Curr_location.getLat() == 0 && Curr_location.getLng() == 0 ) {
                 Curr_location.setLat(38);
                 Curr_location.setLng(-122.8);
+                StoreClient.setCurrLocation(Curr_location);
             }
             //Curr_location.setLat(38);
             //Curr_location.setLng(-122.8);
@@ -130,8 +132,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
         // final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
 
-        /* smsButton = (Button) findViewById(R.id.saveSmsButton);
-        //smsButton.setVisibility(View.INVISIBLE);
+// smsButton = (Button) findViewById(R.id.saveSmsButton);
+      /*  //smsButton.setVisibility(View.INVISIBLE);
 
         smsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,10 +207,9 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
 
                 currAlarmModel = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
-                //currAlarmModel.setActivation_distance(seekBar.getProgress());
-
-                StoreClient.setCurrAlarm(currAlarmModel);
-                /*APIClient.getDirectionsProvider()
+                currAlarmModel.setActivation_distance(seekBar.getProgress());
+                /*
+                APIClient.getDirectionsProvider()
 
                         .getDirections(StoreClient.getCurrLocation().getCoordHtmlString(), TextUtils.htmlEncode(searchDestTextView.getText().toString()))
                         .subscribeOn(Schedulers.newThread())
@@ -242,7 +243,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                                 Toast.makeText(getApplicationContext(), "API Call successful. Destination coordinates:"
                                         + Dest_coords.getCoordString(), Toast.LENGTH_LONG).show();
                             }
-                        }); */
+                        });
+                        */
             }
         });
 
@@ -449,6 +451,11 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             seekBar.setProgress(sharedPreferences.getInt("miles", 1));
             distanceText.setText(String.valueOf(sharedPreferences.getInt("miles", 1)));
         }
+        else {
+            seekBar.setProgress(1);
+            distanceText.setText("1");
+        }
+
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -462,7 +469,9 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 //              THIS IF-STATEMENT ONLY SETS destination's ACTIVATION DISTANCE
 //                  IF THE START BUTTON HAS NOT BEEN PRESSED
                 if (!isPressed) {
-                    currAlarmModel.setActivation_distance(progress);
+                    if(currAlarmModel != null && !currAlarmModel.error) {
+                        currAlarmModel.setActivation_distance(progress);
+                    }
                 }
 
                 activationDistance = seekBar.getProgress();
@@ -477,14 +486,17 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
                 }
                 distanceText.setText(seekBar.getProgress() + "");
-                seekBarEditor.putInt("miles", seekBar.getProgress());
-                seekBarEditor.commit();
+                //seekBarEditor.putInt("miles", seekBar.getProgress());
+                //seekBarEditor.commit();
+                if(currAlarmModel != null && !currAlarmModel.error) {
+                    currAlarmModel.setActivation_distance((double) seekBar.getProgress());
+                }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                //Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
 
             }
 
@@ -503,6 +515,13 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(currAlarmModel == null || currAlarmModel.getDestination() == null) {
+                        Toast.makeText(getApplicationContext(), "Error! No assigned destination." , Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                else {
+                    StoreClient.setCurrAlarm(currAlarmModel);
+                }
                 if (msgOnly || alrmAndMsg) {
                     Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     destinationIntent.putExtra("source", "alarmActivity");
@@ -601,7 +620,20 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //smsButton.setVisibility(View.INVISIBLE);
     }
 
+    public void APIReturned(AlarmModel alarm) {
+        if(alarm.error) {
+            return;
+        }
 
+        if(alarm.getDestination() != null) {
+            seekBar.setMax((int) currAlarmModel.getDistance_left());
+        }
+        if(alarm.getActivation_distance() != 0) {
+            alarm.setActivation_distance((double) seekBar.getProgress());
+        }
+
+        this.StoreClient.setCurrAlarm(alarm);
+    }
 
     public void onSaveOrUseClick(View view) {
         if (saveInfoBool) {

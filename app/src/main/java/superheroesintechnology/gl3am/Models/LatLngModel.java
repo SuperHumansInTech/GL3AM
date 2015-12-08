@@ -2,8 +2,11 @@
 
 
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.net.URL;
 import java.net.URLEncoder;
 
  /**
@@ -34,6 +37,6 @@ public class LatLngModel {
     //Returns a string in the form "Latitude, Longitude". This is used for API calls.
     public String getCoordString() {return String.valueOf(this.lat) + ", " + String.valueOf(this.lng);}
 
-    public String getCoordHtmlString() {return URLEncoder.encode(String.valueOf(this.lat) + "," + String.valueOf(this.lng));}
+    public String getCoordHtmlString() {return (String.valueOf(this.lat) + "," + String.valueOf(this.lng));}
 
 }
