@@ -1,6 +1,7 @@
 package superheroesintechnology.gl3am.Adapters;
 
 import android.content.Context;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
             TextView nameText = (TextView) v.findViewById(R.id.nameText);
             TextView descText = (TextView) v.findViewById(R.id.descText);
             TextView phoneText = (TextView) v.findViewById(R.id.phoneText);
-            TextView messageText = (TextView) v.findViewById(R.id.messageText);
+           // TextView messageText = (TextView) v.findViewById(R.id.messageText);
 
 
             if(nameText != null) {
@@ -63,15 +64,15 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
             if (phoneText != null) {
                 if (message.getPhoneNumber() != null) {
-                    phoneText.setText("Number: " + message.getPhoneNumber());
+                    phoneText.setText("Number: " + PhoneNumberUtils.formatNumber(message.getPhoneNumber()));
                 }
             }
 
-            if (messageText != null) {
-                if (message.getSmsTextMessage() != null) {
-                    messageText.setText("Message: " + message.getSmsTextMessage());
-                }
-            }
+//            if (messageText != null) {
+//                if (message.getSmsTextMessage() != null) {
+//                    messageText.setText("Message: " + message.getSmsTextMessage());
+//                }
+//            }
 
         }
 
