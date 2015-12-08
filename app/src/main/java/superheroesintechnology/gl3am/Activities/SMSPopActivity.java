@@ -34,6 +34,7 @@ public class SMSPopActivity extends Activity {
         //final boolean save = savedInstanceState.getBoolean("save", false);
         final boolean save = false;
         final StorageClient storeClient = new StorageClient(this, "default");
+
         Intent srcIntent = getIntent();
         final String sourceActivity = srcIntent.getStringExtra("source");
         final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
@@ -44,6 +45,13 @@ public class SMSPopActivity extends Activity {
         desc = (EditText)findViewById(R.id.SMSDesc);
         number = (EditText)findViewById(R.id.SMSPhoneNum);
         message = (EditText)findViewById(R.id.SMSTextMess);
+
+
+//// Initialize text in EditText fields to null
+//        name.setText(null);
+//        desc.setText(null);
+//        number.setText(null);
+//        message.setText(null);
 
         confirmButton = (ImageView)findViewById(R.id.confirmSMSButton);
         cancelButton = (ImageView)findViewById(R.id.SMScancelButton);
@@ -113,7 +121,8 @@ public class SMSPopActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-
+                SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
+                storeClient.addSMS(newSMS);
             }
         });
 
