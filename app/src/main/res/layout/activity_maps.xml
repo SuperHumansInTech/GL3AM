@@ -3,9 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:padding="16dp"
     android:background="#434343"
     android:id="@+id/main"
     tools:context=".MapsActivity">
+
+    <ImageView
+        android:id="@+id/infoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/info"
+        android:background="@drawable/btn_click_event"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
 
     <LinearLayout
         android:orientation="horizontal"
