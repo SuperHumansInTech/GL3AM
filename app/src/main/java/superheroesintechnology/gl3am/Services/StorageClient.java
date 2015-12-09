@@ -145,7 +145,9 @@ public class StorageClient {
 
     public void setCurrAlarm(AlarmModel current) {
         AlarmModel temp = current;
-        temp.updateContext(null);
+        if(temp != null) {
+            temp.updateContext(null);
+        }
         String json = gson.toJson(current);
         PrefEditor.putString(CURR_ALARM, json);
         PrefEditor.apply();

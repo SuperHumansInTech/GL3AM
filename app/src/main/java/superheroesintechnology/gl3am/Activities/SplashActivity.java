@@ -1,14 +1,9 @@
 package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,11 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import superheroesintechnology.gl3am.Activities.MapsActivity;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.StorageClient;
 
@@ -43,8 +35,14 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient.setCurrAlarm(null);
+
         /*Curr_location.setLatitude(0);
         Curr_location.setLongitude(0);
 

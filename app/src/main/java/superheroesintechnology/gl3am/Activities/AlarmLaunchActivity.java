@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.SMSMessage;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.StorageClient;
@@ -42,8 +43,9 @@ public class AlarmLaunchActivity extends Service {
     MediaPlayer alarmSound;
     public String myPhoneNumber;
     public String smsText;
-    boolean sendSMSBool;
-    boolean alrmBool;
+    //boolean sendSMSBool;
+    //boolean alrmBool;
+    AlarmModel alarm;
 
 
 
@@ -63,19 +65,23 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final StorageClient StoreClient = new StorageClient(this, "default");
-        final SMSMessage newMessage = StoreClient.getCurrSMS();
-        sendSMSBool = intent.getBooleanExtra("sendMsg?", false);
-        alrmBool = intent.getBooleanExtra("alrm?", false);
+        alarm = StoreClient.getCurrAlarm(this);
+        //final SMSMessage newMessage = StoreClient.getCurrSMS();
+        //sendSMSBool = intent.getBooleanExtra("sendMsg?", false);
+        //alrmBool = intent.getBooleanExtra("alrm?", false);
 
-        if (sendSMSBool) {
+        if (alarm.getFlags("near", "sms")) {
+            alarm.sendSMS("SMS");
+            Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
+            /*
             if (newMessage.getPhoneNumber() != null && newMessage.getSmsTextMessage() != null) {
                 //final SMSMessage newMessage = new SMSMessage(myPhoneNumber,smsText);
-                newMessage.sendSMS();
                 Toast.makeText(getApplicationContext(), "The text was sent!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), "No text sent. You did not enter a number or message!",
                         Toast.LENGTH_LONG).show();
             }
+            */
         }
 
 
@@ -85,7 +91,7 @@ public class AlarmLaunchActivity extends Service {
             alarmSound.seekTo(0);
         }
 
-        if (alrmBool) {
+        if (alarm.getFlags("near", "sound")) {
             alarmSound.start();
         }
         return START_STICKY;
@@ -95,11 +101,11 @@ public class AlarmLaunchActivity extends Service {
     public void onCreate() {
         new AlarmLaunchActivity();
         super.onCreate();
-        final Gson gson = new Gson();
-        final StorageClient StoreClient = new StorageClient(this, "default");
+       // final Gson gson = new Gson();
+        //final StorageClient StoreClient = new StorageClient(this, "default");
 // GET SMS INFO (USING SHAREDPREFS) FROM AlarmActivity
 // SAVE THEM TO LOCAL NUMBER AND TEXT STRING VARIABLES
-        final SMSMessage newMessage = StoreClient.getCurrSMS();
+        //final SMSMessage newMessage = StoreClient.getCurrSMS();
 
         //SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
         //myPhoneNumber = sharedSMSPrefs.getString("number", null);

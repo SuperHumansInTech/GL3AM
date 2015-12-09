@@ -46,10 +46,9 @@ public class UpdateActivity extends Activity {
         setContentView(R.layout.activity_update);
         Alarm = StoreClient.getCurrAlarm(this);
 
-
-        Intent intent = getIntent();
-        final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
-        final boolean alrmBool = intent.getBooleanExtra("alrm?", true);
+        //Intent intent = getIntent();
+        //final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
+        //final boolean alrmBool = intent.getBooleanExtra("alrm?", true);
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -201,8 +200,10 @@ public class UpdateActivity extends Activity {
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 //alarmSound.start();
-                                                Intent popUpTest = new Intent(UpdateActivity.this, AlarmLaunchActivity.class);
+                                                //Intent popUpTest = new Intent(UpdateActivity.this, AlarmLaunchActivity.class);
+                                                /*
                                                 if (sendSMSBool) {
+
                                                     if (alrmBool) {
                                                         popUpTest.putExtra("alrm?", true);
                                                     } else {
@@ -219,7 +220,8 @@ public class UpdateActivity extends Activity {
                                                     popUpTest.putExtra("sendMsg?", false);
                                                     startService(popUpTest);
                                                 }
-
+                                                */
+                                                startService(new Intent(UpdateActivity.this, AlarmLaunchActivity.class));
                                                 //alarmSound.pause();
                                             }
                                         });

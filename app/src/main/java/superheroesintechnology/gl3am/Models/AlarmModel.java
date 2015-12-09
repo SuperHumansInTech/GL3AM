@@ -155,6 +155,36 @@ public class AlarmModel {
         }
         this.minimize_API = minimize;
     }
+
+    //getFlags -ZBrester
+    //There is absolutely a better way to do this, but it's due in 2 days and I'm an absolute madman.
+    public boolean getFlags(String model, String type) {
+        switch (model) {
+            case "near" : {
+                switch (type) {
+                    case "sms": {return this.send_SMS;}
+                    case "sound": {return this.play_sound;}
+                    case "notify": {return this.push_notification;}
+                }
+            }
+
+            case "late" : {
+                switch (type) {
+                    case "sms": {return this.late_SMS;}
+                    case "sound": {return this.late_sound;}
+                    case "notify": {return this.late_push;}
+                }
+            }
+            case "arrive" : {
+                switch (type) {
+                    case "sms": {return this.arrive_SMS;}
+                    case "sound": {return this.arrive_sound;}
+                    case "notify": {return this.arrive_push;}
+                }
+            }
+        }
+        return false;
+    }
     //getFlagStrings(String which) - ZBrester
     //Returns a string describing the type of alarm set on the AlarmModel.
     //Argument which can be either "near", "late", or "arrive", which should be self-explanatory.
@@ -192,17 +222,6 @@ public class AlarmModel {
         }
     }
 
-    public void notifyNearing() {
-        if(push_notification) {
-            Toast.makeText(context.getApplicationContext(), "Nearing destination.", Toast.LENGTH_LONG).show();
-        }
-        if(send_SMS) {
-            sendSMS("SMS");
-        }
-        if(play_sound) {
-
-        }
-    }
 
     public void updateRoute(final boolean first, String search_address) {
         StorageClient StoreClient = new StorageClient(context, "default");
@@ -245,23 +264,11 @@ public class AlarmModel {
                         destination = leg.getEnd_location();
                         Toast.makeText(context.getApplicationContext(), "API Call successful. Destination coordinates:"
                                 + destination.getCoordString(), Toast.LENGTH_LONG).show();
-                        if(caller == "Alarm") {
-
-                        }
-
                     }
                 });
     }
     public boolean verifyDistance() {
-
-        // boolean verifyDist = false;
-
-        if (activation_distance >= calcDistanceFromDest()) {
-            return true;
-            //verifyDist = true;
-        }
-        return false;
-        //return verifyDist;
+        return (activation_distance >= calcDistanceFromDest());
     }
     private double calcDistanceFromDest() {
         StorageClient StoreClient = new StorageClient(context, "default");
