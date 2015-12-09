@@ -19,114 +19,94 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayoutMainMenu"
-            android:layout_alignTop="@+id/linearLayout"
-            android:layout_toRightOf="@+id/linearLayout"
-            android:layout_toEndOf="@+id/linearLayout"
-            android:layout_gravity="center">
+            android:id="@+id/linearLayoutMainMenu">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/alarmImage"
-                android:background="@drawable/alarm_text_icon"
-                android:clickable="true"
-                android:layout_gravity="center" />
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/alarm_text_icon"
+                android:clickable="true" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/alarm_service"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="@string/alarm_service"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="10dp"/>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/favoritesImage"
-                android:background="@drawable/favorites"
-                android:layout_gravity="center" />
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/favorites" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:text="@string/favorites"
-                    android:textSize="12sp"
                     android:textColor="@color/text_color"
                     android:textAlignment="center"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"/>
+
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ImageView
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            ></LinearLayout>
+            />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_width="wrap_content">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/textImage"
-                android:background="@drawable/speech_bubble63"
-                android:layout_gravity="center" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/message_service"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color"
-                    android:textAlignment="center" />
-            </LinearLayout>
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/message_favorites"/>
 
-            <LinearLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/message_service"
+                android:textColor="@color/text_color"
+                android:textAlignment="center"/>
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_gravity="center"></LinearLayout>
+               />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/currentActivityImage"
-                android:background="@drawable/map4"
-            />
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/map4"/>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/update_system"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
+                android:layout_height="40dp"
+                android:text="@string/update_system"
+                android:textColor="@color/text_color"
+                android:layout_gravity="top"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
 

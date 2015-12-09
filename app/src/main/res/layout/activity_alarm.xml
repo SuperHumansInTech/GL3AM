@@ -29,7 +29,8 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/nextbutton"
+            android:src="@drawable/nextbutton"
+            android:background="@drawable/btn_click_event"
             />
     </LinearLayout>
 
@@ -45,45 +46,50 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/favoritesAlarmImage"
-            android:background="@drawable/favorites"
+            android:src="@drawable/favorites"
             android:layout_gravity="bottom"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/alarmAlarmImage"
-            android:background="@drawable/alarm54"
+            android:src="@drawable/alarm_text_icon"
             android:layout_gravity="bottom"
             android:scaleType="centerInside"
             android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp" />
+            android:layout_marginLeft="30dp"
+            />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/homeAlarmImage"
-            android:background="@drawable/home"
+            android:src="@drawable/home"
             android:clickable="true"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/messageAlarmImage"
-            android:background="@drawable/speech_bubble63"
+            android:src="@drawable/message_favorites"
             android:layout_gravity="bottom"
             android:scaleType="centerInside"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" />
+            android:layout_marginRight="30dp"
+            android:background="@drawable/btn_click_event"/>
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/statusAlarmImage"
-            android:background="@drawable/map4"
+            android:src="@drawable/map4"
             android:layout_gravity="bottom"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
 
     </LinearLayout>
 
@@ -95,7 +101,7 @@
     <!--<ImageView-->
         <!--android:layout_width="45dp"-->
         <!--android:layout_height="45dp"-->
-        <!--android:background="@drawable/start"-->
+        <!--android:src="@drawable/start"-->
         <!--android:id="@+id/startStopAlarmImageView"-->
         <!--android:layout_centerHorizontal="true"-->
         <!--android:layout_marginTop="20dp"-->
@@ -129,26 +135,28 @@
         android:layout_weight="1"
         />
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/searchFieldLinearLayout"
-    android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchFieldLinearLayout"
+        android:orientation="horizontal"
         android:layout_gravity="center"
-    android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp">
     <EditText
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:id="@+id/locationSearchFieldAlarm"
         android:textColor="@color/text_color"
-        android:hint="Search location..."/>
-    <Button
+        android:hint="Search location..."
+        android:textColorHint="@color/hint"/>
+    <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/magnifier12"
+        android:src="@drawable/magnifier12"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:id="@+id/destSearchButton" />
-</LinearLayout>
+        android:id="@+id/destSearchButton"
+        android:background="@drawable/btn_click_event"/>
+    </LinearLayout>
 
 
 
@@ -157,7 +165,7 @@
         android:layout_height="match_parent"
         android:id="@+id/spinner"
         android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        android:gravity="center" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -183,12 +191,26 @@
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="20"
+        android:max="40"
         android:layout_marginTop="15dp"
         android:id="@+id/distanceAlarmSeekbar"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />
+
+    <ImageView
+        android:id="@+id/saveAlarmToFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/pop_up_background"
+        />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textAlignment="center"/>
 
 <!--    <TextView
         android:layout_width="wrap_content"
@@ -237,19 +259,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/popup"
-            android:textColor="@color/text_color"
-            android:text="@string/confirmAlarmInfo"
-            android:id="@+id/confirmAlarmInfoButton"/>
         <!--<Button-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@color/popup"-->
+            <!--android:src="@color/popup"-->
+            <!--android:textColor="@color/text_color"-->
+            <!--android:text="@string/confirmAlarmInfo"-->
+            <!--android:id="@+id/confirmAlarmInfoButton"/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:src="@color/popup"-->
             <!--android:textColor="@color/text_color"-->
             <!--android:text="Save or Use"-->
             <!--android:id="@+id/saveOrUseButton"-->

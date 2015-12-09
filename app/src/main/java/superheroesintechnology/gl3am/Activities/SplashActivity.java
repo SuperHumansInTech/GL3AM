@@ -1,14 +1,9 @@
 package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,11 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import superheroesintechnology.gl3am.Activities.MapsActivity;
 import superheroesintechnology.gl3am.R;
 import superheroesintechnology.gl3am.Services.StorageClient;
 
@@ -33,7 +25,7 @@ public class SplashActivity extends Activity {
     private ImageView messageImageView;
     private ImageView leftLineImageView;
     private ImageView rightLineImageView;
-    private Location Curr_location = new Location("");
+    //private Location Curr_location = new Location("");
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -43,9 +35,15 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Curr_location.setLatitude(0);
+
+        StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient.setCurrAlarm(null);
+
+        /*Curr_location.setLatitude(0);
         Curr_location.setLongitude(0);
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -105,10 +103,8 @@ public class SplashActivity extends Activity {
         initLocationPrefsEditor.putString("initialLat", Double.toString(Curr_location.getLatitude()));
         initLocationPrefsEditor.putString("initialLng", Double.toString(Curr_location.getLongitude()));
         initLocationPrefsEditor.apply();
+*/
 
-
-        final StorageClient StoreClient = new StorageClient(this, "default");
-        StoreClient.purgeCurrent();
 
         Typeface titleTypeFace = Typeface.createFromAsset(getAssets(), "Agency_FB.ttf");
         titleTextView = (TextView) findViewById(R.id.appTitleSplashTextView);

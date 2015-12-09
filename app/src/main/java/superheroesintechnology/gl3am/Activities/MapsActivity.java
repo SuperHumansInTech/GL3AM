@@ -44,8 +44,8 @@ public class MapsActivity extends Activity{
         favoritesImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(MapsActivity.this, FavoritesActivity.class));
-                startActivity(new Intent(MapsActivity.this, APISearchActivity.class));
+                startActivity(new Intent(MapsActivity.this, FavoritesActivity.class));
+               // startActivity(new Intent(MapsActivity.this, APISearchActivity.class));
             }
         });
 

@@ -7,24 +7,22 @@
     android:padding="10dp">
 
     <TextView
-        android:id = "@+id/nameText"
+        android:id="@+id/destText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text= "Name Here"
-        android:textSize="20sp"
-        />
+        android:text="Destination Address"
+        android:textSize="20sp"/>
     <TextView
-        android:id = "@+id/phoneText"
+        android:id="@+id/typeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text= "7076798319"
-        android:layout_marginTop="5dp"
-        />
+        android:text="Type of Alarm"
+        android:textSize="10sp"/>
     <TextView
-        android:id = "@+id/descText"
+        android:id="@+id/activationDistText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text= "Description here"
-        />
+        android:text="Activation Distance"
+        android:textSize="5sp"/>
 
 </LinearLayout>

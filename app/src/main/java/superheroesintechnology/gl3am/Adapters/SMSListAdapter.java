@@ -1,6 +1,7 @@
 package superheroesintechnology.gl3am.Adapters;
 
 import android.content.Context;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import superheroesintechnology.gl3am.R;
  * Created by Zach on 12/3/2015.
  */
 public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
+
+
+
     public SMSListAdapter(Context context, ArrayList<SMSMessage> messages) {
         super(context, 0, messages);
     }
@@ -42,33 +46,33 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
             TextView nameText = (TextView) v.findViewById(R.id.nameText);
             TextView descText = (TextView) v.findViewById(R.id.descText);
             TextView phoneText = (TextView) v.findViewById(R.id.phoneText);
-            TextView messageText = (TextView) v.findViewById(R.id.messageText);
+           // TextView messageText = (TextView) v.findViewById(R.id.messageText);
 
 
             if(nameText != null) {
                 if(message.getName() != null) {
-                    nameText.setText(message.getName());
+                    nameText.setText("Name: " + message.getName());
                 }
             }
 
             if(descText != null) {
                 if(message.getDescription() != null) {
-                    descText.setText(message.getDescription());
+                    descText.setText("Description: " + message.getDescription());
                 }
             }
 
 
             if (phoneText != null) {
                 if (message.getPhoneNumber() != null) {
-                    phoneText.setText(message.getPhoneNumber());
+                    phoneText.setText("Number: " + PhoneNumberUtils.formatNumber(message.getPhoneNumber()));
                 }
             }
 
-            if (messageText != null) {
-                if (message.getSmsTextMessage() != null) {
-                    messageText.setText(message.getSmsTextMessage());
-                }
-            }
+//            if (messageText != null) {
+//                if (message.getSmsTextMessage() != null) {
+//                    messageText.setText("Message: " + message.getSmsTextMessage());
+//                }
+//            }
 
         }
 
