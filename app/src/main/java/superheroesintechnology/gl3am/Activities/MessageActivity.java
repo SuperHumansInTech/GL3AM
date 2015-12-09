@@ -51,20 +51,7 @@ public class MessageActivity extends Activity {
         listAdapter = new SMSListAdapter(this, message_list);
         smsList.setAdapter(listAdapter);
 
-//        smsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                alertMessage(position, StoreClient);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        listAdapter.notifyDataSetChanged();
-//
-//                    }
-//                });
-//                return true;
-//            }
-//        });
+
 
 
 

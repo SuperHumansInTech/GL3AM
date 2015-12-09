@@ -26,10 +26,46 @@ public class SMSPopActivity extends Activity {
     private EditText desc;
     private EditText number;
     private EditText message;
+    private boolean fromMessageActivity;
+    private boolean fromAlarmActivity;
+    private boolean fromSaveToFavorites;
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        StorageClient storeClient = new StorageClient(this, "default");
+//        String name;
+//        String description;
+//        String number;
+//        String text;
+//        if (requestCode == 2) {
+//            data.getExtras();
+//            name = data.getStringExtra("name");
+//            description = data.getStringExtra("description");
+//            number = data.getStringExtra("number");
+//            text = data.getStringExtra("text");
+//            final SMSMessage loadedSMS = new SMSMessage (name, description, number, text);
+//            storeClient.setCurrSMS(loadedSMS);
+//        }
+//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        finishAndRemoveTask();
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//  SAVE TO FAVORITES BUTTON:
+//          intent.putExtra("sourceForPop", getString(R.string.fromSaveToFavoritesButton));
+
+//  FROM ALARM ACTIVITY'S NEXT BUTTON:
+//          intent.putExtra("sourceForPop", getString(R.string.fromAlarmActivityNext));
+
+//  FROM MESSAGE ACTIVITY
+//          intent.putExtra("sourceForPop", getString(R.string.fromFavoriteMessages));
+
 
         //final boolean save = savedInstanceState.getBoolean("save", false);
         final boolean save = false;
@@ -37,10 +73,24 @@ public class SMSPopActivity extends Activity {
 
         Intent srcIntent = getIntent();
         final String sourceActivity = srcIntent.getStringExtra("source");
+        final String sourceForAlternatePop = srcIntent.getStringExtra("sourceForPop");
         //final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
         //final boolean alrmBool = srcIntent.getBooleanExtra("alrm?", true);
 
-        setContentView(R.layout.activity_smspop);
+//        if (sourceForAlternatePop == getString(R.string.fromSaveToFavoritesButton)) {
+//            setContentView(R.layout.save_alarm_to_favorites_pop);
+//            fromSaveToFavorites = true;
+//            fromAlarmActivity = fromMessageActivity = false;
+//        } if (sourceForAlternatePop == getString(R.string.fromAlarmActivityNext)) {
+            setContentView(R.layout.activity_smspop);
+//            fromAlarmActivity = true;
+//            fromSaveToFavorites = fromMessageActivity = false;
+//        } if (sourceForAlternatePop == getString(R.string.fromFavoriteMessages)) {
+//            setContentView(R.layout.save_sms_to_favorites_pop);
+//            fromMessageActivity = true;
+//            fromAlarmActivity = fromSaveToFavorites = false;
+//        }
+
         name = (EditText)findViewById(R.id.SMSName);
         desc = (EditText)findViewById(R.id.SMSDesc);
         number = (EditText)findViewById(R.id.SMSPhoneNum);
@@ -110,27 +160,40 @@ public class SMSPopActivity extends Activity {
             }
         });
 
-        saveSMSButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+//        if (fromAlarmActivity || fromSaveToFavorites) {
+//
+//            if (fromAlarmActivity) {
+                saveSMSButton.setOnClickListener(new View.OnClickListener() {
 
-                if(number.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
-                    return;
+                    @Override
+                    public void onClick(View v) {
+
+                        if(number.getText().toString().equals("")) {
+                            Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
+                        storeClient.addSMS(newSMS);
+                    }
+                });
+//            }
+
+
+            getSavedSMSButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), LoadSMSActivity.class);
+                    startActivityForResult(intent, 2);
                 }
+            });
 
-                SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
-                storeClient.addSMS(newSMS);
-            }
-        });
 
-        getSavedSMSButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
+
+
 }
+
+
