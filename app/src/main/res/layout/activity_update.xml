@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/destinationResultTextView"
-                android:text="test"
+                android:text=""
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"/>
 
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/defDistResultTextView"
-                android:text="test"
+                android:text=""
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"/>
 
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/distFromDestResultTextView"
-                android:text="test"
+                android:text=""
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"/>
 
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/booleanResultTextView"
-                android:text="test"
+                android:text=""
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"/>
         </LinearLayout>
