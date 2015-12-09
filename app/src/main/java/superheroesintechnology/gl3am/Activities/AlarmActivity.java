@@ -69,6 +69,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private boolean useInfoBool = false;
     private ImageView nextButton;
     private  StorageClient StoreClient = null;
+    int alarm_flags = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +209,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
                 currAlarmModel = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
                 currAlarmModel.setActivation_distance(seekBar.getProgress() * .5);
+                currAlarmModel.setFlags(alarm_flags,0, 0, false);
+
                 /*
                 APIClient.getDirectionsProvider()
 
@@ -520,10 +523,13 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                         return;
                     }
                 else {
+                    currAlarmModel.setFlags(alarm_flags, 0, 0, false);
                     StoreClient.setCurrAlarm(currAlarmModel);
                 }
-                if (msgOnly || alrmAndMsg) {
-                    Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                //2 (0010) signals that it must be either Alarm and Message or Message Only)
+                if ( (alarm_flags&2) != 0 /*msgOnly || alrmAndMsg*/) {
+
+                    /*Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     destinationIntent.putExtra("source", "alarmActivity");
                     destinationIntent.putExtra("msg?", true);
                     if (msgOnly) {
@@ -531,14 +537,19 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                     } else {
                         destinationIntent.putExtra("alrm?", true);
                     }
+
                     startActivity(destinationIntent);
-                    //startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+                    */
+                    startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+
                 } else {
+                    /*
                     Intent intent = new Intent(AlarmActivity.this, UpdateActivity.class);
                     intent.putExtra("msg?", false);
                     intent.putExtra("alrm?", true);
                     startActivity(intent);
-                    //startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                    */
+                    startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
                 }
             }
         });
@@ -607,36 +618,39 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     // Set boolean value based on which spinner item is selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-            case 0:
+        //1 is sound, 2 is message, 3(1&2) is alarm and message. This actually adds up perfectly to do this:
+        alarm_flags = position+1;
+        /*switch (position) {
+            case 0: //Alarm Only
                 alrmOnly = true;
                 msgOnly = alrmAndMsg = false;
                 //smsButton.setVisibility(View.INVISIBLE);
                 break;
-            case 1:
+            case 1: //Message Only
                 msgOnly = true;
                 alrmOnly = alrmOnly = false;
                 //smsButton.setVisibility(View.VISIBLE);
                 break;
-            case 2:
+            case 2: //Alarm and Message
                 alrmAndMsg = true;
                 alrmOnly = msgOnly = false;
                 //smsButton.setVisibility(View.VISIBLE);
                 break;
         }
+        */
     }
 
     // Set a default spinner item in case none are selected
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        alrmOnly = true;
+        //alrmOnly = true;
+        alarm_flags = 1;
         //smsButton.setVisibility(View.INVISIBLE);
     }
 
 
 
-    public void setFlags(AlarmModel alarm) {
-    }
+
     public void onSaveOrUseClick(View view) {
         if (saveInfoBool) {
             Toast.makeText(getApplicationContext(), "Save", Toast.LENGTH_LONG).show();
