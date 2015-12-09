@@ -37,8 +37,8 @@ public class SMSPopActivity extends Activity {
 
         Intent srcIntent = getIntent();
         final String sourceActivity = srcIntent.getStringExtra("source");
-        final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
-        final boolean alrmBool = srcIntent.getBooleanExtra("alrm?", true);
+        //final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
+        //final boolean alrmBool = srcIntent.getBooleanExtra("alrm?", true);
 
         setContentView(R.layout.activity_smspop);
         name = (EditText)findViewById(R.id.SMSName);
@@ -77,9 +77,13 @@ public class SMSPopActivity extends Activity {
                         storeClient.addSMS(newSMS);
                         SMSPopActivity.this.finish();
                     } else {
+
                         alarm.setSMS(newSMS);
                         storeClient.setCurrAlarm(alarm);
                         storeClient.setCurrSMS(newSMS);
+
+
+                        /*
                         Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
                         if (sendSMSBool) {
                             intent.putExtra("msg?", true);
@@ -87,8 +91,9 @@ public class SMSPopActivity extends Activity {
                         if (!alrmBool) {
                             intent.putExtra("alrm?", false);
                         }
-
-                        startActivity(intent);
+ */
+                        startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
+                        SMSPopActivity.this.finish();
                     }
 
                     //startActivity(new Intent(SMSPopActivity.this, AlarmActivity.class));
@@ -109,6 +114,12 @@ public class SMSPopActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+
+                if(number.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
                 storeClient.addSMS(newSMS);
             }
@@ -121,4 +132,5 @@ public class SMSPopActivity extends Activity {
             }
         });
     }
+
 }

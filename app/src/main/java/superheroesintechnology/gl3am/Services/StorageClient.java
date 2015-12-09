@@ -92,9 +92,38 @@ public class StorageClient {
         if (alarm_list == null) {
             alarm_list = new ArrayList<AlarmModel>();
         }
+        alarm.updateContext(null);
         alarm_list.add(alarm);
         saveAlarmList(alarm_list);
         PrefEditor.apply();
+    }
+
+    //getAlarm - ZBrester
+    //Takes a position as an argument, and returns the AlarmModel in that position in the Alarm List.
+    //Returns null if index out of bounds, or the alarm list is empty.
+    //Does not remove the AlarmModel from the list, merely extracts a copy. -ZBrester
+    public AlarmModel getAlarm(int position) {
+        ArrayList<AlarmModel> alarm_list = loadAlarmList();
+        if (alarm_list == null || position < 0 || position >= alarm_list.size()) {
+            return null;
+        }
+        else {
+            return alarm_list.get(position);
+        }
+    }
+
+    //deleteAlarm(int position) -ZBrester
+    //Deletes the AlarmModel in that position from the alarm list.
+    //Returns without doing anything if null list or position out of bounds.
+    public void deleteAlarm(int position) {
+        ArrayList<AlarmModel> alarm_list = loadAlarmList();
+        if (alarm_list == null || position < 0 || position >= alarm_list.size()) {
+            return;
+        }
+        else {
+            alarm_list.remove(position);
+            saveAlarmList(alarm_list);
+        }
     }
 
     //SMS Message list
@@ -126,26 +155,34 @@ public class StorageClient {
         PrefEditor.apply();
     }
 
-    public void deleteSMS(int position) {
+    public SMSMessage getSMS(int position) {
         ArrayList<SMSMessage> message_list = loadSMSList();
-        message_list.remove(position);
+
+        if (message_list == null || position < 0 || position >= message_list.size()) {
+            return null;
+        }
+        else { return message_list.get(position);}
     }
 
-    public void deleteSMS(SMSMessage message) {
+    public void deleteSMS(int position) {
         ArrayList<SMSMessage> message_list = loadSMSList();
-        for (int counter = 0; counter < message_list.size(); counter++) {
-            if (message == message_list.get(counter)) {
-                message_list.remove(counter);
-            }
+        if (message_list == null || position < 0 || position >= message_list.size()) {
+            return;
         }
+        message_list.remove(position);
+        saveSMSList(message_list);
     }
+
+
 
 
     //Deal with data transfer between objects.
 
     public void setCurrAlarm(AlarmModel current) {
         AlarmModel temp = current;
-        temp.updateContext(null);
+        if(temp != null) {
+            temp.updateContext(null);
+        }
         String json = gson.toJson(current);
         PrefEditor.putString(CURR_ALARM, json);
         PrefEditor.apply();
@@ -178,6 +215,7 @@ public class StorageClient {
             return gson.fromJson(json, SMSMessage.class);
         }
     }
+
 
     public void setCurrLocation(LatLngModel location) {
         String json = gson.toJson(location);
