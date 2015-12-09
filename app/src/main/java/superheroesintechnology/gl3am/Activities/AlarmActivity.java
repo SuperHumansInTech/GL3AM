@@ -72,6 +72,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private  StorageClient StoreClient = null;
     int alarm_flags = 1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StoreClient = new StorageClient(this, "default");
@@ -196,19 +198,22 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
         saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
 
-//        saveToFavButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (searchLoc.getText().toString().equals("")) {
-//                    return;
-//                }
-////                AlarmModel newAlarmFavorite = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
-////                newAlarmFavorite.setActivation_distance(seekBar.getProgress() * .5);
-////                newAlarmFavorite.setFlags(2, 0, 0, false);
-//                StoreClient.addAlarm(currAlarmModel);
-//            }
-//        });
+        saveToFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (searchLoc.getText().toString().equals("")) {
+                    return;
+                }
+//                AlarmModel newAlarmFavorite = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
+//                newAlarmFavorite.setActivation_distance(seekBar.getProgress() * .5);
+//                newAlarmFavorite.setFlags(2, 0, 0, false);
+//                SharedPreferences sharedPrefs = getSharedPreferences("sourceForPop", Context.MODE_PRIVATE);
+//                intent.putExtra("sourceForPop", getString(R.string.fromSaveToFavoritesButton));
+
+                StoreClient.addAlarm(currAlarmModel);
+            }
+        });
         //final TextView searchDestTextView = (TextView) findViewById(R.id.locationSearchFieldAlarm);
 
 //      SETTING UP DESTINATION SEARCH BUTTON onCLICKLISTENER
@@ -541,9 +546,18 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 else {
                     currAlarmModel.setFlags(alarm_flags, 0, 0, false);
                     StoreClient.setCurrAlarm(currAlarmModel);
+                    if (LoadSMSActivity.loadedSMS != null) {
+                        currAlarmModel.setSMS(LoadSMSActivity.loadedSMS);
+                    }
                 }
                 //2 (0010) signals that it must be either Alarm and Message or Message Only)
                 if ( (alarm_flags&2) != 0 /*msgOnly || alrmAndMsg*/) {
+
+                    if (currAlarmModel.getSMS() == null) {
+                        startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+                    } else {
+                        startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                    }
 
                     /*Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     destinationIntent.putExtra("source", "alarmActivity");
@@ -556,7 +570,6 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
                     startActivity(destinationIntent);
                     */
-                    startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
 
                 } else {
                     /*

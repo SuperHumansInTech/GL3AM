@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/loadSMSPop"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:divider="#FD6721"
+        android:dividerHeight="1dp"
+        android:layout_above="@+id/loadSMSConCanLinLay">
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/loadSMSConCanLinLay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/saveinfo"
+            android:background="@drawable/sms_btn_click"
+            android:id="@+id/confirmLoadSMSButton"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <ImageView
+            android:id="@+id/cancelLoadSMSButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/sms_btn_click"
+            android:src="@drawable/cancel"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

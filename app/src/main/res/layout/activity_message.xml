@@ -20,7 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/navBarLinear"
         android:layout_marginTop="30dp"
-        android:layout_weight=".75">
+        android:layout_weight=".75"
+        android:divider="#FD6721"
+        android:dividerHeight="1dp">
     </ListView>
 
 
