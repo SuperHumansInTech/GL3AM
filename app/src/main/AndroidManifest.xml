@@ -73,7 +73,6 @@
         <activity
             android:name=".Activities.SMSPopActivity"
             android:theme="@style/AppTheme.AlarmPop"></activity>
-        <activity android:name=".Activities.LoadSMSActivity"></activity>
     </application>
 
 </manifest>
