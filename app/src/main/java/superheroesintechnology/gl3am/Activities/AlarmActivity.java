@@ -208,8 +208,9 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
 
                 currAlarmModel = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
-                currAlarmModel.setActivation_distance(seekBar.getProgress());
+                currAlarmModel.setActivation_distance(seekBar.getProgress() * .5);
                 currAlarmModel.setFlags(alarm_flags,0, 0, false);
+
                 /*
                 APIClient.getDirectionsProvider()
 
@@ -451,7 +452,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         distanceText = (TextView)findViewById(R.id.distanceAlarmTextView);
         if (sharedPreferences.contains("miles")){
             seekBar.setProgress(sharedPreferences.getInt("miles", 1));
-            distanceText.setText(String.valueOf(sharedPreferences.getInt("miles", 1)));
+            distanceText.setText(String.valueOf((sharedPreferences.getInt("miles", 1) * .5)));
         }
         else {
             seekBar.setProgress(1);
@@ -476,20 +477,20 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                     }
                 }
 
-                activationDistance = seekBar.getProgress();
+//                activationDistance = seekBar.getProgress();
                 isSeekChanged = true;
-                SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
-                SharedPreferences.Editor activationDistanceEditor = activationDistancePrefs.edit();
-                activationDistanceEditor.putInt("activationDist", activationDistance);
-                activationDistanceEditor.commit();
+//                SharedPreferences activationDistancePrefs = getSharedPreferences("activationDistance", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor activationDistanceEditor = activationDistancePrefs.edit();
+//                activationDistanceEditor.putInt("activationDist", activationDistance);
+//                activationDistanceEditor.commit();
 
                 if(progress < MIN_VALUE){
                     seekBar.setProgress(MIN_VALUE);
 
                 }
-                distanceText.setText(seekBar.getProgress() + "");
-                //seekBarEditor.putInt("miles", seekBar.getProgress());
-                //seekBarEditor.commit();
+                distanceText.setText(seekBar.getProgress() * .5 + "");
+                seekBarEditor.putInt("miles", seekBar.getProgress());
+                seekBarEditor.commit();
                 if(currAlarmModel != null && !currAlarmModel.error) {
                     currAlarmModel.setActivation_distance((double) seekBar.getProgress());
                 }
