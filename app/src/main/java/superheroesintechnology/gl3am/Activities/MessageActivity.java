@@ -51,20 +51,20 @@ public class MessageActivity extends Activity {
         listAdapter = new SMSListAdapter(this, message_list);
         smsList.setAdapter(listAdapter);
 
-        smsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                alertMessage(position, StoreClient);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listAdapter.notifyDataSetChanged();
-
-                    }
-                });
-                return true;
-            }
-        });
+//        smsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                alertMessage(position, StoreClient);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        listAdapter.notifyDataSetChanged();
+//
+//                    }
+//                });
+//                return true;
+//            }
+//        });
 
 
 
@@ -134,24 +134,24 @@ public class MessageActivity extends Activity {
         });
     }
 
-    public void alertMessage(final int position, final StorageClient StoreClient) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE: // Yes button clicked
-                        Toast.makeText(getApplicationContext(), "Yes Clicked", Toast.LENGTH_LONG).show();
-                        StoreClient.deleteSMS(position);
-                        listAdapter.notifyDataSetChanged();
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE: // No button clicked // do nothing
-                        Toast.makeText(getApplicationContext(), "No Clicked", Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
-    }
+//    public void alertMessage(final int position, final StorageClient StoreClient) {
+//        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                switch (which) {
+//                    case DialogInterface.BUTTON_POSITIVE: // Yes button clicked
+//                        Toast.makeText(getApplicationContext(), "Yes Clicked", Toast.LENGTH_LONG).show();
+//                        StoreClient.deleteSMS(position);
+//                        listAdapter.notifyDataSetChanged();
+//                        break;
+//                    case DialogInterface.BUTTON_NEGATIVE: // No button clicked // do nothing
+//                        Toast.makeText(getApplicationContext(), "No Clicked", Toast.LENGTH_LONG).show();
+//                        break;
+//                }
+//            }
+//        };
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("Are you sure?")
+//                .setPositiveButton("Yes", dialogClickListener)
+//                .setNegativeButton("No", dialogClickListener).show();
+//    }
 }
