@@ -92,6 +92,7 @@ public class StorageClient {
         if (alarm_list == null) {
             alarm_list = new ArrayList<AlarmModel>();
         }
+        alarm.updateContext(null);
         alarm_list.add(alarm);
         saveAlarmList(alarm_list);
         PrefEditor.apply();
@@ -129,16 +130,10 @@ public class StorageClient {
     public void deleteSMS(int position) {
         ArrayList<SMSMessage> message_list = loadSMSList();
         message_list.remove(position);
+        saveSMSList(message_list);
     }
 
-    public void deleteSMS(SMSMessage message) {
-        ArrayList<SMSMessage> message_list = loadSMSList();
-        for (int counter = 0; counter < message_list.size(); counter++) {
-            if (message == message_list.get(counter)) {
-                message_list.remove(counter);
-            }
-        }
-    }
+
 
 
     //Deal with data transfer between objects.
