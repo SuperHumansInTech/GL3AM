@@ -98,36 +98,98 @@ public class AlarmModel {
         this.context = C;
     }
     public void sendSMS(String argument) {
-        if(argument == "SMS") {
+        if(argument.equals("SMS")) {
             SMS.sendSMS();
         }
-        else if (argument == "LATE") {
+        else if (argument.equals("LATE")) {
             Late_SMS.sendSMS();
         }
-        else if (argument == "ARRIVE") {
+        else if (argument.equals("ARRIVE")) {
             Arrive_SMS.sendSMS();
         }
     }
-
+    //setFlags - ZBrester
+    //Uses  3 bitflags (split into 3 to avoid excess confusion) to set the preferences of the alarm.
+    //For threshold (Nearing destination), late (time to arrival has exceeded your tolerance for being on-time,
+    //And arrival (You have arrived within X miles of the destination.), the flags are as follows:
+    // Play Sound: 1  Binary: (0001) (It's probably like 32 or 64 bit, though, don't worry about it)
+    // Send SMS: 2 (0010)
+    // Top Bar Notification: 4 (0100). (Not implemented yet).
+    //Note that for ease of use, each flag just sets the booleans properly.
+    //To clear a flag, send a value that doesn't contain bits 1, 2, or 4. Most reliably, just use -1.
+    //This is a little better than sending 9 arguments, and an array is bound to get confusing.
+    //Plus, I like bitflags. - ZBrester
     public void setFlags(int threshold_flags, int late_flags, int arrive_flags, boolean minimize) {
         if(threshold_flags != 0) {
-            if((threshold_flags & 1) != 0) {this.play_sound = true;}
-            if((threshold_flags & 2) != 0) {this.send_SMS = true;}
-            if((threshold_flags & 4) != 0) {this.push_notification = true;}
+            this.play_sound = false;
+            this.send_SMS = false;
+            this.push_notification = false;
+            if(threshold_flags > 0) {
+                if ((threshold_flags & 1) != 0) {this.play_sound = true;}
+                if ((threshold_flags & 2) != 0) {this.send_SMS = true;}
+                if ((threshold_flags & 4) != 0) {this.push_notification = true;}
+            }
         }
 
         if(late_flags != 0) {
-            if((late_flags & 1) != 0) {this.late_sound = true;}
-            if((late_flags & 2) != 0) {this.late_SMS = true;}
-            if((late_flags & 4) != 0) {this.late_push = true;}
+            this.late_sound = false;
+            this.late_SMS = false;
+            this.late_push = false;
+            if(late_flags > 0) {
+
+                if ((late_flags & 1) != 0) {this.late_sound = true;}
+                if ((late_flags & 2) != 0) {this.late_SMS = true;}
+                if ((late_flags & 4) != 0) {this.late_push = true;}
+            }
         }
 
         if(arrive_flags != 0) {
-            if((arrive_flags & 1) != 0) {this.arrive_sound = true;}
-            if((arrive_flags & 2) != 0) {this.arrive_SMS = true;}
-            if((arrive_flags & 4) != 0) {this.arrive_push = true;}
+            this.arrive_sound = false;
+            this.arrive_SMS = false;
+            this.arrive_push = false;
+            if(arrive_flags > 0) {
+                if ((arrive_flags & 1) != 0) {this.arrive_sound = true;}
+                if ((arrive_flags & 2) != 0) {this.arrive_SMS = true;}
+                if ((arrive_flags & 4) != 0) {this.arrive_push = true;}
+            }
         }
         this.minimize_API = minimize;
+    }
+    //getFlagStrings(String which) - ZBrester
+    //Returns a string describing the type of alarm set on the AlarmModel.
+    //Argument which can be either "near", "late", or "arrive", which should be self-explanatory.
+    //If which is not one of these, or the booleans are in error, it will return the string "Error"
+    //Can only be used to return a string for a single alarm criteria (I.e. nearing, late, or arrival).
+    //If you wish to do all three, you will have to call each in turn. - ZBrester
+    public String getFlagStrings(String which) {
+        int temp = 0;
+        if (which.equals("near")){
+            if(this.play_sound) {temp +=1;}
+            if(this.send_SMS) {temp += 2;}
+        }
+        else if (which.equals("late")) {
+            if(this.late_sound) {temp += 1;}
+            if(this.late_SMS) {temp += 2;}
+        }
+        else if(which.equals("arrive")) {
+            if(this.arrive_sound) {temp +=1;}
+            if(this.arrive_SMS) {temp += 2;}
+        }
+
+        switch(temp) {
+            case (1): {
+                return "Alarm Only.";
+            }
+            case (2):  {
+                return "Message Only.";
+            }
+            case (3): {
+                return "Alarm and Message.";
+            }
+            default: {
+                return "Error.";
+            }
+        }
     }
 
     public void notifyNearing() {
