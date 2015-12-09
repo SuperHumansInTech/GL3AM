@@ -226,7 +226,7 @@ public class AlarmModel {
     public void updateRoute(final boolean first, String search_address) {
         StorageClient StoreClient = new StorageClient(context, "default");
         if(!first) {
-            search_address = URLEncoder.encode(destination.getCoordString());
+            search_address = destination.getCoordHtmlString();
         }
         else {
             search_address = URLEncoder.encode(search_address);
@@ -260,10 +260,11 @@ public class AlarmModel {
                         if (first) {
                             address_string = leg.getEnd_address();
                             initial_time_left = time_left.getValue();
+                            destination = leg.getEnd_location();
+                            Toast.makeText(context.getApplicationContext(), "API Call successful. Destination coordinates:"
+                                    + destination.getCoordString(), Toast.LENGTH_LONG).show();
                         }
-                        destination = leg.getEnd_location();
-                        Toast.makeText(context.getApplicationContext(), "API Call successful. Destination coordinates:"
-                                + destination.getCoordString(), Toast.LENGTH_LONG).show();
+                        distance_left = leg.getDistance().getValue();
                     }
                 });
     }

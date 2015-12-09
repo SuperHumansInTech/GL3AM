@@ -186,7 +186,6 @@ public class UpdateActivity extends Activity {
                                 public void run() {
                                     SharedPreferences startStopPrefs = getSharedPreferences("AlarmPreferenceFile", 0);
                                     final boolean isPressed = startStopPrefs.getBoolean("isPressed", false);
-
                                     //SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
                                     //final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
                                     //final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
@@ -247,12 +246,21 @@ public class UpdateActivity extends Activity {
 
                                     } else {
                                         counter++;
-                                        if (counter >= 5) {
 
+                                        if(counter >= 10800){
+                                            counter = 0;
+                                            Toast.makeText(getApplicationContext(), "Warning: Run duration exceeded! Auto-shutting down."
+                                                    , Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        if (counter % 5 == 0) {
 
                                             Toast.makeText(getApplicationContext(), "Distance remaining: "
                                                     + Alarm.getDistance_left(), Toast.LENGTH_LONG).show();
-                                            counter = 0;
+
+                                        }
+                                        if(counter % Alarm.getCheck_frequency() == 0) {
+                                            Alarm.updateRoute(false, null);
                                         }
                                     }
 
@@ -261,6 +269,7 @@ public class UpdateActivity extends Activity {
                                         //DELAY THE LOCATION UPDATE FOR 2 SECONDS
                                         locationUpdateHandler.postDelayed(this, 2000);
                                     }
+
                                 }
                             });
                         }

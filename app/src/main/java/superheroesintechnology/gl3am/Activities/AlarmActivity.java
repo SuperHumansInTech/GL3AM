@@ -489,7 +489,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 //                  IF THE START BUTTON HAS NOT BEEN PRESSED
                 if (!isPressed) {
                     if(currAlarmModel != null && !currAlarmModel.error) {
-                        currAlarmModel.setActivation_distance(progress);
+                        currAlarmModel.setActivation_distance(progress * 0.5);
                     }
                 }
 
