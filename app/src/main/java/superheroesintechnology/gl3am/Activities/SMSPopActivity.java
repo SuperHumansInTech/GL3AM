@@ -74,24 +74,15 @@ public class SMSPopActivity extends Activity {
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
                     if (sourceActivity == "MessageActivity") {
-                        if (save) {
-                            storeClient.addSMS(newSMS);
-                        } else {
-                            //storeClient.setCurrSMS(newSMS);
-                            alarm.setSMS(newSMS);
-                            storeClient.setCurrAlarm(alarm);
-
-                        }
+                        storeClient.addSMS(newSMS);
                         SMSPopActivity.this.finish();
                     } else {
-                        if (save) {
-                            storeClient.addSMS(newSMS);
-                        } else {
-                            //storeClient.setCurrSMS(newSMS);
-                            alarm.setSMS(newSMS);
-                            storeClient.setCurrAlarm(alarm);
 
-                        }
+                        alarm.setSMS(newSMS);
+                        storeClient.setCurrAlarm(alarm);
+                        storeClient.setCurrSMS(newSMS);
+
+
                         /*
                         Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
                         if (sendSMSBool) {

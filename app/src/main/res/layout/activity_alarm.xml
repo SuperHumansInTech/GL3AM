@@ -135,12 +135,12 @@
         android:layout_weight="1"
         />
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/searchFieldLinearLayout"
-    android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchFieldLinearLayout"
+        android:orientation="horizontal"
         android:layout_gravity="center"
-    android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp">
     <EditText
         android:layout_width="288dp"
         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/destSearchButton"
         android:background="@drawable/btn_click_event"/>
-</LinearLayout>
+    </LinearLayout>
 
 
 
@@ -197,6 +197,20 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />
+
+    <ImageView
+        android:id="@+id/saveAlarmToFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/pop_up_background"
+        />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textAlignment="center"/>
 
 <!--    <TextView
         android:layout_width="wrap_content"

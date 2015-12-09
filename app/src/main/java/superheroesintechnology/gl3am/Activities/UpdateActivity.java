@@ -209,7 +209,7 @@ public class UpdateActivity extends Activity {
                                                     } else {
                                                         popUpTest.putExtra("alrm?", false);
                                                     }
-                                                    popUpTest.putExtra("sendMsg?", true);
+                                                    popUpTest.putExtra("msg?", true);
                                                     startService(popUpTest);
                                                 } if (!sendSMSBool) {
                                                     if (alrmBool) {
@@ -217,7 +217,7 @@ public class UpdateActivity extends Activity {
                                                     } else {
                                                         popUpTest.putExtra("alrm?", false);
                                                     }
-                                                    popUpTest.putExtra("sendMsg?", false);
+                                                    popUpTest.putExtra("msg?", false);
                                                     startService(popUpTest);
                                                 }
                                                 */
