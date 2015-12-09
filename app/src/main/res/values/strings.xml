@@ -23,4 +23,7 @@
     <string name="radioButtonText">Save Info to Favorites</string>
     <string name="saveRadioText">Save Info to Favorites</string>
     <string name="useRadioText">Do Not Save</string>
+    <string name="fromSaveToFavoritesButton">saveToFavoritesButton</string>
+    <string name="fromFavoriteMessages">addToFavoriteMessages</string>
+    <string name="fromAlarmActivityNext">fromOnNextAlarmActivity</string>
 </resources>
