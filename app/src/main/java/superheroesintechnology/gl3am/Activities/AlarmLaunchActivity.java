@@ -64,7 +64,7 @@ public class AlarmLaunchActivity extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         final StorageClient StoreClient = new StorageClient(this, "default");
         final SMSMessage newMessage = StoreClient.getCurrSMS();
-        sendSMSBool = intent.getBooleanExtra("sendMsg?", false);
+        sendSMSBool = intent.getBooleanExtra("msg?", false);
         alrmBool = intent.getBooleanExtra("alrm?", false);
 
         if (sendSMSBool) {

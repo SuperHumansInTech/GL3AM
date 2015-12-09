@@ -49,9 +49,9 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
                 }
             }
 
-//            if (typeText != null) {
-//                if (alarm.get)
-//            }
+            if (typeText != null) {
+                typeText.setText(alarm.getFlagStrings("near"));
+            }
 
             if (activationDistText != null) {
                 activationDistText.setText(String.valueOf(alarm.getActivation_distance()));

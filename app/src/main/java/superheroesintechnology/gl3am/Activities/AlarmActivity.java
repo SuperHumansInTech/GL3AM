@@ -68,6 +68,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private boolean saveInfoBool = false;
     private boolean useInfoBool = false;
     private ImageView nextButton;
+    private ImageView saveToFavButton;
     private  StorageClient StoreClient = null;
 
     @Override
@@ -192,6 +193,21 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
         startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
         startCancelTextView = (TextView) findViewById(R.id.startStopText);
+        saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
+
+//        saveToFavButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (searchLoc.getText().toString().equals("")) {
+//                    return;
+//                }
+////                AlarmModel newAlarmFavorite = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
+////                newAlarmFavorite.setActivation_distance(seekBar.getProgress() * .5);
+////                newAlarmFavorite.setFlags(2, 0, 0, false);
+//                StoreClient.addAlarm(currAlarmModel);
+//            }
+//        });
         //final TextView searchDestTextView = (TextView) findViewById(R.id.locationSearchFieldAlarm);
 
 //      SETTING UP DESTINATION SEARCH BUTTON onCLICKLISTENER

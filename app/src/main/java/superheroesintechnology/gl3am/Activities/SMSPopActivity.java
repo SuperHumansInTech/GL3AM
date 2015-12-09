@@ -63,7 +63,7 @@ public class SMSPopActivity extends Activity {
         int width = popDM.widthPixels;
         int height = popDM.heightPixels;
 
-        getWindow().setLayout((int)(width*.8), (int)(height*.6));
+        getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -74,24 +74,12 @@ public class SMSPopActivity extends Activity {
                     SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
                     if (sourceActivity == "MessageActivity") {
-                        if (save) {
-                            storeClient.addSMS(newSMS);
-                        } else {
-                            //storeClient.setCurrSMS(newSMS);
-                            alarm.setSMS(newSMS);
-                            storeClient.setCurrAlarm(alarm);
-
-                        }
+                        storeClient.addSMS(newSMS);
                         SMSPopActivity.this.finish();
                     } else {
-                        if (save) {
-                            storeClient.addSMS(newSMS);
-                        } else {
-                            //storeClient.setCurrSMS(newSMS);
-                            alarm.setSMS(newSMS);
-                            storeClient.setCurrAlarm(alarm);
-
-                        }
+                        alarm.setSMS(newSMS);
+                        storeClient.setCurrAlarm(alarm);
+                        storeClient.setCurrSMS(newSMS);
                         Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
                         if (sendSMSBool) {
                             intent.putExtra("msg?", true);
