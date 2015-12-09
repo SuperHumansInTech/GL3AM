@@ -30,29 +30,12 @@ public class SMSPopActivity extends Activity {
     private boolean fromAlarmActivity;
     private boolean fromSaveToFavorites;
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        StorageClient storeClient = new StorageClient(this, "default");
-//        String name;
-//        String description;
-//        String number;
-//        String text;
-//        if (requestCode == 2) {
-//            data.getExtras();
-//            name = data.getStringExtra("name");
-//            description = data.getStringExtra("description");
-//            number = data.getStringExtra("number");
-//            text = data.getStringExtra("text");
-//            final SMSMessage loadedSMS = new SMSMessage (name, description, number, text);
-//            storeClient.setCurrSMS(loadedSMS);
-//        }
-//    }
-
+//
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         finishAndRemoveTask();
-    }
+    } */
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -184,14 +167,43 @@ public class SMSPopActivity extends Activity {
             getSavedSMSButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), LoadSMSActivity.class);
-                    startActivityForResult(intent, 2);
+                    //Intent intent = new Intent(getApplicationContext(), LoadSMSActivity.class);
+                    startActivityForResult(new Intent(getApplicationContext(), LoadSMSActivity.class), 2);
                 }
             });
 
 
+
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        StorageClient storeClient = new StorageClient(this, "default");
+        if(requestCode != 2) {
+            return;
+        }
+        AlarmModel temp = storeClient.getCurrAlarm(SMSPopActivity.this);
+        if(temp != null && temp.getSMS() != null) {
+            startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
+            SMSPopActivity.this.finish();
+        }
+       /* String name;
+        String description;
+        String number;
+        String text;
+        if (requestCode == 2) {
+            data.getExtras();
+            name = data.getStringExtra("name");
+            description = data.getStringExtra("description");
+            number = data.getStringExtra("number");
+            text = data.getStringExtra("text");
+            final SMSMessage loadedSMS = new SMSMessage (name, description, number, text);
+            storeClient.setCurrSMS(loadedSMS);
+
+        }*/
+    }
 
 
 }

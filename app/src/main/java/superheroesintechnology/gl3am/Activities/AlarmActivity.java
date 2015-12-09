@@ -546,9 +546,11 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 else {
                     currAlarmModel.setFlags(alarm_flags, 0, 0, false);
                     StoreClient.setCurrAlarm(currAlarmModel);
+                    /*
                     if (LoadSMSActivity.loadedSMS != null) {
                         currAlarmModel.setSMS(LoadSMSActivity.loadedSMS);
                     }
+                    */
                 }
                 //2 (0010) signals that it must be either Alarm and Message or Message Only)
                 if ( (alarm_flags&2) != 0 /*msgOnly || alrmAndMsg*/) {

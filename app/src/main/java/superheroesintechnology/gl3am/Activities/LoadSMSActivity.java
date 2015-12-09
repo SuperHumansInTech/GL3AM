@@ -25,7 +25,7 @@ public class LoadSMSActivity extends Activity {
     private ArrayList<SMSMessage> message_list;
     ArrayAdapter<SMSMessage> listAdapter;
 //    public static SMSMessage loadedSMS;
-    public static SMSMessage loadedSMS;
+    private  SMSMessage loadedSMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,29 @@ public class LoadSMSActivity extends Activity {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
                 loadedSMS = StoreClient.getSMS(position);
                 Toast.makeText(getApplicationContext(), "testing", Toast.LENGTH_LONG).show();
-                setResult(2);
-                finishAndRemoveTask();
+                //finishAndRemoveTask();
             }
         });
 
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loadedSMS == null) {
+                    Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
+                }
+
+                AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);
+                currAlarm.setSMS(loadedSMS);
+                StoreClient.setCurrAlarm(currAlarm);
+                LoadSMSActivity.this.finish();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadSMSActivity.this.finish();
+            }
+        });
     }
 }
