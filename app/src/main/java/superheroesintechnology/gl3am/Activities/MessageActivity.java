@@ -34,12 +34,12 @@ public class MessageActivity extends Activity {
     private ImageView swipeLeft;
     ArrayAdapter<SMSMessage> listAdapter;
     private ImageView Add;
-
+    private StorageClient StoreClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient = new StorageClient(this, "default");
         setContentView(R.layout.activity_message);
 
 //        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
@@ -65,7 +65,7 @@ public class MessageActivity extends Activity {
                 Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
                 intent.putExtra("Mode", "Save");
                 intent.putExtra("ReturnTo", "None");
-                startActivity(intent);
+                startActivityForResult(intent,1);
         }
         });
 
@@ -133,4 +133,15 @@ public class MessageActivity extends Activity {
 //                .setPositiveButton("Yes", dialogClickListener)
 //                .setNegativeButton("No", dialogClickListener).show();
 //    }
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == 1) {
+        message_list = StoreClient.loadSMSList();
+        listAdapter = new SMSListAdapter(this, message_list);
+        smsList.setAdapter(listAdapter);
+    }
+}
+
+
 }
