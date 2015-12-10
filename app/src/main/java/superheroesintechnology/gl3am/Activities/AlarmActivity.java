@@ -304,6 +304,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                         startActivity(intent);
                     } else {
                         startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                        AlarmActivity.this.finish();
                     }
                 } else {
                     startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));

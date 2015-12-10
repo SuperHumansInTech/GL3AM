@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.Set;
+
 import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.Destination;
 import superheroesintechnology.gl3am.Models.LatLngModel;
@@ -40,11 +42,12 @@ public class UpdateActivity extends Activity {
     private ImageView startCancelImageView;
     private TextView startCancelTextView;
     private AlarmModel Alarm;
+    private StorageClient StoreClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final StorageClient StoreClient = new StorageClient(this, "default");
+        StoreClient = new StorageClient(this, "default");
         Alarm = StoreClient.getCurrAlarm(this);
 
         if (Alarm == null) {
@@ -373,6 +376,11 @@ public class UpdateActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     counter = -10;
+                    StoreClient.setCurrAlarm(null);
+                    SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
+                    SharedPreferences.Editor startStopEditor = sharedPreferences.edit();
+                    startStopEditor.putBoolean("bool", true);
+
                     //if user pressed "yes", then he is allowed to exit from application
                     finish();
                 }
@@ -386,6 +394,9 @@ public class UpdateActivity extends Activity {
             });
             AlertDialog alert = builder.create();
             alert.show();
+        }
+        else {
+            finish();
         }
     }
 }

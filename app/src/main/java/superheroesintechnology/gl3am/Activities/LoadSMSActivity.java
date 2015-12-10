@@ -47,7 +47,7 @@ public class LoadSMSActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
                 loadedSMS = StoreClient.getSMS(position);
-                Toast.makeText(getApplicationContext(), "testing", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Message Selected: " + loadedSMS.getName(), Toast.LENGTH_LONG).show();
                 //finishAndRemoveTask();
             }
         });
