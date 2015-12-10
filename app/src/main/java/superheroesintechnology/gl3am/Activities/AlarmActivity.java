@@ -126,7 +126,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                     Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     intent.putExtra("ReturnTo", "None");
                     intent.putExtra("Mode", "Add");
-                    startActivity(intent);
+                    startActivityForResult(intent, 2);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                 }
@@ -138,7 +138,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             public void onClick(View v) {
                 if (currAlarmModel != null) {
                     StoreClient.setCurrAlarm(currAlarmModel);
-                    startActivity(new Intent(AlarmActivity.this, LoadSMSActivity.class));
+                    startActivityForResult(new Intent(AlarmActivity.this, LoadSMSActivity.class), 2);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                 }

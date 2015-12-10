@@ -191,6 +191,7 @@ public class UpdateActivity extends Activity {
                                         //      PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
                                         //TempWakeLock.acquire();
 
+                                        counter = 0;
                                         runOnUiThread(new Runnable() {
                                             public void run() {
                                                 //alarmSound.start();
@@ -246,6 +247,7 @@ public class UpdateActivity extends Activity {
                                         distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
 
                                         if(counter < 0) {
+                                            counter = 0;
                                             return;
                                         }
                                         if (counter >= 10800) {
@@ -363,26 +365,28 @@ public class UpdateActivity extends Activity {
     }
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("Warning: Leaving the page will stop tracking.");
-        builder.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                counter = -10;
-                //if user pressed "yes", then he is allowed to exit from application
-                finish();
-            }
-        });
-        builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert=builder.create();
-        alert.show();
+        if(counter > 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("Warning: Leaving the page will stop tracking.");
+            builder.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    counter = -10;
+                    //if user pressed "yes", then he is allowed to exit from application
+                    finish();
+                }
+            });
+            builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //if user select "No", just cancel this dialog and continue with app
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 }
 
