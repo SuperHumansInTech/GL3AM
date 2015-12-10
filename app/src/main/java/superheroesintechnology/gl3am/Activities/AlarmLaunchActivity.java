@@ -8,9 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -40,7 +44,9 @@ public class AlarmLaunchActivity extends Service {
     private LinearLayout layout;
     private TextView alarmMessage;
     private ImageView stopButton;
-    MediaPlayer alarmSound;
+    private Uri notification;
+    private MediaPlayer mp;
+    private Vibrator vibrate;
     public String myPhoneNumber;
     public String smsText;
     //boolean sendSMSBool;
@@ -87,16 +93,22 @@ public class AlarmLaunchActivity extends Service {
             */
         }
 
+        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mp = MediaPlayer.create(getApplicationContext(), notification);
+        mp.setLooping(true);
 
+        vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
-        alarmSound = MediaPlayer.create(this, R.raw.sound);
-        if (alarmSound.getCurrentPosition() != 0) {
-            alarmSound.seekTo(0);
+        if(alarm.getFlags("near", "sound")){
+        mp.start();
+            if (am.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
+                    am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
+                vibrate.vibrate(new long[] { 0, 200, 0 }, 0);}
         }
 
-        if (alarm.getFlags("near", "sound")) {
-            alarmSound.start();
-        }
+
+
         return START_STICKY;
     }
 
@@ -174,10 +186,12 @@ public class AlarmLaunchActivity extends Service {
 
             @Override
             public void onClick(View v) {
-                if (alarmSound.isPlaying()) {
-                    alarmSound.pause();
-                    alarmSound.release();
-                }
+//                if (alarmSound.isPlaying()) {
+//                    alarmSound.pause();
+//                    alarmSound.release();
+//                }
+                mp.stop();
+                vibrate.cancel();
               wm.removeView(layout);
                 stopSelf();
                 //RELEASE WAKELOCK
