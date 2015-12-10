@@ -6,6 +6,8 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class MessageActivity extends Activity {
     private ListView smsList;
     private Button searchButton;
     private ArrayList<SMSMessage> message_list;
+    private ImageView swipeLeft;
     ArrayAdapter<SMSMessage> listAdapter;
 
 
@@ -52,26 +56,6 @@ public class MessageActivity extends Activity {
         smsList.setAdapter(listAdapter);
 
 
-
-
-
-
-
-//        smsList.setOnTouchListener(new OnSwipeTouchListener(this) {
-//            @Override
-//            public void onSwipeLeft() {
-//                Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_LONG).show();
-//                deleteSms.setVisibility(View.VISIBLE);
-//                deleteSms.setClickable(true);
-//
-//            }
-//
-//            @Override
-//            public void onSwipeRight() {
-//                deleteSms.setClickable(false);
-//                deleteSms.setVisibility(View.GONE);
-//            }
-//        });
 
 
 
