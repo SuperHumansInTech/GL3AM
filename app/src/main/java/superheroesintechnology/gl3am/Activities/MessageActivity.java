@@ -46,7 +46,7 @@ public class MessageActivity extends Activity {
         smsList = (ListView) findViewById(R.id.list);
 //        LinearLayout smsItem = (LinearLayout) findViewById(R.id.smsListItem);
 //        View v = smsList.findFocus();
-        searchButton = (Button) findViewById(R.id.SMSRefreshButton);
+        //searchButton = (Button) findViewById(R.id.SMSRefreshButton);
 
 
         message_list = StoreClient.loadSMSList();

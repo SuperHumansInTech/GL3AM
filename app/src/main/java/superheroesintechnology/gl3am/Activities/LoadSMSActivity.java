@@ -57,6 +57,7 @@ public class LoadSMSActivity extends Activity {
             public void onClick(View v) {
                 if (loadedSMS == null) {
                     Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);

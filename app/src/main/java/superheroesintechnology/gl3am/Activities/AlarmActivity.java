@@ -5,16 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -22,14 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import superheroesintechnology.gl3am.Models.AlarmModel;
-import superheroesintechnology.gl3am.Models.Destination;
 import superheroesintechnology.gl3am.Models.LatLngModel;
 import superheroesintechnology.gl3am.Models.LegModel;
 import superheroesintechnology.gl3am.Models.RouteModel;
@@ -42,29 +31,18 @@ import superheroesintechnology.gl3am.Services.StorageClient;
 
 public class AlarmActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
-    //private double longitude;
-    //private double latitude;
+
     private LatLngModel Curr_location = new LatLngModel();
-    private LatLngModel Dest_coords = new LatLngModel();
     private SeekBar seekBar;
     private TextView distanceText;
-    private ImageView startCancelImageView;
     private static final String ALARM_PREFS = "AlarmPreferenceFile";
-    private TextView startCancelTextView;
     private boolean isPressed = false;
     public boolean isSeekChanged = false;
-    //public int activationDistance = 1;
     private ImageView searchButton;
     private EditText searchLoc;
-    //private Button smsButton;
-   // public int counter = 4;
     private Spinner spinner;
     private String[] alarmSpinnerElems = {"Alarm Only", "Message Only", "Alarm & Message"};
-    //private boolean alrmOnly = false;
-    //private boolean msgOnly = false;
-    //private boolean alrmAndMsg = false;
     public AlarmModel currAlarmModel;
-    //private Location initialLocation = new Location("");
     private boolean saveInfoBool = false;
     private boolean useInfoBool = false;
     private ImageView nextButton;
@@ -194,8 +172,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //final Destination destination = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, activationDistance);
         //final Destination destination = new Destination();
 
-        startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
-        startCancelTextView = (TextView) findViewById(R.id.startStopText);
+        //startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
+        //startCancelTextView = (TextView) findViewById(R.id.startStopText);
         saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
 
         saveToFavButton.setOnClickListener(new View.OnClickListener() {
@@ -205,12 +183,6 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 if (searchLoc.getText().toString().equals("")) {
                     return;
                 }
-//                AlarmModel newAlarmFavorite = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
-//                newAlarmFavorite.setActivation_distance(seekBar.getProgress() * .5);
-//                newAlarmFavorite.setFlags(2, 0, 0, false);
-//                SharedPreferences sharedPrefs = getSharedPreferences("sourceForPop", Context.MODE_PRIVATE);
-//                intent.putExtra("sourceForPop", getString(R.string.fromSaveToFavoritesButton));
-
                 StoreClient.addAlarm(currAlarmModel);
             }
         });
