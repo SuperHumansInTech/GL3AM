@@ -70,20 +70,20 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
             if(nameText != null) {
                 if(message.getName() != null) {
-                    nameText.setText("Name: " + message.getName());
+                    nameText.setText(message.getName());
                 }
             }
 
             if(descText != null) {
                 if(message.getDescription() != null) {
-                    descText.setText("Description: " + message.getDescription());
+                    descText.setText(message.getDescription());
                 }
             }
 
 
             if (phoneText != null) {
                 if (message.getPhoneNumber() != null) {
-                    phoneText.setText("Number: " + PhoneNumberUtils.formatNumber(message.getPhoneNumber()));
+                    phoneText.setText(PhoneNumberUtils.formatNumber(message.getPhoneNumber()));
                 }
             }
 
