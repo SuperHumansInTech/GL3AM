@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -97,10 +98,13 @@ public class AlarmLaunchActivity extends Service {
         mp.setLooping(true);
 
         vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         if(alarm.getFlags("near", "sound")){
         mp.start();
-        vibrate.vibrate(new long[] { 0, 200, 0 }, 0);
+            if (am.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
+                    am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
+                vibrate.vibrate(new long[] { 0, 200, 0 }, 0);}
         }
 
 
