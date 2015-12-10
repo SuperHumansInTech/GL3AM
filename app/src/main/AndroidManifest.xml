@@ -73,9 +73,10 @@
         <activity
             android:name=".Activities.SMSPopActivity"
             android:theme="@style/AppTheme.AlarmPop"></activity>
-<activity
+        <activity
             android:name=".Activities.LoadSMSActivity"
             android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>
