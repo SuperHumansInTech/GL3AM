@@ -14,11 +14,14 @@ import java.util.List;
 
 import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.R;
+import superheroesintechnology.gl3am.Services.StorageClient;
 
 /**
  * Created by chadlewis on 12/8/15.
  */
 public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
+    StorageClient storeClient = new StorageClient(this.getContext(), "default");
+
     public FavoriteAlarmListAdapter(Context context, ArrayList<AlarmModel> alarms) {
         super(context, 0, alarms);
     }
@@ -27,7 +30,7 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
         super(context, resource, items);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
 
         if (v == null) {
@@ -80,7 +83,23 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
                         swipeDelete.setTag("p");
                         swipeDelete.setImageResource(R.drawable.right_swipe);
                         deleteLayout.addView(deleteView);
+                        final ImageView deleteItem = (ImageView) deleteView.findViewById(R.id.deleteItemView);
+                        deleteItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                swipeDelete.setImageResource(R.drawable.swipe_arrow);
+                                deleteLayout.removeView(deleteView);
+                                swipeDelete.setTag("nP");
 
+                                storeClient.deleteSMS(position);
+
+                                FavoriteAlarmListAdapter.this.remove(getItem(position));
+                                FavoriteAlarmListAdapter.this.notifyDataSetChanged();
+
+//                            parent.getChildAt(position).setVisibility(View.GONE);
+
+                            }
+                        });
                     }
                 }
             });

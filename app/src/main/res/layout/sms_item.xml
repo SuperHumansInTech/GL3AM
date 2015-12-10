@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/smsRelativeLayout"
     android:background="@drawable/btn_click_event"
-    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
     android:padding="10dp">
 
     <LinearLayout
