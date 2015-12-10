@@ -59,7 +59,7 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
             }
 
             if (activationDistText != null) {
-                activationDistText.setText(String.valueOf(alarm.getActivation_distance()));
+                activationDistText.setText(String.valueOf(alarm.getActivation_distance()) + " mi");
             }
 
             //The following allows the user to click an expansion button that reveals a delete button
