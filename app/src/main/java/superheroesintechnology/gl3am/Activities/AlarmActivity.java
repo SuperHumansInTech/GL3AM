@@ -20,12 +20,8 @@ import android.widget.Toast;
 
 import superheroesintechnology.gl3am.Models.AlarmModel;
 import superheroesintechnology.gl3am.Models.LatLngModel;
-import superheroesintechnology.gl3am.Models.LegModel;
-import superheroesintechnology.gl3am.Models.RouteModel;
 import superheroesintechnology.gl3am.Models.SMSMessage;
-import superheroesintechnology.gl3am.Models.SearchResultModel;
 import superheroesintechnology.gl3am.R;
-import superheroesintechnology.gl3am.Services.APIClient;
 import superheroesintechnology.gl3am.Services.StorageClient;
 
 
@@ -47,9 +43,10 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     private boolean useInfoBool = false;
     private ImageView nextButton;
     private ImageView saveToFavButton;
-    private  StorageClient StoreClient = null;
+    private ImageView addSMSButton;
+    private ImageView loadSMSButton;
+    private StorageClient StoreClient = null;
     int alarm_flags = 1;
-
 
 
     @Override
@@ -60,7 +57,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 // Get user's initial location from SplashActivity (Using SharedPreferences)
         //SharedPreferences initLocationPrefs = getSharedPreferences("initialLocation", Context.MODE_PRIVATE);
         //initialLocation.setLatitude(Double.parseDouble(initLocationPrefs.getString("initialLat", "")));
-       //initialLocation.setLongitude(Double.parseDouble(initLocationPrefs.getString("initialLng", "")));
+        //initialLocation.setLongitude(Double.parseDouble(initLocationPrefs.getString("initialLng", "")));
 
         final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location temp_loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -69,7 +66,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //final Gson gson = new GsonBuilder().create();
 
 
-        if(temp_loc != null) {
+        if (temp_loc != null) {
             Curr_location.setLat(temp_loc.getLatitude());
             Curr_location.setLng(temp_loc.getLongitude());
             StoreClient.setCurrLocation(Curr_location);
@@ -78,10 +75,9 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
             //sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
             //sharedLocationEditor.apply();
-        }
-        else {
+        } else {
             Curr_location = StoreClient.getCurrLocation();
-            if(Curr_location.getLat() == 0 && Curr_location.getLng() == 0 ) {
+            if (Curr_location.getLat() == 0 && Curr_location.getLng() == 0) {
                 Curr_location.setLat(38);
                 Curr_location.setLng(-122.8);
                 StoreClient.setCurrLocation(Curr_location);
@@ -90,9 +86,9 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             //Curr_location.setLng(-122.8);
             //StoreClient.setCurrLocation(Curr_location);
 
-           // sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
-           // sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
-           // sharedLocationEditor.apply();
+            // sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
+            // sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
+            // sharedLocationEditor.apply();
         }
 
         super.onCreate(savedInstanceState);
@@ -101,96 +97,66 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         //Curr_location.setLng(-122.8);
 
 
-
 // Initialize and set up the spinner to pick alarm, msg, or alarm and msg
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.row_spinner, R.id.spinnerTxt, alarmSpinnerElems);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(this);
 
-// SET UP EDITTEXT FIELDS FOR SMS
-        //final EditText smsNumber = (EditText) findViewById(R.id.smsNumberField);
-        // final EditText smsText = (EditText) findViewById(R.id.smsTextField);
-        //final TextView smsNumberView = (TextView) findViewById(R.id.smsNumberField);
-        // final TextView smsTextView = (TextView) findViewById(R.id.smsTextField);
+        searchLoc = (EditText) findViewById(R.id.locationSearchFieldAlarm);
+        searchButton = (ImageView) findViewById(R.id.destSearchButton);
 
-// smsButton = (Button) findViewById(R.id.saveSmsButton);
-      /*  //smsButton.setVisibility(View.INVISIBLE);
 
-        smsButton.setOnClickListener(new View.OnClickListener() {
+        addSMSButton = (ImageView) findViewById(R.id.newSMS);
+        loadSMSButton = (ImageView) findViewById(R.id.addSMS);
+
+
+        addSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        //alarmSound.start();
-                        Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
-                        startActivity(popUpTest);
-                        //alarmSound.pause();
-                    }
-                });
-// IF USER HAS NOT ENTERED SMS DATA, RETURN
-
-                if (smsNumberView.getText() == null || smsTextView.getText() == null) {
-                    return;
+                if(currAlarmModel != null) {
+                    StoreClient.setCurrAlarm(currAlarmModel);
+                    Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                    intent.putExtra("ReturnTo", "None");
+                    intent.putExtra("Mode", "Add");
+                    startActivity(intent);
                 }
                 else {
-
-
-// IF USER HAS ENTERED SMS DATA, GET THE DATA
-                    //final String smsNumberString = smsNumber.getText().toString();
-                    //final String smsTextString = smsText.getText().toString();
-
-                    SMSMessage stored = new SMSMessage(smsNumber.getText().toString(), smsText.getText().toString());
-
-// SAVE SMS INFO (USING SHAREDPREFS): NUMBER AND TEXT
-                    StoreClient.setCurrSMS(stored);
-                    StoreClient.addSMS(stored);
+                    Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                 }
-                //String SMSJson = gson.toJson(stored);
-                //Toast.makeText(getApplicationContext(), SMSJson, Toast.LENGTH_LONG).show();
-                //SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
-                //SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
-                //sharedSMSEditor.putString("sms", SMSJson);
-                //sharedSMSEditor.commit();
+            }
+        });
 
-                SharedPreferences sharedSMSPrefs = getSharedPreferences("smsInfo", Context.MODE_PRIVATE);
-                SharedPreferences.Editor sharedSMSEditor = sharedSMSPrefs.edit();
-                sharedSMSEditor.putString("number", smsNumberString);
-                sharedSMSEditor.putString("text", smsTextString);
-                sharedSMSEditor.commit();
+        loadSMSButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currAlarmModel != null) {
+                    StoreClient.setCurrAlarm(currAlarmModel);
+                    startActivity(new Intent(AlarmActivity.this, LoadSMSActivity.class));
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
+                }
 
 
             }
         });
-        */
-
-        searchLoc = (EditText)findViewById(R.id.locationSearchFieldAlarm);
-        searchButton = (ImageView) findViewById(R.id.destSearchButton);
-
-
-
-        //final Destination destination = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, activationDistance);
-        //final Destination destination = new Destination();
-
-        //startCancelImageView = (ImageView) findViewById(R.id.startStopAlarmImageView);
-        //startCancelTextView = (TextView) findViewById(R.id.startStopText);
         saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
 
         saveToFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(currAlarmModel == null || currAlarmModel.getDestination() == null) {
-                    Toast.makeText(getApplicationContext(), "Error! No assigned destination." , Toast.LENGTH_LONG).show();
+                if (currAlarmModel == null || currAlarmModel.getDestination() == null) {
+                    Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                     return;
-                }
-                else {
+                } else {
                     currAlarmModel.setFlags(alarm_flags, 0, 0, false);
 
                 }
 
                 //2 (0010) signals that it must be either Alarm and Message or Message Only)
-                if ( (alarm_flags&2) != 0 /*msgOnly || alrmAndMsg*/) {
+                if ((alarm_flags & 2) != 0 /*msgOnly || alrmAndMsg*/) {
 
                     if (currAlarmModel.getSMS() == null) {
 
@@ -198,8 +164,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                         intent.putExtra("ReturnTo", "None");
                         intent.putExtra("Mode", "Add");
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
                         StoreClient.addAlarm(currAlarmModel);
                     }
 
@@ -216,49 +181,40 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
             @Override
             public void onClick(View v) {
-                if(searchLoc.getText().toString().equals("")) {
+                if (searchLoc.getText().toString().equals("")) {
                     return;
                 }
 
+                AlarmModel temp = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
 
-                currAlarmModel = new AlarmModel(AlarmActivity.this, searchLoc.getText().toString());
-                currAlarmModel.setActivation_distance(seekBar.getProgress() * .5);
-                currAlarmModel.setFlags(alarm_flags,0, 0, false);
+                temp.setActivation_distance(seekBar.getProgress() * .5);
+                temp.setFlags(alarm_flags, 0, 0, false);
+                if(currAlarmModel != null && currAlarmModel.getSMS() != null) {
+                    temp.setSMS(currAlarmModel.getSMS());
+                }
+                currAlarmModel = temp;
             }
         });
 
         SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
-//
-//        if (sharedPreferences.contains("bool")){
-//            setIsPressed(sharedPreferences.getBoolean("bool", false));
-//            if(getIsPressed()){
-//                startCancelImageView.setBackgroundResource(R.drawable.cancel);
-//                startCancelTextView.setText(R.string.cancel);
-//            }
-//            else{
-//                startCancelImageView.setBackgroundResource(R.drawable.start);
-//                startCancelTextView.setText(R.string.start);
-//            }
-//        }
 
 
-        seekBar = (SeekBar)findViewById(R.id.distanceAlarmSeekbar);
-        distanceText = (TextView)findViewById(R.id.distanceAlarmTextView);
-        if (sharedPreferences.contains("miles")){
+        seekBar = (SeekBar) findViewById(R.id.distanceAlarmSeekbar);
+        distanceText = (TextView) findViewById(R.id.distanceAlarmTextView);
+        if (sharedPreferences.contains("miles")) {
             seekBar.setProgress(sharedPreferences.getInt("miles", 1));
             distanceText.setText(String.valueOf((sharedPreferences.getInt("miles", 1) * .5)));
-        }
-        else {
+        } else {
             seekBar.setProgress(1);
             distanceText.setText("1");
         }
-
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             SharedPreferences seekBarPreferences = getSharedPreferences(ALARM_PREFS, 0);
             SharedPreferences.Editor seekBarEditor = seekBarPreferences.edit();
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final int MIN_VALUE = 1;
@@ -266,7 +222,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 //              THIS IF-STATEMENT ONLY SETS destination's ACTIVATION DISTANCE
 //                  IF THE START BUTTON HAS NOT BEEN PRESSED
                 if (!isPressed) {
-                    if(currAlarmModel != null && !currAlarmModel.error) {
+                    if (currAlarmModel != null && !currAlarmModel.error) {
                         currAlarmModel.setActivation_distance(progress * 0.5);
                     }
                 }
@@ -278,14 +234,14 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 //                activationDistanceEditor.putInt("activationDist", activationDistance);
 //                activationDistanceEditor.commit();
 
-                if(progress < MIN_VALUE){
+                if (progress < MIN_VALUE) {
                     seekBar.setProgress(MIN_VALUE);
 
                 }
                 distanceText.setText(seekBar.getProgress() * .5 + "");
                 seekBarEditor.putInt("miles", seekBar.getProgress());
                 seekBarEditor.commit();
-                if(currAlarmModel != null && !currAlarmModel.error) {
+                if (currAlarmModel != null && !currAlarmModel.error) {
                     currAlarmModel.setActivation_distance((double) seekBar.getProgress());
                 }
             }
@@ -293,7 +249,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Seekbar in use", Toast.LENGTH_LONG).show();
 
             }
 
@@ -303,20 +259,19 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             }
         });
 
-        final ImageView homeImageView = (ImageView)findViewById(R.id.homeAlarmImage);
-        ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesAlarmImage);
-        ImageView statusImageView = (ImageView)findViewById(R.id.statusAlarmImage);
-        ImageView messageImageView = (ImageView)findViewById(R.id.messageAlarmImage);
-        nextButton = (ImageView)findViewById(R.id.nextButton);
+        final ImageView homeImageView = (ImageView) findViewById(R.id.homeAlarmImage);
+        ImageView favoritesImageView = (ImageView) findViewById(R.id.favoritesAlarmImage);
+        ImageView statusImageView = (ImageView) findViewById(R.id.statusAlarmImage);
+        ImageView messageImageView = (ImageView) findViewById(R.id.messageAlarmImage);
+        nextButton = (ImageView) findViewById(R.id.nextButton);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currAlarmModel == null || currAlarmModel.getDestination() == null) {
-                        Toast.makeText(getApplicationContext(), "Error! No assigned destination." , Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                else {
+                if (currAlarmModel == null || currAlarmModel.getDestination() == null) {
+                    Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
                     currAlarmModel.setFlags(alarm_flags, 0, 0, false);
                     StoreClient.setCurrAlarm(currAlarmModel);
                     /*
@@ -326,44 +281,30 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                     */
                 }
                 //2 (0010) signals that it must be either Alarm and Message or Message Only)
-                if ( (alarm_flags&2) != 0 /*msgOnly || alrmAndMsg*/) {
+                if ((alarm_flags & 2) != 0 /*msgOnly || alrmAndMsg*/) {
 
                     if (currAlarmModel.getSMS() == null) {
-                        startActivity(new Intent(AlarmActivity.this, SMSPopActivity.class));
+                        Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
+                        intent.putExtra("Mode", "Add");
+                        intent.putExtra("ReturnTo", "Update");
+                        startActivity(intent);
                     } else {
                         startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
                     }
-
-                    /*Intent destinationIntent = new Intent(AlarmActivity.this, SMSPopActivity.class);
-                    destinationIntent.putExtra("source", "alarmActivity");
-                    destinationIntent.putExtra("msg?", true);
-                    if (msgOnly) {
-                        destinationIntent.putExtra("alrm?", false);
-                    } else {
-                        destinationIntent.putExtra("alrm?", true);
-                    }
-
-                    startActivity(destinationIntent);
-                    */
-
-                } else {
-                    /*
-                    Intent intent = new Intent(AlarmActivity.this, UpdateActivity.class);
-                    intent.putExtra("msg?", false);
-                    intent.putExtra("alrm?", true);
-                    startActivity(intent);
-                    */
+                }
+                else {
                     startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                    finish();
                 }
             }
         });
-
 
 
         homeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AlarmActivity.this, MapsActivity.class));
+                finish();
             }
         });
 
@@ -372,6 +313,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             public void onClick(View v) {
 
                 startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
+                finish();
             }
         });
 
@@ -379,6 +321,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                finish();
             }
         });
 
@@ -386,35 +329,16 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AlarmActivity.this, MessageActivity.class));
+                finish();
             }
         });
-
-//        Button confirmInfoButton = (Button) findViewById(R.id.confirmAlarmInfoButton);
-//        //smsButton.setVisibility(View.INVISIBLE);
-//
-//        confirmInfoButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (msgOnly || alrmAndMsg) {
-//                    runOnUiThread(new Runnable() {
-//                        public void run() {
-//                            //alarmSound.start();
-//                            Intent popUpTest = new Intent(AlarmActivity.this, SMSPopActivity.class);
-//                            startActivity(popUpTest);
-//                            //alarmSound.pause();
-//                        }
-//                    });
-//                }
-//            }
-//        });
     }
 
-    public void setIsPressed(boolean useThis){
+    public void setIsPressed(boolean useThis) {
         this.isPressed = useThis;
     }
 
-    public boolean getIsPressed(){
+    public boolean getIsPressed() {
         return this.isPressed;
     }
 
@@ -423,7 +347,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //1 is sound, 2 is message, 3(1&2) is alarm and message. This actually adds up perfectly to do this:
-        alarm_flags = position+1;
+        alarm_flags = position + 1;
         /*switch (position) {
             case 0: //Alarm Only
                 alrmOnly = true;
@@ -451,8 +375,6 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         alarm_flags = 1;
         //smsButton.setVisibility(View.INVISIBLE);
     }
-
-
 
 
     public void onSaveOrUseClick(View view) {

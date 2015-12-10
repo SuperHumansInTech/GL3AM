@@ -30,6 +30,9 @@ public class SMSPopActivity extends Activity {
     private boolean fromAlarmActivity;
     private boolean fromSaveToFavorites;
 
+    private StorageClient storeClient;
+   private String ReturnTo;
+    private String Mode;
 //
     /*
     @Override
@@ -38,14 +41,14 @@ public class SMSPopActivity extends Activity {
     } */
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         //final boolean save = false;
-        final StorageClient storeClient = new StorageClient(this, "default");
-
+        storeClient = new StorageClient(this, "default");
         Intent srcIntent = getIntent();
-        final String ReturnTo = srcIntent.getStringExtra("ReturnTo");
-        final String Mode = srcIntent.getStringExtra("Mode");
+        ReturnTo = srcIntent.getStringExtra("ReturnTo");
+        Mode = srcIntent.getStringExtra("Mode");
 
         setContentView(R.layout.activity_smspop);
 
@@ -78,42 +81,7 @@ public class SMSPopActivity extends Activity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!number.getText().toString().equals("")) {
-                    AlarmModel alarm = storeClient.getCurrAlarm(SMSPopActivity.this);
-                    SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
-
-                    switch (Mode) {
-                        case "Save": {
-                            storeClient.addSMS(newSMS);
-                        }
-
-                        case "Add": {
-                            alarm.setSMS(newSMS);
-                            storeClient.setCurrAlarm(alarm);
-                        }
-                    }
-
-                    switch (ReturnTo) {
-                        case "None" : {
-                            SMSPopActivity.this.finish();
-                            return;
-                        }
-                        case "Update" : {
-                            startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
-                            SMSPopActivity.this.finish();
-                        }
-                        case "Alarm" : {
-                            startActivity( new Intent(SMSPopActivity.this, AlarmActivity.class));
-                            SMSPopActivity.this.finish();
-                        }
-                        case "Messages" : {
-                            startActivity( new Intent(SMSPopActivity.this, MessageActivity.class));
-                            SMSPopActivity.this.finish();
-                        }
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
-                }
+                doAction(null, null, false);
             }
         });
 
@@ -132,14 +100,7 @@ public class SMSPopActivity extends Activity {
 
                     @Override
                     public void onClick(View v) {
-
-                        if(number.getText().toString().equals("")) {
-                            Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
-                        storeClient.addSMS(newSMS);
+                        doAction("Save", "Stay", false);
                     }
                 });
 //            }
@@ -161,14 +122,12 @@ public class SMSPopActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        StorageClient storeClient = new StorageClient(this, "default");
         if(requestCode != 2) {
             return;
         }
         AlarmModel temp = storeClient.getCurrAlarm(SMSPopActivity.this);
         if(temp != null && temp.getSMS() != null) {
-            startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
-            SMSPopActivity.this.finish();
+            doAction(null, null, true);
         }
        /* String name;
         String description;
@@ -184,6 +143,60 @@ public class SMSPopActivity extends Activity {
             storeClient.setCurrSMS(loadedSMS);
 
         }*/
+    }
+
+    private void doAction(String ModeOverride, String ReturnOverride, boolean loaded) {
+        if (!number.getText().toString().equals("") && !loaded) {
+            AlarmModel alarm = storeClient.getCurrAlarm(this);
+            SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
+
+            String modetype = Mode;
+            String returntype = ReturnTo;
+            if(ModeOverride != null) {
+                modetype = ModeOverride;
+            }
+            if(ReturnOverride != null) {
+                returntype = ReturnOverride;
+            }
+            switch (modetype) {
+                case "Save": {
+                    storeClient.addSMS(newSMS);
+                    Toast.makeText(getApplicationContext(), "SMS Saved", Toast.LENGTH_LONG).show();
+                }
+
+                case "Add": {
+                    if(alarm == null) {
+                        return;
+                    }
+                    alarm.setSMS(newSMS);
+                    storeClient.setCurrAlarm(alarm);
+                }
+            }
+
+            switch (returntype) {
+                case "None" : {
+                    SMSPopActivity.this.finish();
+                    return;
+                }
+                case "Update" : {
+                    startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Alarm" : {
+                    startActivity( new Intent(SMSPopActivity.this, AlarmActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Messages" : {
+                    startActivity( new Intent(SMSPopActivity.this, MessageActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Stay" : {
+                    return;
+                }
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
+        }
     }
 
 

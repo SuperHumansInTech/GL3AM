@@ -21,8 +21,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="18dp"
                 android:id="@+id/defDistTextView"
-                android:text="@string/act_dist"
+                android:text="@string/emptyStatus"
                 android:layout_gravity="right"
                 android:layout_weight="1"/>
 

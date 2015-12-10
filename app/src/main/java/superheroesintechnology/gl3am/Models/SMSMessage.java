@@ -39,15 +39,14 @@ public class SMSMessage {
 
         this.phoneNumber = number;
 
-        if(message == null) {
-            this.smsTextMessage = "Be there soon.";
+        if(message == null || message.equals("")) {
+            this.smsTextMessage = null;
         }
         else {
             this.smsTextMessage = message;
         }
-        if(append) {
-            this.smsTextMessage += "This message sent automatically by Gl3AMS.";
-        }
+        this.smsTextMessage += "This message sent automatically by Gl3AMS.";
+
     }
     public SMSMessage(String name, String description, String number, String message) {
 
@@ -68,10 +67,11 @@ public class SMSMessage {
         this.phoneNumber = number;
 
         if(message.equals("")) {
-            this.smsTextMessage = "Be there soon.";
+            this.smsTextMessage = "";
         }
         else {
             this.smsTextMessage = message;
+
         }
     }
     public String getName() {return name;}

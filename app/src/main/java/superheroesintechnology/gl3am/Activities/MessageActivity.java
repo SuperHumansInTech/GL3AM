@@ -33,6 +33,7 @@ public class MessageActivity extends Activity {
     private ArrayList<SMSMessage> message_list;
     private ImageView swipeLeft;
     ArrayAdapter<SMSMessage> listAdapter;
+    private ImageView Add;
 
 
     @Override
@@ -56,8 +57,17 @@ public class MessageActivity extends Activity {
         smsList.setAdapter(listAdapter);
 
 
+        Add = (ImageView) findViewById(R.id.newSMSFav);
+        Add.setOnClickListener(new View.OnClickListener() {
 
-
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
+                intent.putExtra("Mode", "Save");
+                intent.putExtra("ReturnTo", "None");
+                startActivity(intent);
+        }
+        });
 
         //smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
 
@@ -74,6 +84,7 @@ public class MessageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MessageActivity.this, AlarmActivity.class));
+                finish();
             }
         });
 
@@ -81,6 +92,7 @@ public class MessageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MessageActivity.this, MapsActivity.class));
+                finish();
             }
         });
 
@@ -88,6 +100,7 @@ public class MessageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MessageActivity.this, FavoritesActivity.class));
+                finish();
             }
         });
 
@@ -95,6 +108,7 @@ public class MessageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MessageActivity.this, UpdateActivity.class));
+                finish();
             }
         });
     }

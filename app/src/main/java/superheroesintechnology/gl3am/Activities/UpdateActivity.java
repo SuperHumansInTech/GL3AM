@@ -43,14 +43,16 @@ public class UpdateActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final StorageClient StoreClient = new StorageClient(this, "default");
-        setContentView(R.layout.activity_update);
         Alarm = StoreClient.getCurrAlarm(this);
 
-        if(Alarm == null) {
-            TextView errorTextView = (TextView) findViewById(R.id.distFromDestResultTextView);
-            errorTextView.setText("No alarm has been selected.");
+        if (Alarm == null) {
+            setContentView(R.layout.activity_update_empty);
+            generateNavigationRow();
             return;
+        } else {
+            setContentView(R.layout.activity_update);
         }
+
         //Intent intent = getIntent();
         //final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
         //final boolean alrmBool = intent.getBooleanExtra("alrm?", true);
@@ -65,16 +67,16 @@ public class UpdateActivity extends Activity {
         //final Destination testDest = new Destination("3208 Marsh Rd\nSanta Rosa, CA 95403", 38.462135, -122.761644, Double.parseDouble(Integer.toString(activationDistance)));
 
 
-
         TextView destinationTextView = (TextView) findViewById(R.id.destinationResultTextView);
         TextView actDistTextView = (TextView) findViewById(R.id.defDistResultTextView);
         final TextView distFromDefTextView = (TextView) findViewById(R.id.distFromDestResultTextView);
 
-        //for testing Destination Class only. Can be removed
-        final TextView boolTextView = (TextView) findViewById((R.id.booleanResultTextView));
+        final TextView TimeLeft = (TextView) findViewById((R.id.TimeResultTextView));
 
         destinationTextView.setText(Alarm.getAddress_string());
         actDistTextView.setText(Double.toString(Alarm.getActivation_distance()) + " mi.");
+        TimeLeft.setText(Alarm.getTimeString());
+        distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
 
 
         final Handler locationUpdateHandler = new Handler();
@@ -88,14 +90,14 @@ public class UpdateActivity extends Activity {
 //                final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
 //                final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
 
-                if (Alarm.verifyDistance()) {
-                    boolTextView.setText("True");
-                    return;
-                } else {
-                    boolTextView.setText("False");
-                }
+//                if (Alarm.verifyDistance()) {
+//                    boolTextView.setText("True");
+//                    return;
+//                } else {
+//                    boolTextView.setText("False");
+//                }
 
-                distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
+
 
                 if (isPressed) {
                     locationUpdateHandler.postDelayed(this, 2000);
@@ -252,7 +254,7 @@ public class UpdateActivity extends Activity {
                                     } else {
                                         counter++;
 
-                                        if(counter >= 10800){
+                                        if (counter >= 10800) {
                                             counter = 0;
                                             Toast.makeText(getApplicationContext(), "Warning: Run duration exceeded! Auto-shutting down."
                                                     , Toast.LENGTH_LONG).show();
@@ -264,8 +266,10 @@ public class UpdateActivity extends Activity {
                                                     + Alarm.getDistance_left(), Toast.LENGTH_LONG).show();
 
                                         }
-                                        if(counter % Alarm.getCheck_frequency() == 0) {
+                                        if (counter % Alarm.getCheck_frequency() == 0) {
                                             Alarm.updateRoute(false, null);
+                                            TimeLeft.setText(Alarm.getTimeString());
+                                            distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
                                         }
                                     }
 
@@ -290,43 +294,51 @@ public class UpdateActivity extends Activity {
                     startStopEditor.putBoolean("bool", true);
                     startStopEditor.putString("textState", startCancelTextView.getText().toString());
                     startStopEditor.commit();
-                    }
                 }
+            }
 
-            };
+        };
 
         startCancelImageView.setOnClickListener(startCancelListener);
         SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
 
 
-
-        if (sharedPreferences.contains("bool")){
+        if (sharedPreferences.contains("bool")) {
             setIsPressed(sharedPreferences.getBoolean("bool", false));
-            if(getIsPressed()){
+            if (getIsPressed()) {
                 startCancelImageView.setBackgroundResource(R.drawable.cancel);
                 startCancelTextView.setText(R.string.cancel);
-            }
-            else{
+            } else {
                 startCancelImageView.setBackgroundResource(R.drawable.start);
                 startCancelTextView.setText(R.string.start);
             }
         }
 
+        generateNavigationRow();
+
+    }
+
+    public void setIsPressed(boolean useThis) {
+        this.isPressed = useThis;
+    }
+
+    public boolean getIsPressed() {
+        return this.isPressed;
+    }
 
 
-
-
-        ImageView alarmImageView = (ImageView)findViewById(R.id.alarmStatusImage);
-        ImageView homeImageView = (ImageView)findViewById(R.id.homeStatusImage);
-        ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesStatusImage);
-        ImageView messageImageView = (ImageView)findViewById(R.id.messageStatusImage);
-
+    private void generateNavigationRow() {
+        ImageView alarmImageView = (ImageView) findViewById(R.id.alarmStatusImage);
+        ImageView homeImageView = (ImageView) findViewById(R.id.homeStatusImage);
+        ImageView favoritesImageView = (ImageView) findViewById(R.id.favoritesStatusImage);
+        ImageView messageImageView = (ImageView) findViewById(R.id.messageStatusImage);
 
 
         alarmImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UpdateActivity.this, AlarmActivity.class));
+                finish();
             }
         });
 
@@ -334,6 +346,7 @@ public class UpdateActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UpdateActivity.this, MapsActivity.class));
+                finish();
             }
         });
 
@@ -341,6 +354,7 @@ public class UpdateActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UpdateActivity.this, FavoritesActivity.class));
+                finish();
             }
         });
 
@@ -348,155 +362,10 @@ public class UpdateActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UpdateActivity.this, MessageActivity.class));
+                finish();
             }
         });
 
     }
-
-    public void setIsPressed(boolean useThis){
-        this.isPressed = useThis;
-    }
-
-    public boolean getIsPressed(){
-        return this.isPressed;
-    }
-
-//    public void trackLocation () {
-//        final LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//
-//        LocationListener listener = new LocationListener() {
-//
-//
-//            @Override
-//            public void onLocationChanged(Location location) {
-//
-//                Curr_location.setLat(location.getLatitude());
-//                Curr_location.setLng(location.getLongitude());
-//                //StoreClient.setCurrLocation(Curr_location); //Temporary, this will be updating the AlarmModel's current location LatLng rather than this. - ZBrester
-//
-//                //latitude = location.getLatitude();
-//                //longitude = location.getLongitude();
-//
-//
-//
-//
-//                //sharedLocationEditor.putString("currentLatitude", Double.toString(Curr_location.getLat()));
-//                //sharedLocationEditor.putString("currentLongitude", Double.toString(Curr_location.getLng()));
-//
-//                //editor.putString("currentLatitude", Double.toString(latitude));
-//                //editor.putString("currentLongitude", Double.toString(longitude));
-//                //sharedLocationEditor.apply();
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//            }
-//
-//            @Override
-//            public void onProviderEnabled(String provider) {
-//
-//            }
-//
-//            @Override
-//            public void onProviderDisabled(String provider) {
-//
-//            }
-//        };
-//
-//        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-//
-//        //PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//        //  PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CPUWakeLock");
-//        //wl.acquire();
-//        Runnable locationRunnable = new Runnable() {
-//            @Override
-//            public void run()  {
-//
-//
-//                            /*
-//                                THIS HANDLER ALLOWS THE LOCATION TO BE UPDATED EVERY X SECONDS,
-//                                LOOPING UNTIL THE "START BUTTON IS NO LONGER PRESSED. ELIMINATES
-//                                NEED FOR A FOR LOOP.
-//                             */
-//                final Handler locationUpdateHandler = new Handler(Looper.getMainLooper());
-//                locationUpdateHandler.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        SharedPreferences startStopPrefs = getSharedPreferences("AlarmPreferenceFile", 0);
-//                        final boolean isPressed = startStopPrefs.getBoolean("isPressed", false);
-//
-//                        //SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
-//                        //final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
-//                        //final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
-//
-//
-//                        if (destination.verifyDistance(Curr_location.getLng(), Curr_location.getLat())) {
-//                            //PowerManager.WakeLock TempWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP |
-//                            //      PowerManager.ON_AFTER_RELEASE, "TempWakeLock");
-//                            //TempWakeLock.acquire();
-//
-//                            runOnUiThread(new Runnable() {
-//                                public void run() {
-//                                    //alarmSound.start();
-//                                    Intent popUpTest = new Intent(UpdateActivity.this, AlarmLaunchActivity.class);
-//                                    startService(popUpTest);
-//                                    //alarmSound.pause();
-//                                }
-//                            });
-//
-//
-//                            final SharedPreferences.Editor startStopEditor = startStopPrefs.edit();
-//                            startStopEditor.putBoolean("bool", false);
-//                            startStopEditor.commit();
-//                            runOnUiThread(new Runnable() {
-//                                public void run() {
-//                                    //boolean makeFalse = false;
-//                                    setIsPressed(false);
-//                                    //alarmSound.pause();
-//                                    //alarmSound.seekTo(0);
-//                                    startCancelImageView.setBackgroundResource(R.drawable.start);
-//                                    startCancelTextView.setText(R.string.start);
-//                                    startStopEditor.putBoolean("isPressed", false);
-//                                }
-//                            });
-//
-//                            //TempWakeLock.release();
-//                            return;
-//
-//                        }
-//
-//                        else {
-//                            counter++;
-//                            if (counter >= 5) {
-//
-//
-//                                Toast.makeText(getApplicationContext(), "Distance remaining: "
-//                                        + destination.getDistFromCurLoc(), Toast.LENGTH_LONG).show();
-//                                counter = 0;
-//                            }
-//                        }
-//
-//
-//                        if (isPressed) {
-//                            //DELAY THE LOCATION UPDATE FOR 2 SECONDS
-//                            locationUpdateHandler.postDelayed(this, 2000);
-//                        }
-//                    }
-//                });
-//            }
-//        };
-//
-//        Thread locationUpdateThread = new Thread(locationRunnable);
-//        locationUpdateThread.start();
-//
-//        startCancelImageView.setBackgroundResource(R.drawable.cancel);
-//        startCancelTextView.setText(R.string.cancel);
-//        startStopEditor.putBoolean("bool", true);
-//        startStopEditor.putString("textState", startCancelTextView.getText().toString());
-//        startStopEditor.commit();
-//    }
 }
-
-
 
