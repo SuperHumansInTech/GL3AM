@@ -4,6 +4,7 @@
     android:layout_height="40dp"
     android:src="@drawable/delete_icon"
     android:background="@drawable/btn_click_event"
-    android:clickable="true">
+    android:clickable="true"
+    android:id="@+id/deleteItemView">
 
 </ImageView>

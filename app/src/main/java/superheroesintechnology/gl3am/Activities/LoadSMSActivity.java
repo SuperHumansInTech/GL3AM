@@ -25,7 +25,7 @@ public class LoadSMSActivity extends Activity {
     private ArrayList<SMSMessage> message_list;
     ArrayAdapter<SMSMessage> listAdapter;
 //    public static SMSMessage loadedSMS;
-    private  SMSMessage loadedSMS;
+    private  SMSMessage loadedSMS = new SMSMessage(null, null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
