@@ -87,6 +87,8 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
         }
 
+
+        //The following allows the user to click an expansion button that reveals a delete button
         LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final LinearLayout deleteLayout = (LinearLayout)v.findViewById(R.id.SMSdeleteLinLay);
         final View deleteView = layoutInflater.inflate(R.layout.delete_list_item, deleteLayout,
