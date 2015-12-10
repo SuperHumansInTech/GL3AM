@@ -33,7 +33,7 @@ public class UpdateActivity extends Activity {
 
 
     private boolean isPressed = false;
-    public int counter = 4;
+    public int counter = 0;
     private static final String ALARM_PREFS = "AlarmPreferenceFile";
     private LatLngModel Curr_location = new LatLngModel();
     public int activationDistance;

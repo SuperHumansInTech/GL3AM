@@ -92,22 +92,21 @@ public class AlarmLaunchActivity extends Service {
             }
             */
         }
-        if(alarm.getFlags("near","sound")) {
-            notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            mp = MediaPlayer.create(getApplicationContext(), notification);
-            mp.setLooping(true);
 
-            vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mp = MediaPlayer.create(getApplicationContext(), notification);
+        mp.setLooping(true);
 
-            if (alarm.getFlags("near", "sound")) {
+        vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
-                if (am.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
-                        am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
-                    vibrate.vibrate(new long[]{0, 200, 0}, 0);
-                } else {
-                    mp.start();
-                }
+        if(alarm.getFlags("near", "sound")){
+
+            if (am.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
+                    am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
+                vibrate.vibrate(new long[] { 0, 200, 0 }, 0);}
+            else{
+                mp.start();
             }
         }
 

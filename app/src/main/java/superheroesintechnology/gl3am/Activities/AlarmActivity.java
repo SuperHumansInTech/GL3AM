@@ -176,9 +176,11 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                     }
 
                 }
-                StoreClient.addAlarm(currAlarmModel);
-                startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
-                AlarmActivity.this.finish();
+                else {
+                    StoreClient.addAlarm(currAlarmModel);
+                    startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
+                    AlarmActivity.this.finish();
+                }
 
             }
         });
