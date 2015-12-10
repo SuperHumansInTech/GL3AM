@@ -35,6 +35,7 @@
                 android:id="@+id/destinationTextView"
                 android:text="@string/destination"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FD6721"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -42,7 +43,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/destinationResultTextView"
                 android:text=""
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
             <TextView
@@ -51,6 +53,7 @@
                 android:id="@+id/defDistTextView"
                 android:text="@string/act_dist"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FD6721"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -59,7 +62,7 @@
                 android:id="@+id/defDistResultTextView"
                 android:text=""
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"/>
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
                 android:id="@+id/distFromDestTextView"
                 android:text="@string/distance_from_location"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FD6721"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -74,24 +78,24 @@
                 android:layout_height="match_parent"
                 android:id="@+id/distFromDestResultTextView"
                 android:text=""
-                android:layout_marginLeft="10dp"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
-            // Below can be removed before final product is completed. For testing purposes only.
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/booleanTextView"
                 android:text="Estimated Time:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FD6721"
                 android:layout_gravity="center"/>
-            //the below textview is only or testing
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/booleanResultTextView"
                 android:text=""
-                android:layout_marginLeft="10dp"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
 
