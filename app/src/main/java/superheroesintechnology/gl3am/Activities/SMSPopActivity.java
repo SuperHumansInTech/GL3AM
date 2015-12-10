@@ -146,7 +146,7 @@ public class SMSPopActivity extends Activity {
     }
 
     private void doAction(String ModeOverride, String ReturnOverride, boolean loaded) {
-        if (!number.getText().toString().equals("") && !loaded) {
+        if (!number.getText().toString().equals("") || loaded) {
             AlarmModel alarm = storeClient.getCurrAlarm(this);
             SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
 
@@ -181,14 +181,22 @@ public class SMSPopActivity extends Activity {
                 case "Update" : {
                     startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
                     SMSPopActivity.this.finish();
+                    return;
                 }
                 case "Alarm" : {
                     startActivity( new Intent(SMSPopActivity.this, AlarmActivity.class));
                     SMSPopActivity.this.finish();
+                    return;
                 }
                 case "Messages" : {
                     startActivity( new Intent(SMSPopActivity.this, MessageActivity.class));
                     SMSPopActivity.this.finish();
+                    return;
+                }
+                case "Favorites" : {
+                    startActivity( new Intent(SMSPopActivity.this, FavoritesActivity.class));
+                    SMSPopActivity.this.finish();
+                    return;
                 }
                 case "Stay" : {
                     return;
