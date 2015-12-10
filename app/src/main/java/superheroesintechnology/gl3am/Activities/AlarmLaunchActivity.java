@@ -101,10 +101,13 @@ public class AlarmLaunchActivity extends Service {
         AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         if(alarm.getFlags("near", "sound")){
-        mp.start();
+
             if (am.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
                     am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
                 vibrate.vibrate(new long[] { 0, 200, 0 }, 0);}
+            else{
+                mp.start();
+            }
         }
 
 
