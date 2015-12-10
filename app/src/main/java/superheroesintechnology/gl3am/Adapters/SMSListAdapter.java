@@ -92,28 +92,29 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
         final View deleteView = layoutInflater.inflate(R.layout.delete_list_item, deleteLayout,
                 false);
 
-
         final ImageView swipeDelete = (ImageView)v.findViewById(R.id.swipeImage);
 
+        swipeDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(swipeDelete.getTag().toString().equals("p")){
+                    swipeDelete.setImageResource(R.drawable.swipe_arrow);
+                    deleteLayout.removeView(deleteView);
+                    swipeDelete.setTag("nP");
 
+                }
+                else{
+                    swipeDelete.setTag("p");
+                    swipeDelete.setImageResource(R.drawable.right_swipe);
+                    deleteLayout.addView(deleteView);
 
-                swipeDelete.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
-
-                    @Override
-                    public void onSwipeLeft() {
-                        swipeDelete.setImageResource(R.drawable.right_swipe);
-                        deleteLayout.addView(deleteView);
-                    }
-
-                    @Override
-                    public void onSwipeRight() {
-                        swipeDelete.setImageResource(R.drawable.swipe_arrow);
-                        deleteLayout.removeView(deleteView);
-                    }
-                });
-
+                }
+            }
+        });
 
 
         return v;
     }
+
+
 }

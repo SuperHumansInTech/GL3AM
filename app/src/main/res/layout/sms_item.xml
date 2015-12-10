@@ -49,7 +49,8 @@
         android:src="@drawable/swipe_arrow"
         android:background="@drawable/btn_click_event"
         android:clickable="true"
-        android:minWidth="100dp" />
+        android:minWidth="100dp"
+        android:tag="nP"/>
 
     <LinearLayout
         android:id="@+id/SMSdeleteLinLay"
