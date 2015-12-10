@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="superheroesintechnology.gl3am.Activities.UpdateActivity"
+    android:background="@color/primaryBackGroundColor">
+
+
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="18dp"
+                android:id="@+id/defDistTextView"
+                android:text="@string/emptyStatus"
+                android:layout_gravity="right"
+                android:layout_weight="1"/>
+
+
+
+        </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/alarmAppNavLinearLayout">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/favoritesStatusImage"
+            android:src="@drawable/favorites"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/alarmStatusImage"
+            android:src="@drawable/alarm_text_icon"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/btn_click_event"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/homeStatusImage"
+            android:src="@drawable/home"
+            android:clickable="false"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/messageStatusImage"
+            android:src="@drawable/message_favorites"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/btn_click_event"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/statusStatusImage"
+            android:src="@drawable/map4"
+            android:layout_gravity="bottom"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_click_event"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

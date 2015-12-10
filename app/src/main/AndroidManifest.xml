@@ -75,8 +75,8 @@
             android:theme="@style/AppTheme.AlarmPop"></activity>
         <activity
             android:name=".Activities.LoadSMSActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

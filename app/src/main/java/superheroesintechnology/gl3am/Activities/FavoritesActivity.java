@@ -50,6 +50,7 @@ public class FavoritesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FavoritesActivity.this, AlarmActivity.class));
+                finish();
             }
         });
 
@@ -57,6 +58,7 @@ public class FavoritesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FavoritesActivity.this, MapsActivity.class));
+                finish();
             }
         });
 
@@ -64,6 +66,7 @@ public class FavoritesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FavoritesActivity.this, MessageActivity.class));
+                finish();
             }
         });
 
@@ -71,6 +74,7 @@ public class FavoritesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FavoritesActivity.this, UpdateActivity.class));
+                finish();
             }
         });
     }

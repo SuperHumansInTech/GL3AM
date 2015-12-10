@@ -30,6 +30,9 @@ public class SMSPopActivity extends Activity {
     private boolean fromAlarmActivity;
     private boolean fromSaveToFavorites;
 
+    private StorageClient storeClient;
+   private String ReturnTo;
+    private String Mode;
 //
     /*
     @Override
@@ -38,41 +41,17 @@ public class SMSPopActivity extends Activity {
     } */
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-//  SAVE TO FAVORITES BUTTON:
-//          intent.putExtra("sourceForPop", getString(R.string.fromSaveToFavoritesButton));
-
-//  FROM ALARM ACTIVITY'S NEXT BUTTON:
-//          intent.putExtra("sourceForPop", getString(R.string.fromAlarmActivityNext));
-
-//  FROM MESSAGE ACTIVITY
-//          intent.putExtra("sourceForPop", getString(R.string.fromFavoriteMessages));
-
-
-        //final boolean save = savedInstanceState.getBoolean("save", false);
-        final boolean save = false;
-        final StorageClient storeClient = new StorageClient(this, "default");
-
+        //final boolean save = false;
+        storeClient = new StorageClient(this, "default");
         Intent srcIntent = getIntent();
-        final String sourceActivity = srcIntent.getStringExtra("source");
-        final String sourceForAlternatePop = srcIntent.getStringExtra("sourceForPop");
-        //final boolean sendSMSBool = srcIntent.getBooleanExtra("msg?", false);
-        //final boolean alrmBool = srcIntent.getBooleanExtra("alrm?", true);
+        ReturnTo = srcIntent.getStringExtra("ReturnTo");
+        Mode = srcIntent.getStringExtra("Mode");
 
-//        if (sourceForAlternatePop == getString(R.string.fromSaveToFavoritesButton)) {
-//            setContentView(R.layout.save_alarm_to_favorites_pop);
-//            fromSaveToFavorites = true;
-//            fromAlarmActivity = fromMessageActivity = false;
-//        } if (sourceForAlternatePop == getString(R.string.fromAlarmActivityNext)) {
-            setContentView(R.layout.activity_smspop);
-//            fromAlarmActivity = true;
-//            fromSaveToFavorites = fromMessageActivity = false;
-//        } if (sourceForAlternatePop == getString(R.string.fromFavoriteMessages)) {
-//            setContentView(R.layout.save_sms_to_favorites_pop);
-//            fromMessageActivity = true;
-//            fromAlarmActivity = fromSaveToFavorites = false;
-//        }
+        setContentView(R.layout.activity_smspop);
+
 
         name = (EditText)findViewById(R.id.SMSName);
         desc = (EditText)findViewById(R.id.SMSDesc);
@@ -102,37 +81,7 @@ public class SMSPopActivity extends Activity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!number.getText().toString().equals("")) {
-                    AlarmModel alarm = storeClient.getCurrAlarm(SMSPopActivity.this);
-                    SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
-
-                    if (sourceActivity == "MessageActivity") {
-                        storeClient.addSMS(newSMS);
-                        SMSPopActivity.this.finish();
-                    } else {
-
-                        alarm.setSMS(newSMS);
-                        storeClient.setCurrAlarm(alarm);
-                        storeClient.setCurrSMS(newSMS);
-
-
-                        /*
-                        Intent intent = new Intent(SMSPopActivity.this, UpdateActivity.class);
-                        if (sendSMSBool) {
-                            intent.putExtra("msg?", true);
-                        }
-                        if (!alrmBool) {
-                            intent.putExtra("alrm?", false);
-                        }
- */
-                        startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
-                        SMSPopActivity.this.finish();
-                    }
-
-                    //startActivity(new Intent(SMSPopActivity.this, AlarmActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
-                }
+                doAction(null, null, false);
             }
         });
 
@@ -151,14 +100,7 @@ public class SMSPopActivity extends Activity {
 
                     @Override
                     public void onClick(View v) {
-
-                        if(number.getText().toString().equals("")) {
-                            Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
-                        storeClient.addSMS(newSMS);
+                        doAction("Save", "Stay", false);
                     }
                 });
 //            }
@@ -180,14 +122,12 @@ public class SMSPopActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        StorageClient storeClient = new StorageClient(this, "default");
         if(requestCode != 2) {
             return;
         }
         AlarmModel temp = storeClient.getCurrAlarm(SMSPopActivity.this);
         if(temp != null && temp.getSMS() != null) {
-            startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
-            SMSPopActivity.this.finish();
+            doAction(null, null, true);
         }
        /* String name;
         String description;
@@ -203,6 +143,60 @@ public class SMSPopActivity extends Activity {
             storeClient.setCurrSMS(loadedSMS);
 
         }*/
+    }
+
+    private void doAction(String ModeOverride, String ReturnOverride, boolean loaded) {
+        if (!number.getText().toString().equals("") && !loaded) {
+            AlarmModel alarm = storeClient.getCurrAlarm(this);
+            SMSMessage newSMS = new SMSMessage(name.getText().toString(), desc.getText().toString(), number.getText().toString(), message.getText().toString());
+
+            String modetype = Mode;
+            String returntype = ReturnTo;
+            if(ModeOverride != null) {
+                modetype = ModeOverride;
+            }
+            if(ReturnOverride != null) {
+                returntype = ReturnOverride;
+            }
+            switch (modetype) {
+                case "Save": {
+                    storeClient.addSMS(newSMS);
+                    Toast.makeText(getApplicationContext(), "SMS Saved", Toast.LENGTH_LONG).show();
+                }
+
+                case "Add": {
+                    if(alarm == null) {
+                        return;
+                    }
+                    alarm.setSMS(newSMS);
+                    storeClient.setCurrAlarm(alarm);
+                }
+            }
+
+            switch (returntype) {
+                case "None" : {
+                    SMSPopActivity.this.finish();
+                    return;
+                }
+                case "Update" : {
+                    startActivity( new Intent(SMSPopActivity.this, UpdateActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Alarm" : {
+                    startActivity( new Intent(SMSPopActivity.this, AlarmActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Messages" : {
+                    startActivity( new Intent(SMSPopActivity.this, MessageActivity.class));
+                    SMSPopActivity.this.finish();
+                }
+                case "Stay" : {
+                    return;
+                }
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "You must enter a phone number!", Toast.LENGTH_LONG).show();
+        }
     }
 
 

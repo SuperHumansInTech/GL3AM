@@ -77,7 +77,7 @@ public class StorageClient {
     public ArrayList<AlarmModel> loadAlarmList() {
         //Extract JSON string.
         String json = sharedPref.getString(ALARM_LIST, null);
-        if(json == null) {
+        if(json == null || json.equals("null")) {
             //Returns null if there is no entry.
             return new ArrayList<AlarmModel>();
         }
@@ -135,7 +135,7 @@ public class StorageClient {
 
     public ArrayList<SMSMessage> loadSMSList() {
         String json = sharedPref.getString(SMS_LIST, null);
-        if(json == null) {
+        if(json == null || json.equals("null")) {
             return new ArrayList<SMSMessage>();
         }
         else {
@@ -179,9 +179,8 @@ public class StorageClient {
     //Deal with data transfer between objects.
 
     public void setCurrAlarm(AlarmModel current) {
-        AlarmModel temp = current;
-        if(temp != null) {
-            temp.updateContext(null);
+        if(current != null) {
+            current.updateContext(null);
         }
         String json = gson.toJson(current);
         PrefEditor.putString(CURR_ALARM, json);
@@ -190,7 +189,7 @@ public class StorageClient {
 
     public AlarmModel getCurrAlarm(Context context) {
         String json = sharedPref.getString(CURR_ALARM, null);
-        if(json == null) {
+        if(json == null || json.equals("null")) {
             return null;
         }
         else {
@@ -208,7 +207,7 @@ public class StorageClient {
 
     public SMSMessage getCurrSMS() {
         String json = sharedPref.getString(CURR_SMS, null);
-        if(json == null) {
+        if(json == null || json == "null") {
             return new SMSMessage(null, null);
         }
         else {

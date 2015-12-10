@@ -32,6 +32,7 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
+        int pos = position;
 
         if (v == null) {
             LayoutInflater vi;
@@ -91,7 +92,7 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
                                 deleteLayout.removeView(deleteView);
                                 swipeDelete.setTag("nP");
 
-                                storeClient.deleteSMS(position);
+                                storeClient.deleteAlarm(position);
 
                                 FavoriteAlarmListAdapter.this.remove(getItem(position));
                                 FavoriteAlarmListAdapter.this.notifyDataSetChanged();

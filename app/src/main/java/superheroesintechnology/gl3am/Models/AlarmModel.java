@@ -1,14 +1,10 @@
 package superheroesintechnology.gl3am.Models;
 
 import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v4.text.TextUtilsCompatJellybeanMr1;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.net.URLEncoder;
+import java.sql.Time;
 import java.text.DecimalFormat;
 
 import rx.Subscriber;
@@ -99,6 +95,8 @@ public class AlarmModel {
     }
     public void sendSMS(String argument) {
         if(argument.equals("SMS")) {
+            SMS.setSmsTextMessage(SMS.getSmsTextMessage() + " This message sent automatically by GL3AMS. User is "
+            + getDistance_leftString() + " miles from their destination.");
             SMS.sendSMS();
         }
         else if (argument.equals("LATE")) {
@@ -298,9 +296,10 @@ public class AlarmModel {
 
     public double getDistance_left() {return distance_left;}
     public void setDistance_left(double distance_left) {this.distance_left = distance_left;}
+
     public String getDistance_leftString() {
         DecimalFormat form = new DecimalFormat("0.00");
-        return String.valueOf(form.format(distance_left)); }
+        return (String) (form.format(distance_left)); }
 
 
     public String getAddress_string() {return address_string;}
