@@ -58,15 +58,21 @@ public class MessageActivity extends Activity {
 
 
 
+
+
+
         //smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listAdapter.notifyDataSetChanged();
                 message_list = StoreClient.loadSMSList();
-                smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
+                smsList.setAdapter(listAdapter);
             }
         });
+
+
 
 
 
