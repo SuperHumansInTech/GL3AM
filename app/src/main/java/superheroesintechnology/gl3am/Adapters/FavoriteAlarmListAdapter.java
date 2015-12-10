@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,6 +58,32 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
             if (activationDistText != null) {
                 activationDistText.setText(String.valueOf(alarm.getActivation_distance()));
             }
+
+            //The following allows the user to click an expansion button that reveals a delete button
+            LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final LinearLayout deleteLayout = (LinearLayout)v.findViewById(R.id.alarmDelLL);
+            final View deleteView = layoutInflater.inflate(R.layout.delete_list_item, deleteLayout,
+                    false);
+
+            final ImageView swipeDelete = (ImageView)v.findViewById(R.id.expandImage);
+
+            swipeDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(swipeDelete.getTag().toString().equals("p")){
+                        swipeDelete.setImageResource(R.drawable.swipe_arrow);
+                        deleteLayout.removeView(deleteView);
+                        swipeDelete.setTag("nP");
+
+                    }
+                    else{
+                        swipeDelete.setTag("p");
+                        swipeDelete.setImageResource(R.drawable.right_swipe);
+                        deleteLayout.addView(deleteView);
+
+                    }
+                }
+            });
         }
 
         return v;
