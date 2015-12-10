@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/loadSMSPop"
+    android:background="@color/primaryBackGroundColor"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
@@ -13,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
         android:divider="#FD6721"
         android:dividerHeight="1dp"
         android:layout_above="@+id/loadSMSConCanLinLay">
@@ -29,9 +31,8 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:paddingTop="10dp"
             android:src="@drawable/saveinfo"
-            android:background="@drawable/sms_btn_click"
+            android:background="@drawable/btn_click_event"
             android:id="@+id/confirmLoadSMSButton"
             android:layout_weight="1"
             />
@@ -42,7 +43,7 @@
             android:id="@+id/cancelLoadSMSButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/sms_btn_click"
+            android:background="@drawable/btn_click_event"
             android:src="@drawable/cancel"
             android:layout_weight="1"
             />

@@ -144,7 +144,6 @@
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:paddingTop="10dp"
         android:src="@drawable/saveinfo"
         android:background="@drawable/sms_btn_click"
         android:id="@+id/confirmSMSButton"

@@ -1,7 +1,9 @@
 package superheroesintechnology.gl3am.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -85,20 +87,6 @@ public class UpdateActivity extends Activity {
             public void run() {
                 SharedPreferences startStopPrefs = getSharedPreferences("AlamrPrefernceFile", 0);
                 final boolean isPressed = startStopPrefs.getBoolean("isPressed", false);
-
-//                SharedPreferences sharedLocationPref = getSharedPreferences("currentLocation", Context.MODE_PRIVATE);
-//                final double currentLongitude = Double.parseDouble(sharedLocationPref.getString("currentLongitude", "0.0"));
-//                final double currentLatitude = Double.parseDouble(sharedLocationPref.getString("currentLatitude", "0.0"));
-
-//                if (Alarm.verifyDistance()) {
-//                    boolTextView.setText("True");
-//                    return;
-//                } else {
-//                    boolTextView.setText("False");
-//                }
-
-
-
                 if (isPressed) {
                     locationUpdateHandler.postDelayed(this, 2000);
                 }
@@ -227,6 +215,7 @@ public class UpdateActivity extends Activity {
                                                     startService(popUpTest);
                                                 }
                                                 */
+                                                counter = 0;
                                                 startService(new Intent(UpdateActivity.this, AlarmLaunchActivity.class));
                                                 //alarmSound.pause();
                                             }
@@ -254,6 +243,11 @@ public class UpdateActivity extends Activity {
                                     } else {
                                         counter++;
 
+                                        distFromDefTextView.setText(Alarm.getDistance_leftString() + " mi.");
+
+                                        if(counter < 0) {
+                                            return;
+                                        }
                                         if (counter >= 10800) {
                                             counter = 0;
                                             Toast.makeText(getApplicationContext(), "Warning: Run duration exceeded! Auto-shutting down."
@@ -366,6 +360,29 @@ public class UpdateActivity extends Activity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Warning: Leaving the page will stop tracking.");
+        builder.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                counter = -10;
+                //if user pressed "yes", then he is allowed to exit from application
+                finish();
+            }
+        });
+        builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
     }
 }
 
