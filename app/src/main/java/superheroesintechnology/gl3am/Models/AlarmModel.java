@@ -206,13 +206,13 @@ public class AlarmModel {
 
         switch(temp) {
             case (1): {
-                return "Alarm Only.";
+                return "Alarm Only";
             }
             case (2):  {
-                return "Message Only.";
+                return "Message Only";
             }
             case (3): {
-                return "Alarm and Message.";
+                return "Alarm and Message";
             }
             default: {
                 return "Error.";
