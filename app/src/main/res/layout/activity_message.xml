@@ -7,13 +7,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="superheroesintechnology.gl3am.Activities.MessageActivity"
     android:background="@color/primaryBackGroundColor">
-    <Button
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/magnifier12"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/SMSRefreshButton" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
@@ -24,18 +18,6 @@
         android:divider="#FD6721"
         android:dividerHeight="1dp">
     </ListView>
-
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/addtofavorites"
-            android:id="@+id/addMessageToFavs"/>
-
 
     <LinearLayout
         android:orientation="horizontal"
