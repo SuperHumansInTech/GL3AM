@@ -43,7 +43,6 @@ public class MessageActivity extends Activity {
 
 //        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
 
-
         smsList = (ListView) findViewById(R.id.list);
 //        LinearLayout smsItem = (LinearLayout) findViewById(R.id.smsListItem);
 //        View v = smsList.findFocus();

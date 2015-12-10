@@ -94,6 +94,7 @@ public class SMSListAdapter extends ArrayAdapter<SMSMessage> {
 
 
         final ImageView swipeDelete = (ImageView)v.findViewById(R.id.swipeImage);
+        final ImageView deleteItem = (ImageView) v.findViewById(R.id.deleteItemView);
 
 
 
