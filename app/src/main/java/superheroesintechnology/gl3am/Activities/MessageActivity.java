@@ -47,7 +47,6 @@ public class MessageActivity extends Activity {
         smsList = (ListView) findViewById(R.id.list);
 //        LinearLayout smsItem = (LinearLayout) findViewById(R.id.smsListItem);
 //        View v = smsList.findFocus();
-        searchButton = (Button) findViewById(R.id.SMSRefreshButton);
 
 
         message_list = StoreClient.loadSMSList();
@@ -61,13 +60,7 @@ public class MessageActivity extends Activity {
 
         //smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message_list = StoreClient.loadSMSList();
-                smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
-            }
-        });
+
 
 
 

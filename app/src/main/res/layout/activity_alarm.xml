@@ -14,13 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/alarmAppNavLinearLayout"
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/nextTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_color"
             android:text="Next"
             />
 
@@ -181,18 +181,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+            <ImageView
+                android:id="@+id/addSMS"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/message_favorites"
+                android:clickable="true"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add Message"/>
+        </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical"
+        android:layout_gravity="top">
         <ImageView
             android:id="@+id/saveAlarmToFav"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:src="@drawable/alarm_text_icon_save"
             android:background="@drawable/btn_click_event"
@@ -202,32 +223,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Save"
-            android:textAlignment="center"/>
+            android:text="Save"/>
     </LinearLayout>
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="match_parent" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/getAlarmFave"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:layout_gravity="center"
-            android:src="@drawable/favorites"
-            android:background="@drawable/btn_click_event"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favorites"
-            android:gravity="center"
-            android:textAlignment="center"/>
-    </LinearLayout>
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/newSMS"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_click_event"
+                android:src="@drawable/save_message"
+                android:layout_gravity="center"
+                android:clickable="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Message"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
     </LinearLayout>
     </LinearLayout>
 
