@@ -8,16 +8,44 @@
     tools:context="superheroesintechnology.gl3am.Activities.MessageActivity"
     android:background="@color/primaryBackGroundColor">
 
+    <TextView
+        android:id="@+id/serviceFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message Favorites"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/navBarLinear"
+        android:layout_above="@+id/newSMSFav"
+        android:layout_below="@id/serviceFavorites"
         android:layout_marginTop="30dp"
-        android:layout_weight=".75"
         android:divider="#FD6721"
         android:dividerHeight="1dp">
     </ListView>
+    <ImageView
+        android:id="@+id/newSMSFav"
+        android:background="@drawable/btn_click_event"
+        android:src="@drawable/save_message"
+        android:layout_margin="5dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/addNewSMS"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/addNewSMS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New"
+        android:layout_above="@+id/navBarLinear"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -76,66 +104,6 @@
             android:scaleType="centerInside" />
 
     </LinearLayout>
-  <!--  <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/alarmSeekBarReadOutDisp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/seekBarMessage">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=""
-            android:id="@+id/distanceAlarmTextView"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/alarmMeasurementType"
-            android:text="@string/miles"
-            android:textColor="@color/text_color"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>-->
 
-<!--
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Message"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:id="@+id/starStopMessageTextView"
-        android:textColor="@color/text_color"
-        android:layout_above="@+id/startStopMessageImage"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:background="@drawable/start"
-        android:id="@+id/startStopMessageImage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@+id/navBarLinear" />
-
-    <SeekBar
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:max="20"
-        android:id="@+id/seekBarMessage"
-        android:layout_above="@+id/starStopMessageTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
--->
 
 </RelativeLayout>

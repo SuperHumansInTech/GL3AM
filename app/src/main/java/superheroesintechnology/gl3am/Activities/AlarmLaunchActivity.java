@@ -166,7 +166,7 @@ public class AlarmLaunchActivity extends Service {
 
         stopButton = new ImageView(this);
         stopButton.setBackground(ResourcesCompat.getDrawable(getResources(),
-                R.drawable.alarm54, null));
+                R.drawable.saveinfo, null));
 
         stopButton.setLayoutParams(btnParams);
 
@@ -190,7 +190,7 @@ public class AlarmLaunchActivity extends Service {
         LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        layout.setBackgroundColor(getResources().getColor(R.color.popup));
+        layout.setBackgroundColor(getResources().getColor(R.color.pop_up_background));
         layout.setLayoutParams(llParams);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(8, 8, 8, 8);

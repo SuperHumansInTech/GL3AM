@@ -46,6 +46,11 @@ public class UpdateActivity extends Activity {
         setContentView(R.layout.activity_update);
         Alarm = StoreClient.getCurrAlarm(this);
 
+        if(Alarm == null) {
+            TextView errorTextView = (TextView) findViewById(R.id.distFromDestResultTextView);
+            errorTextView.setText("No alarm has been selected.");
+            return;
+        }
         //Intent intent = getIntent();
         //final boolean sendSMSBool = intent.getBooleanExtra("msg?", false);
         //final boolean alrmBool = intent.getBooleanExtra("alrm?", true);
