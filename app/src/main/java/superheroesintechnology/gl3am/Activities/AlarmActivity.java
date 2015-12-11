@@ -255,6 +255,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 seekBarEditor.commit();
                 if (currAlarmModel != null && !currAlarmModel.error) {
                     currAlarmModel.setActivation_distance((double) (seekBar.getProgress()*.5));
+                    StoreClient.setCurrAlarm(currAlarmModel);
                 }
             }
 

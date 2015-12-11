@@ -4,12 +4,15 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,8 +38,8 @@ public class LoadSMSActivity extends Activity {
         setContentView(R.layout.load_saved_sms);
 
         smsList = (ListView) findViewById(R.id.list);
-        ImageView confirmButton = (ImageView) findViewById(R.id.confirmLoadSMSButton);
-        ImageView cancelButton = (ImageView) findViewById(R.id.cancelLoadSMSButton);
+//        ImageView confirmButton = (ImageView) findViewById(R.id.confirmLoadSMSButton);
+//        ImageView cancelButton = (ImageView) findViewById(R.id.cancelLoadSMSButton);
         message_list = StoreClient.loadSMSList();
 
         listAdapter = new SMSListAdapter(this, message_list);
@@ -47,30 +50,42 @@ public class LoadSMSActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
                 loadedSMS = StoreClient.getSMS(position);
-                Toast.makeText(getApplicationContext(), "testing", Toast.LENGTH_LONG).show();
-                //finishAndRemoveTask();
-            }
-        });
 
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loadedSMS == null) {
-                    Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                        .getSystemService(LAYOUT_INFLATER_SERVICE);
+                final RelativeLayout r = (RelativeLayout) findViewById(R.id.loadSMSPop);
+                final View popUpView = layoutInflater.inflate(R.layout.activity_confirm_favorite, r, false);
+                r.addView(popUpView);
 
-                AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);
-                currAlarm.setSMS(loadedSMS);
-                StoreClient.setCurrAlarm(currAlarm);
-                LoadSMSActivity.this.finish();
-            }
-        });
+                ImageView confirmButton = (ImageView) popUpView.findViewById(R.id.confirmAlarmButton);
+                ImageView cancelButton = (ImageView) popUpView.findViewById(R.id.cancel_action);
+                TextView confirmOrCancelText = (TextView) popUpView.findViewById(R.id.confirmOrCancelTextView);
+                confirmOrCancelText.setText("Use this message?");
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoadSMSActivity.this.finish();
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (loadedSMS == null) {
+                            Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);
+                        currAlarm.setSMS(loadedSMS);
+                        StoreClient.setCurrAlarm(currAlarm);
+                        r.removeView(popUpView);
+                        startActivity(new Intent(LoadSMSActivity.this, UpdateActivity.class));
+                        LoadSMSActivity.this.finish();
+
+                    }
+                });
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        r.removeView(popUpView);
+                    }
+                });
             }
         });
     }

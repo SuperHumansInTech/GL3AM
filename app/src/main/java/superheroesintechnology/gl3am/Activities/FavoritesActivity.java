@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,8 @@ public class FavoritesActivity extends Activity {
 
                 ImageView confirmButton = (ImageView) popUpView.findViewById(R.id.confirmAlarmButton);
                 ImageView cancelButton = (ImageView) popUpView.findViewById(R.id.cancel_action);
+                TextView confirmOrCancelText = (TextView) popUpView.findViewById(R.id.confirmOrCancelTextView);
+                confirmOrCancelText.setText("Use this service?");
 
                 confirmButton.setOnClickListener(new View.OnClickListener() {
                     @Override
