@@ -379,16 +379,16 @@ public class UpdateActivity extends Activity {
                     StoreClient.setCurrAlarm(null);
                     SharedPreferences sharedPreferences = getSharedPreferences(ALARM_PREFS, 0);
                     SharedPreferences.Editor startStopEditor = sharedPreferences.edit();
-                    startStopEditor.putBoolean("bool", true);
-
-                    //if user pressed "yes", then he is allowed to exit from application
+                    setIsPressed(false);
+                    startCancelImageView.setBackgroundResource(R.drawable.start);
+                    startCancelTextView.setText(R.string.start);
+                    startStopEditor.putBoolean("isPressed", false);
                     finish();
                 }
             });
             builder.setNegativeButton("Stay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //if user select "No", just cancel this dialog and continue with app
                     dialog.cancel();
                 }
             });
