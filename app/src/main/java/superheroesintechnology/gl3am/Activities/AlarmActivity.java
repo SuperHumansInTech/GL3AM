@@ -257,6 +257,7 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 seekBarEditor.commit();
                 if (currAlarmModel != null && !currAlarmModel.error) {
                     currAlarmModel.setActivation_distance((double) (seekBar.getProgress()*.5));
+                    StoreClient.setCurrAlarm(currAlarmModel);
                 }
             }
 
@@ -298,10 +299,13 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 if ((alarm_flags & 2) != 0 /*msgOnly || alrmAndMsg*/) {
 
                     if (currAlarmModel.getSMS() == null) {
+                        Toast.makeText(getApplicationContext(), "Error! No assigned message!", Toast.LENGTH_LONG).show();
+                        /*
                         Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                         intent.putExtra("Mode", "Add");
                         intent.putExtra("ReturnTo", "Update");
                         startActivity(intent);
+                        */
                     } else {
                         startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
                         AlarmActivity.this.finish();

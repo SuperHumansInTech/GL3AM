@@ -16,37 +16,36 @@
         android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:divider="#FD6721"
-        android:dividerHeight="1dp"
-        android:layout_above="@+id/loadSMSConCanLinLay">
+        android:dividerHeight="1dp">
     </ListView>
 
-    <LinearLayout
-        android:id="@+id/loadSMSConCanLinLay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/loadSMSConCanLinLay"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_centerHorizontal="true">-->
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/saveinfo"
-            android:background="@drawable/btn_click_event"
-            android:id="@+id/confirmLoadSMSButton"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <ImageView
-            android:id="@+id/cancelLoadSMSButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/btn_click_event"
-            android:src="@drawable/cancel"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
+        <!--<ImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:src="@drawable/saveinfo"-->
+            <!--android:background="@drawable/btn_click_event"-->
+            <!--android:id="@+id/confirmLoadSMSButton"-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp" />-->
+        <!--<ImageView-->
+            <!--android:id="@+id/cancelLoadSMSButton"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/btn_click_event"-->
+            <!--android:src="@drawable/cancel"-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
 
 </RelativeLayout>
