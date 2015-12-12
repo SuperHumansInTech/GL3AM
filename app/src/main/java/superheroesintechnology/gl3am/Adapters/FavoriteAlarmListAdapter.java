@@ -48,6 +48,7 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
             TextView typeText = (TextView) v.findViewById(R.id.typeText);
             TextView activationDistText =
                     (TextView) v.findViewById(R.id.activationDistText);
+            ImageView typeImg = (ImageView) v.findViewById(R.id.servTypeImg);
 
             if (destText != null) {
                 if (alarm.getAddress_string() != null) {
@@ -57,6 +58,25 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
 
             if (typeText != null) {
                 typeText.setText(alarm.getFlagStrings("near"));
+
+                //Switch case statement loads proper service image to the service type
+                switch (alarm.getFlagStrings("near")){
+
+                    case "Alarm Only":{
+                        typeImg.setImageResource(R.drawable.alarm54);
+                        break;
+                    }
+
+                    case "Message Only" :{
+                        typeImg.setImageResource(R.drawable.speehcbubble);
+                        break;
+                    }
+
+                    case "Alarm and Message" :{
+                        typeImg.setImageResource(R.drawable.alarm_text_icon);
+                        break;
+                    }
+                }
             }
 
             if (activationDistText != null) {

@@ -45,9 +45,9 @@ public class FavoritesActivity extends Activity {
         listAdapter = new FavoriteAlarmListAdapter(this, alarmArrayList);
         alarmList.setAdapter(listAdapter);
 
-        alarmList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        alarmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
 
                 LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
@@ -93,7 +93,6 @@ public class FavoritesActivity extends Activity {
                         r.removeView(popUpView);
                     }
                 });
-                return true;
             }
         });
 
