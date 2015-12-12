@@ -206,13 +206,13 @@ public class AlarmModel {
 
         switch(temp) {
             case (1): {
-                return "Alarm Only.";
+                return "Alarm Only";
             }
             case (2):  {
-                return "Message Only.";
+                return "Message Only";
             }
             case (3): {
-                return "Alarm and Message.";
+                return "Alarm and Message";
             }
             default: {
                 return "Error.";
@@ -259,10 +259,10 @@ public class AlarmModel {
                             address_string = leg.getEnd_address();
                             initial_time_left = time_left.getValue();
                             destination = leg.getEnd_location();
-                            Toast.makeText(context.getApplicationContext(), "API Call successful. Destination coordinates:"
-                                    + destination.getCoordString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context.getApplicationContext(), "API Call successful. Destination set to: "
+                                    + getAddress_string(), Toast.LENGTH_LONG).show();
                         }
-                        distance_left = leg.getDistance().getValue();
+                        distance_left = leg.getDistance().getValue() * 0.000621371; //Conversion to miles from meters.
                     }
                 });
     }

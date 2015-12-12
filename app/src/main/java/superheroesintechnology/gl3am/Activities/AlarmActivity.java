@@ -109,19 +109,25 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
         addSMSButton = (ImageView) findViewById(R.id.newSMS);
         loadSMSButton = (ImageView) findViewById(R.id.addSMS);
+        saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
 
+        addSMSButton.setClickable(false);
+        addSMSButton.setAlpha(((float) 0.4));
+        loadSMSButton.setClickable(false);
+        loadSMSButton.setAlpha((float) 0.4);
+        saveToFavButton.setClickable(false);
+        saveToFavButton.setAlpha((float) 0.4);
 
         addSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currAlarmModel != null) {
+                if (currAlarmModel != null) {
                     StoreClient.setCurrAlarm(currAlarmModel);
                     Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                     intent.putExtra("ReturnTo", "None");
                     intent.putExtra("Mode", "Add");
-                    startActivity(intent);
-                }
-                else {
+                    startActivityForResult(intent, 2);
+                } else {
                     Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                 }
             }
@@ -130,18 +136,16 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         loadSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currAlarmModel != null) {
+                if (currAlarmModel != null) {
                     StoreClient.setCurrAlarm(currAlarmModel);
-                    startActivity(new Intent(AlarmActivity.this, LoadSMSActivity.class));
-                }
-                else {
+                    startActivityForResult(new Intent(AlarmActivity.this, LoadSMSActivity.class), 2);
+                } else {
                     Toast.makeText(getApplicationContext(), "Error! No assigned destination.", Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
-        saveToFavButton = (ImageView) findViewById(R.id.saveAlarmToFav);
 
         saveToFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,14 +164,22 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
                     if (currAlarmModel.getSMS() == null) {
 
+                        StoreClient.setCurrAlarm(currAlarmModel);
                         Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                         intent.putExtra("ReturnTo", "None");
                         intent.putExtra("Mode", "Add");
-                        startActivity(intent);
+                        startActivityForResult(intent,3);
                     } else {
                         StoreClient.addAlarm(currAlarmModel);
+                        startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
+                        AlarmActivity.this.finish();
                     }
 
+                }
+                else {
+                    StoreClient.addAlarm(currAlarmModel);
+                    startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
+                    AlarmActivity.this.finish();
                 }
 
             }
@@ -189,10 +201,12 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
 
                 temp.setActivation_distance(seekBar.getProgress() * .5);
                 temp.setFlags(alarm_flags, 0, 0, false);
-                if(currAlarmModel != null && currAlarmModel.getSMS() != null) {
+                if (currAlarmModel != null && currAlarmModel.getSMS() != null) {
                     temp.setSMS(currAlarmModel.getSMS());
                 }
                 currAlarmModel = temp;
+                saveToFavButton.setClickable(true);
+                saveToFavButton.setAlpha((float) 1);
             }
         });
 
@@ -242,7 +256,8 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 seekBarEditor.putInt("miles", seekBar.getProgress());
                 seekBarEditor.commit();
                 if (currAlarmModel != null && !currAlarmModel.error) {
-                    currAlarmModel.setActivation_distance((double) seekBar.getProgress());
+                    currAlarmModel.setActivation_distance((double) (seekBar.getProgress()*.5));
+                    StoreClient.setCurrAlarm(currAlarmModel);
                 }
             }
 
@@ -284,15 +299,18 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
                 if ((alarm_flags & 2) != 0 /*msgOnly || alrmAndMsg*/) {
 
                     if (currAlarmModel.getSMS() == null) {
+                        Toast.makeText(getApplicationContext(), "Error! No assigned message!", Toast.LENGTH_LONG).show();
+                        /*
                         Intent intent = new Intent(AlarmActivity.this, SMSPopActivity.class);
                         intent.putExtra("Mode", "Add");
                         intent.putExtra("ReturnTo", "Update");
                         startActivity(intent);
+                        */
                     } else {
                         startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
+                        AlarmActivity.this.finish();
                     }
-                }
-                else {
+                } else {
                     startActivity(new Intent(AlarmActivity.this, UpdateActivity.class));
                     finish();
                 }
@@ -348,6 +366,18 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //1 is sound, 2 is message, 3(1&2) is alarm and message. This actually adds up perfectly to do this:
         alarm_flags = position + 1;
+        if(position == 0) {
+            addSMSButton.setClickable(false);
+            addSMSButton.setAlpha(((float) 0.5));
+            loadSMSButton.setClickable(false);
+            loadSMSButton.setAlpha((float)0.5);
+        }
+        else {
+            addSMSButton.setClickable(true);
+            addSMSButton.setAlpha(((float) 1));
+            loadSMSButton.setClickable(true);
+            loadSMSButton.setAlpha((float)1);
+        }
         /*switch (position) {
             case 0: //Alarm Only
                 alrmOnly = true;
@@ -387,6 +417,27 @@ public class AlarmActivity extends Activity implements AdapterView.OnItemSelecte
         if (!saveInfoBool && !useInfoBool) {
             Toast.makeText(getApplicationContext(), "Error! You must choose whether or not to save info!",
                     Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            AlarmModel temp = StoreClient.getCurrAlarm(AlarmActivity.this);
+            if (temp != null && temp.getSMS() != null) {
+                currAlarmModel = temp;
+
+            }
+        }
+        if(requestCode == 3) {
+            AlarmModel temp = StoreClient.getCurrAlarm(AlarmActivity.this);
+            if(temp.getSMS() != null) {
+                startActivity(new Intent(AlarmActivity.this, FavoritesActivity.class));
+                AlarmActivity.this.finish();
+                StoreClient.setCurrAlarm(null);
+            }
         }
     }
 }
