@@ -2,6 +2,7 @@
 
 
 import android.app.IntentService;
+import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -71,6 +72,13 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final StorageClient StoreClient = new StorageClient(this, "default");
+        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
+        wakeLock.acquire();
+
+        KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
+        keyguardLock.disableKeyguard();
 
         final SMSMessage newMessage = StoreClient.getCurrSMS();
 
