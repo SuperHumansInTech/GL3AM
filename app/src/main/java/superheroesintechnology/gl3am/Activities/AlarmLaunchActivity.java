@@ -72,10 +72,13 @@ public class AlarmLaunchActivity extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final StorageClient StoreClient = new StorageClient(this, "default");
+
+        //Wakes device if asleep on launch of service
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
         wakeLock.acquire();
 
+        //Releases lock of the device on launch of service
         KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
         keyguardLock.disableKeyguard();

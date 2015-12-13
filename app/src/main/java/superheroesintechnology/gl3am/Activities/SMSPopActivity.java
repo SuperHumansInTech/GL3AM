@@ -1,5 +1,6 @@
 package superheroesintechnology.gl3am.Activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.text.TextUtils;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import superheroesintechnology.gl3am.Models.AlarmModel;
@@ -33,6 +35,8 @@ public class SMSPopActivity extends Activity {
     private StorageClient storeClient;
    private String ReturnTo;
     private String Mode;
+
+
 //
     /*
     @Override
@@ -69,13 +73,9 @@ public class SMSPopActivity extends Activity {
         cancelButton = (ImageView)findViewById(R.id.SMScancelButton);
         saveSMSButton = (ImageView)findViewById(R.id.saveMessageButton);
         getSavedSMSButton = (ImageView)findViewById(R.id.getSavedMessageButton);
-        DisplayMetrics popDM = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(popDM);
 
-        int width = popDM.widthPixels;
-        int height = popDM.heightPixels;
 
-        getWindow().setLayout((int) (width * .8), (int) (height * .6));
+        setWindowSize();
 
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +119,15 @@ public class SMSPopActivity extends Activity {
 
     }
 
+    //*************************************************************************************************
+    //Sets popup window size
+    public void setWindowSize(){
+        DisplayMetrics popDM = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(popDM);
+        getWindow().setLayout(popDM.widthPixels, RelativeLayout.LayoutParams.WRAP_CONTENT);
+    }
+
+    //************************************************************************************************
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,6 +154,7 @@ public class SMSPopActivity extends Activity {
         }*/
     }
 
+    //***********************************************************************************************
     private void doAction(String ModeOverride, String ReturnOverride, boolean loaded) {
         if (!number.getText().toString().equals("") || loaded) {
             AlarmModel alarm = storeClient.getCurrAlarm(this);
