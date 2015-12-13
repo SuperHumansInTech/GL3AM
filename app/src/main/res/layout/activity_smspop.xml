@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/pop_up_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
     android:id="@+id/popLayout"
     tools:context="superheroesintechnology.gl3am.Activities.SMSPopActivity">
     <LinearLayout
@@ -11,18 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/SMSpopConCanLinLay"
-        android:weightSum="3"
-        >
+        android:layout_alignParentTop="true">
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/smsLinearLayout"
         android:orientation="vertical"
-        android:layout_weight="2"
         >
 
         <EditText
@@ -30,12 +25,10 @@
             android:layout_height="wrap_content"
             android:hint="Enter a name (optional)..."
             android:id="@+id/SMSName"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/hint"
-            android:layout_weight="1"
             />
 
 
@@ -50,7 +43,6 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/hint"
-            android:layout_weight="1"
             />
 
         <EditText
@@ -63,7 +55,6 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/hint"
-            android:layout_weight="1"
             />
 
         <EditText
@@ -76,19 +67,19 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/hint"
-            android:layout_weight="1"/>
+            />
     </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_weight="1"
             >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/getSavedMessageButton"
                 android:layout_width="40dp"
@@ -103,7 +94,9 @@
                 android:text="Load"
                 android:textColor="@color/text_color"
                 android:layout_below="@+id/getSavedMessageButton"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:singleLine="true"/>
             </RelativeLayout>
             <ImageView
                 android:layout_width="match_parent"
@@ -127,6 +120,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/saveMessageButton"
                 android:text="Save"
+                android:gravity="center"
+                android:singleLine="true"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"/>
             </RelativeLayout>
@@ -136,9 +131,9 @@
         android:id="@+id/SMSpopConCanLinLay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
+        android:layout_below="@id/SMSmasterLinearLayout"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true">
 
     <ImageView
@@ -147,7 +142,6 @@
         android:src="@drawable/saveinfo"
         android:background="@drawable/sms_btn_click"
         android:id="@+id/confirmSMSButton"
-        android:layout_weight="1"
         />
         <ImageView
             android:layout_width="40dp"
@@ -158,7 +152,6 @@
             android:layout_height="40dp"
             android:background="@drawable/sms_btn_click"
             android:src="@drawable/cancel"
-            android:layout_weight="1"
             />
     </LinearLayout>
 

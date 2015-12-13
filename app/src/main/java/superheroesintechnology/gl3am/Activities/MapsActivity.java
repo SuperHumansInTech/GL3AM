@@ -17,6 +17,11 @@ import superheroesintechnology.gl3am.R;
 public class MapsActivity extends Activity{
 
     private ImageView infoButton;
+    private ImageView alarmImage;
+    private ImageView messageImage;
+    private ImageView favoritesImage;
+    private ImageView infoUpdateImage;
+    private RelativeLayout r;
 
 
     @Override
@@ -25,11 +30,8 @@ public class MapsActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        infoButton = (ImageView)findViewById(R.id.infoButton);
-        final ImageView alarmImage = (ImageView) findViewById(R.id.alarmImage);
-        final ImageView messageImage = (ImageView) findViewById(R.id.textImage);
-        final ImageView favoritesImage = (ImageView) findViewById(R.id.favoritesImage);
-        final ImageView infoUpdateImage = (ImageView) findViewById(R.id.currentActivityImage);
+        //set main menu buttons
+        setButtons();
 
         infoButton.setOnClickListener(new View.OnClickListener() {
 
@@ -37,27 +39,18 @@ public class MapsActivity extends Activity{
             @Override
             public void onClick(View arg0) {
 
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-                        .getSystemService(LAYOUT_INFLATER_SERVICE);
-                final RelativeLayout r = (RelativeLayout)findViewById(R.id.main);
-                final View popupView = layoutInflater.inflate(R.layout.activity_information, r, false);
-                r.addView(popupView);
-
-                alarmImage.setClickable(false);
-                messageImage.setClickable(false);
-                favoritesImage.setClickable(false);
-                infoUpdateImage.setClickable(false);
-
+                //intialize information popup window
+                final View popupView = onInflateInfo();
                 ImageView exitInfo = (ImageView) popupView.findViewById(R.id.exitInfoBtn);
 
+                //disable main menu buttons
+                disableButtons();
+
+                //close information popup window
                 exitInfo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        alarmImage.setClickable(true);
-                        messageImage.setClickable(true);
-                        favoritesImage.setClickable(true);
-                        infoUpdateImage.setClickable(true);
-                        r.removeView(popupView);
+                       onDeflateInfo(popupView);
                     }
 
                 });
@@ -97,5 +90,46 @@ public class MapsActivity extends Activity{
         });
 
 
+    }
+
+    public void setButtons(){
+        infoButton = (ImageView)findViewById(R.id.infoButton);
+        alarmImage = (ImageView) findViewById(R.id.alarmImage);
+        messageImage = (ImageView) findViewById(R.id.textImage);
+        favoritesImage = (ImageView) findViewById(R.id.favoritesImage);
+        infoUpdateImage = (ImageView) findViewById(R.id.currentActivityImage);
+        r = (RelativeLayout)findViewById(R.id.main);
+    }
+
+    //***********************************************************************************************
+    //Set the inflation of the information window
+    //disables main menu buttons
+    public View onInflateInfo(){
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.activity_information, r, false);
+        r.addView(popupView);
+
+        return popupView;
+    }
+
+    public void disableButtons(){
+        alarmImage.setClickable(false);
+        messageImage.setClickable(false);
+        favoritesImage.setClickable(false);
+        infoUpdateImage.setClickable(false);
+        infoButton.setClickable(false);
+    }
+
+    //***********************************************************************************************
+    //Handles deflation of info popup
+    //reenables main menu buttons
+    public void onDeflateInfo(View v){
+        alarmImage.setClickable(true);
+        messageImage.setClickable(true);
+        favoritesImage.setClickable(true);
+        infoUpdateImage.setClickable(true);
+        infoButton.setClickable(true);
+        r.removeView(v);
     }
 }
