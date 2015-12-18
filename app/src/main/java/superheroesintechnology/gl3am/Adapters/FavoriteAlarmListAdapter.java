@@ -89,28 +89,27 @@ public class FavoriteAlarmListAdapter extends ArrayAdapter<AlarmModel> {
             final View deleteView = layoutInflater.inflate(R.layout.delete_list_item, deleteLayout,
                     false);
 
-            final ImageView swipeDelete = (ImageView)v.findViewById(R.id.expandImage);
+            final ImageView deleteItem = (ImageView)v.findViewById(R.id.expandImage);
 
-            swipeDelete.setOnClickListener(new View.OnClickListener() {
+            deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(swipeDelete.getTag().toString().equals("p")){
-                        swipeDelete.setImageResource(R.drawable.swipe_arrow);
+                    if (deleteItem.getTag().toString().equals("p")) {
+                        deleteItem.setImageResource(R.drawable.swipe_arrow);
                         deleteLayout.removeView(deleteView);
-                        swipeDelete.setTag("nP");
+                        deleteItem.setTag("nP");
 
-                    }
-                    else{
-                        swipeDelete.setTag("p");
-                        swipeDelete.setImageResource(R.drawable.right_swipe);
+                    } else {
+                        deleteItem.setTag("p");
+                        deleteItem.setImageResource(R.drawable.right_swipe);
                         deleteLayout.addView(deleteView);
                         final ImageView deleteItem = (ImageView) deleteView.findViewById(R.id.deleteItemView);
                         deleteItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                swipeDelete.setImageResource(R.drawable.swipe_arrow);
+                                deleteItem.setImageResource(R.drawable.swipe_arrow);
                                 deleteLayout.removeView(deleteView);
-                                swipeDelete.setTag("nP");
+                                deleteItem.setTag("nP");
 
                                 storeClient.deleteAlarm(position);
 

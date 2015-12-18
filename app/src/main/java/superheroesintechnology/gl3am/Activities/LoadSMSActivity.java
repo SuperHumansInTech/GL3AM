@@ -58,6 +58,7 @@ public class LoadSMSActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
+                smsList.setEnabled(false);
                 loadedSMS = StoreClient.getSMS(position);
                 LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
                         .getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -90,6 +91,7 @@ public class LoadSMSActivity extends Activity {
                 popcancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        smsList.setEnabled(true);
                         r.removeView(popUpView);
                     }
                 });

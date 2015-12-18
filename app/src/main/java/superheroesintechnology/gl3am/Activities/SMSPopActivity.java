@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -58,9 +59,16 @@ public class SMSPopActivity extends Activity {
 
 
         name = (EditText)findViewById(R.id.SMSName);
+        //name.setMaxWidth(name.getWidth());
+
         desc = (EditText)findViewById(R.id.SMSDesc);
+        //desc.setMaxWidth(desc.getWidth());
+
         number = (EditText)findViewById(R.id.SMSPhoneNum);
+        number.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         message = (EditText)findViewById(R.id.SMSTextMess);
+       // message.setMaxWidth(message.getWidth());
 
 
 //// Initialize text in EditText fields to null
