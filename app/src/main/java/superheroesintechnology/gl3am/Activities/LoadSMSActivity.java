@@ -1,14 +1,11 @@
 package superheroesintechnology.gl3am.Activities;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -28,16 +25,22 @@ public class LoadSMSActivity extends Activity {
     private ArrayList<SMSMessage> message_list;
     ArrayAdapter<SMSMessage> listAdapter;
     //    public static SMSMessage loadedSMS;
-    private SMSMessage loadedSMS = new SMSMessage(null, null);
+    private SMSMessage loadedSMS;
+    private StorageClient StoreClient;
+    private RelativeLayout r;
+    private View popUpView;
+    private ImageView confirmButton;
+    private ImageView popcancelButton;
+    private TextView confirmOrCancelText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final StorageClient StoreClient = new StorageClient(this, "default");
-        setContentView(R.layout.load_saved_sms);
+        activityInit();
 
-        smsList = (ListView) findViewById(R.id.list);
+
+
 //        ImageView confirmButton = (ImageView) findViewById(R.id.confirmLoadSMSButton);
         //ImageView cancelButton = (ImageView) findViewById(R.id.cancelLoadSMSButton);
 
@@ -49,41 +52,20 @@ public class LoadSMSActivity extends Activity {
 
         });
         */
-        message_list = StoreClient.loadSMSList();
 
-        listAdapter = new SMSListAdapter(this, message_list);
-        smsList.setAdapter(listAdapter);
 
         smsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
-                smsList.setEnabled(false);
-                loadedSMS = StoreClient.getSMS(position);
-                LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-                        .getSystemService(LAYOUT_INFLATER_SERVICE);
-                final RelativeLayout r = (RelativeLayout) findViewById(R.id.loadSMSPop);
-                final View popUpView = layoutInflater.inflate(R.layout.activity_confirm_favorite, r, false);
-                r.addView(popUpView);
 
-                ImageView confirmButton = (ImageView) popUpView.findViewById(R.id.confirmAlarmButton);
-                ImageView popcancelButton = (ImageView) popUpView.findViewById(R.id.cancel_action);
-                TextView confirmOrCancelText = (TextView) popUpView.findViewById(R.id.confirmOrCancelTextView);
-                confirmOrCancelText.setText("Use this message?");
+
+                popInit(position);
 
                 confirmButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (loadedSMS == null) {
-                            Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);
-                        currAlarm.setSMS(loadedSMS);
-                        StoreClient.setCurrAlarm(currAlarm);
-                        r.removeView(popUpView);
-                        LoadSMSActivity.this.finish();
+                        onConfirm();
                     }
                 });
 
@@ -91,13 +73,66 @@ public class LoadSMSActivity extends Activity {
                 popcancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        smsList.setEnabled(true);
-                        r.removeView(popUpView);
+                        onCancel();
                     }
                 });
             }
 
 
         });
+    }
+
+    //**********************************************************************************************
+    //Initializes Activity
+
+    public void activityInit(){
+        loadedSMS = new SMSMessage(null, null);
+        StoreClient = new StorageClient(this, "default");
+        setContentView(R.layout.load_saved_sms);
+        smsList = (ListView) findViewById(R.id.list);
+        message_list = StoreClient.loadSMSList();
+        listAdapter = new SMSListAdapter(this, message_list);
+        smsList.setAdapter(listAdapter);
+    }
+
+    //**********************************************************************************************
+    //Initializes confirm/cancel popup
+
+    public void popInit(int position){
+        smsList.setEnabled(false);
+        loadedSMS = StoreClient.getSMS(position);
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        r = (RelativeLayout) findViewById(R.id.loadSMSPop);
+        popUpView = layoutInflater.inflate(R.layout.activity_confirm_favorite, r, false);
+        r.addView(popUpView);
+        confirmButton = (ImageView) popUpView.findViewById(R.id.confirmAlarmButton);
+        popcancelButton = (ImageView) popUpView.findViewById(R.id.cancel_action);
+        confirmOrCancelText = (TextView) popUpView.findViewById(R.id.confirmOrCancelTextView);
+        confirmOrCancelText.setText("Use this message?");
+    }
+
+    //**********************************************************************************************
+    //Confirm action for popup
+
+    public void onConfirm(){
+        if (loadedSMS == null) {
+            Toast.makeText(getApplicationContext(), "You have not selected a message.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        AlarmModel currAlarm = StoreClient.getCurrAlarm(LoadSMSActivity.this);
+        currAlarm.setSMS(loadedSMS);
+        StoreClient.setCurrAlarm(currAlarm);
+        r.removeView(popUpView);
+        LoadSMSActivity.this.finish();
+    }
+
+    //**********************************************************************************************
+    //cancel action for popup
+
+    public void onCancel(){
+        smsList.setEnabled(true);
+        r.removeView(popUpView);
     }
 }
