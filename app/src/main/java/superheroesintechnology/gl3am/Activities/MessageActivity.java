@@ -35,52 +35,28 @@ public class MessageActivity extends Activity {
     ArrayAdapter<SMSMessage> listAdapter;
     private ImageView Add;
     private StorageClient StoreClient;
+    private ImageView alarmImageView;
+    private ImageView homeImageView;
+    private ImageView favoritesImageView;
+    private ImageView statusImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StoreClient = new StorageClient(this, "default");
-        setContentView(R.layout.activity_message);
 
-//        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
+        initActivity();
 
-
-        smsList = (ListView) findViewById(R.id.list);
-//        LinearLayout smsItem = (LinearLayout) findViewById(R.id.smsListItem);
-//        View v = smsList.findFocus();
-
-
-
-        message_list = StoreClient.loadSMSList();
-
-        listAdapter = new SMSListAdapter(this, message_list);
-        smsList.setAdapter(listAdapter);
-
-
-        Add = (ImageView) findViewById(R.id.newSMSFav);
         Add.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 activateSMSpop();
-//                Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
-//                intent.putExtra("Mode", "Save");
-//                intent.putExtra("ReturnTo", "None");
-//                startActivityForResult(intent,1);
         }
         });
 
         //smsList.setAdapter(new SMSListAdapter(MessageActivity.this, message_list));
 
-
-
-
-
-        ImageView alarmImageView = (ImageView)findViewById(R.id.alarmMessagesImage);
-        ImageView homeImageView = (ImageView)findViewById(R.id.homeMessagesImage);
-        ImageView favoritesImageView = (ImageView)findViewById(R.id.favoritesMessagesImage);
-        ImageView statusImageView = (ImageView)findViewById(R.id.statusMessagesImage);
 
         alarmImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,8 +132,36 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
         intent.putExtra("Mode", "Save");
         intent.putExtra("ReturnTo", "None");
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
 
+    //**********************************************************************************************
+    //Initializes activity
 
+    public void initActivity(){
+        StoreClient = new StorageClient(this, "default");
+        setContentView(R.layout.activity_message);
+
+//        final ImageView deleteSms = (ImageView) findViewById(R.id.deleteSMSButton);
+
+
+        smsList = (ListView) findViewById(R.id.list);
+//        LinearLayout smsItem = (LinearLayout) findViewById(R.id.smsListItem);
+//        View v = smsList.findFocus();
+
+
+
+        message_list = StoreClient.loadSMSList();
+
+        listAdapter = new SMSListAdapter(this, message_list);
+        smsList.setAdapter(listAdapter);
+
+
+        Add = (ImageView) findViewById(R.id.newSMSFav);
+
+        alarmImageView = (ImageView)findViewById(R.id.alarmMessagesImage);
+        homeImageView = (ImageView)findViewById(R.id.homeMessagesImage);
+        favoritesImageView = (ImageView)findViewById(R.id.favoritesMessagesImage);
+        statusImageView = (ImageView)findViewById(R.id.statusMessagesImage);
+    }
 }
