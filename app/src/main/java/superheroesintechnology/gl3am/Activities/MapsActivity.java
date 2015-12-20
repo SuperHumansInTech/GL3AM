@@ -92,6 +92,8 @@ public class MapsActivity extends Activity{
 
     }
 
+    //**********************************************************************************************
+    //initializes main menu buttons and main menu's relative layout
     public void setButtons(){
         infoButton = (ImageView)findViewById(R.id.infoButton);
         alarmImage = (ImageView) findViewById(R.id.alarmImage);
@@ -113,6 +115,8 @@ public class MapsActivity extends Activity{
         return popupView;
     }
 
+    //***********************************************************************************************
+    //disables all main menu buttons
     public void disableButtons(){
         alarmImage.setClickable(false);
         messageImage.setClickable(false);

@@ -62,10 +62,12 @@ public class MessageActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
-                intent.putExtra("Mode", "Save");
-                intent.putExtra("ReturnTo", "None");
-                startActivityForResult(intent,1);
+
+                activateSMSpop();
+//                Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
+//                intent.putExtra("Mode", "Save");
+//                intent.putExtra("ReturnTo", "None");
+//                startActivityForResult(intent,1);
         }
         });
 
@@ -133,6 +135,8 @@ public class MessageActivity extends Activity {
 //                .setPositiveButton("Yes", dialogClickListener)
 //                .setNegativeButton("No", dialogClickListener).show();
 //    }
+
+    //***********************************************************************************************
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -142,6 +146,18 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         smsList.setAdapter(listAdapter);
     }
 }
+
+    //***********************************************************************************************
+    //Activates SMSpopup
+
+    public void activateSMSpop(){
+
+
+        Intent intent = new Intent(MessageActivity.this, SMSPopActivity.class);
+        intent.putExtra("Mode", "Save");
+        intent.putExtra("ReturnTo", "None");
+        startActivityForResult(intent,1);
+    }
 
 
 }

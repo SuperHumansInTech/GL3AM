@@ -59,6 +59,7 @@ public class LoadSMSActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                StoreClient.getCurrAlarm(getApplicationContext()).setSMS(StoreClient.getSMS(position));
 
+
                 popInit(position);
 
                 confirmButton.setOnClickListener(new View.OnClickListener() {
